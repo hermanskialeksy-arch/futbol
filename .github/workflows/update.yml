@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Pobierz dane i zbuduj stronę
-        run: python futbol.py report
+        run: python futbol.py run
         env:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
       - run: mkdir site && cp raport.html site/index.html
