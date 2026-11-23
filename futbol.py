@@ -1309,6 +1309,14 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .br{display:grid;grid-template-columns:70px 1fr 74px;gap:8px;align-items:center;margin:7px 0;font-size:13.5px}
 .bar{height:10px;border-radius:5px;background:var(--card2);position:relative;overflow:hidden}
 .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--g2)}.bar u{position:absolute;top:-2px;bottom:-2px;width:2px;background:#fff}
+.cph{display:flex;justify-content:space-between;gap:10px;padding:10px 6px 2px;font-weight:700;font-size:14.5px}
+.cph span{flex:1}.cph span:last-child{text-align:right}
+.d1,.d2{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 7px}.d1{background:var(--g2)}.d2{background:#3d7bd6}
+.cs{font-size:12px;color:var(--dim);margin:-4px 0 6px}
+.cp{display:grid;grid-template-columns:52px 1fr 52px;gap:8px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.cv{font-size:17px;font-weight:600;color:var(--dim)}.cv.r{text-align:right}.cv.hi{color:var(--tx);font-weight:800}
+.cl2{text-align:center;font-size:13px;color:var(--dim)}
+.cb{height:6px;border-radius:3px;background:#3d7bd6;margin-top:5px;overflow:hidden}.cb i{display:block;height:100%;background:var(--g2)}
 .hide{display:none}
 .shr{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:4px 11px;font-size:12.5px;margin-left:8px}
 .toast{position:fixed;left:12px;right:12px;bottom:18px;background:#25804f;color:#fff;border-radius:12px;padding:12px 14px;
@@ -1465,16 +1473,30 @@ function groups(x){
   const e=x.exp[stat];
   out+=`<details${stat==='goals'?' open':''}><summary>${ST[stat]}<span style="font-weight:400;color:var(--dim);font-size:13px;margin-left:auto">Σ ${(e[0]+e[1]).toFixed(1)}</span></summary><div class="in">${inner}</div></details>`}
  return out}
+function cmpRow(l,a,b,d){
+ const A=a==null?null:+a,B=b==null?null:+b,t=(A||0)+(B||0),pa=t>0?(A||0)/t*100:50;
+ const f=v=>v==null?'–':(d===0?Math.round(v):v.toFixed(d));
+ return `<div class="cp"><div class="cv${A!=null&&B!=null&&A>B?' hi':''}">${f(A)}</div><div class="cl2">${l}<div class="cb"><i style="width:${pa}%"></i></div></div><div class="cv r${A!=null&&B!=null&&B>A?' hi':''}">${f(B)}</div></div>`}
+function cmpBlock(title,sub,rows){
+ return `<div class="sc"><h4>${title}</h4>${sub?`<div class="cs">${sub}</div>`:''}${rows}</div>`}
 function statsTab(x){
- let h='';
- for(const stat of Object.keys(x.exp)){const e=x.exp[stat],a=x.ph[stat],b=x.pa[stat];
-  const r=(n,f,t)=>`<tr><td>${n}</td><td>${f==null?'–':f}</td><td>${t==null?'–':t}</td></tr>`;
-  h+=`<div class="sc"><h4>${ST[stat]}</h4><div class="ex"><span>${esc(x.h)}</span><b>${e[0].toFixed(2)}</b><span>:</span><b>${e[1].toFixed(2)}</b><span>${esc(x.a)}</span></div>
-  <div style="text-align:center;font-size:12.5px;color:var(--dim);margin-top:4px">oczekiwane w meczu · razem <b style="color:var(--tx)">${(e[0]+e[1]).toFixed(2)}</b></div>
-  <table class="t2"><tr><th>średnia na mecz</th><th>zdobywa</th><th>traci</th></tr>
-  ${a?r(esc(x.h)+' · ost. 6',a[0],a[1])+`<tr class="vn">${r(esc(x.h)+' · <b>u siebie</b> ('+a[6]+')',a[4],a[5]).slice(4,-5)}</tr>`:''}
-  ${b?r(esc(x.a)+' · ost. 6',b[0],b[1])+`<tr class="vn">${r(esc(x.a)+' · <b>na wyjeździe</b> ('+b[6]+')',b[4],b[5]).slice(4,-5)}</tr>`:''}
-  </table></div>`}
+ const st=Object.keys(x.exp);
+ const head=`<div class="cph"><span><i class="d1"></i>${esc(x.h)}</span><span>${esc(x.a)}<i class="d2"></i></span></div>`;
+ const rows=fn=>st.map(k=>fn(k)).join('');
+ const pv=(p,i)=>p&&p[i]!=null?p[i]:null;
+ const nh=(x.ph.goals||[])[6],na=(x.pa.goals||[])[6];
+ let h=head;
+ h+=cmpBlock('Oczekiwane w meczu','Wynik modelu: ile każda drużyna ma średnio zdobyć w tym meczu.',
+   rows(k=>cmpRow(ST[k],x.exp[k][0],x.exp[k][1],k==='goals'?2:1)));
+ h+=cmpBlock('Forma: ostatnie 6 meczów','Średnio na mecz – zdobywa.',
+   rows(k=>cmpRow(ST[k],pv(x.ph[k],0),pv(x.pa[k],0),1)));
+ if(nh>0||na>0){
+ h+=cmpBlock('Gospodarz u siebie vs gość na wyjeździe',`Średnia z meczów w tej roli (${esc(x.h)}: ${nh==null?'–':nh}, ${esc(x.a)}: ${na==null?'–':na}). Zdobywa:`,
+   rows(k=>cmpRow(ST[k],pv(x.ph[k],4),pv(x.pa[k],4),1)));
+ h+=cmpBlock('Tracone: u siebie vs na wyjeździe','Średnio na mecz – traci przeciwnikom (mniej = lepsza obrona).',
+   rows(k=>cmpRow(ST[k],pv(x.ph[k],5),pv(x.pa[k],5),1)));
+ }
+ if((nh>0||na>0)&&((nh!=null&&nh<4)||(na!=null&&na<4)))h+='<div class="note">Uwaga: mało meczów w roli gospodarza/gościa – średnie są mało pewne.</div>';
  return h}
 function h2hTab(x){
  if(!x.h2h.length)return'<div class="empty">Brak bezpośrednich meczów w pobranych danych.</div>';
