@@ -408,6 +408,25 @@ def parse_summary_odds(js):
     return cands[0][1] if cands else {}
 
 
+def parse_summary_form(js, home, away):
+    """Forma: ostatnie 5 meczów każdej drużyny z `lastFiveGames` (ESPN). Zwraca {"h": [...], "a": [...]}."""
+    out = {"h": [], "a": []}
+    blocks = [b for b in (js.get("lastFiveGames") or []) if isinstance(b, dict)]
+    for i, b in enumerate(blocks[:2]):
+        nm = str((b.get("team") or {}).get("displayName", ""))
+        side = "h" if nm == home else "a" if nm == away else ("h" if i == 0 else "a")
+        evs = []
+        for e in (b.get("events") or [])[:5]:
+            if not isinstance(e, dict):
+                continue
+            opp = (e.get("opponent") or {}).get("displayName", "")
+            evs.append([str(e.get("gameResult", ""))[:1].upper(), str(e.get("score", "")), str(e.get("atVs", "")),
+                        opp, str(e.get("gameDate", ""))[:10],
+                        str(e.get("leagueAbbreviation") or e.get("leagueName") or "")])
+        out[side] = evs
+    return out if (out["h"] or out["a"]) else {}
+
+
 def espn_get(path, **params):
     time.sleep(0.12)
     url = f"{ESPN}/{path}" + ("?" + urllib.parse.urlencode(params) if params else "")
@@ -496,13 +515,17 @@ def update_espn(days, budget):
     for rec in sorted(cache["fixtures"].values(), key=lambda r: (r["date"], r["time"])):
         if calls >= budget + 80:
             break
-        if rec.get("odds") and now - rec.get("odds_ts", 0) < 6 * 3600:
+        if rec.get("odds") and rec.get("form") and now - rec.get("odds_ts", 0) < 6 * 3600:
             continue
         calls += 1
         try:
-            odds = parse_summary_odds(espn_get(f"{rec['slug']}/summary", event=rec["id"]))
+            sj = espn_get(f"{rec['slug']}/summary", event=rec["id"])
+            odds = parse_summary_odds(sj)
+            form = parse_summary_form(sj, rec["home"], rec["away"])
         except Exception:  # noqa
             continue
+        if form:
+            rec["form"] = form
         rec["odds_ts"] = now
         if odds:
             rec["odds"] = odds
@@ -1102,7 +1125,8 @@ def build_fixtures(days, dom_played, fd_fix, espn_fix):
                 fo = fd_idx.get((comp, h, a))
                 if fo and fo["odds"]:
                     odds = dict(fo["odds"])
-            out.append(dict(comp=comp, date=pdate(r["date"]), time=r["time"], home=h, away=a, odds=odds))
+            out.append(dict(comp=comp, date=pdate(r["date"]), time=r["time"], home=h, away=a, odds=odds,
+                            form=r.get("form")))
     else:
         for f in fd_fix:
             if today <= f["date"] <= end:
@@ -1141,6 +1165,7 @@ def analyze_fixture(fx, model, api_cache, manual):
     if not pred:
         return None
     return dict(comp=fx["comp"], date=fx["date"], time=fx.get("time", ""), home=h, away=a, odds=fx["odds"],
+                form=fx.get("form") or {},
                 exp=pred["exp"], markets=pred["markets"], prof_h=model.profile(h, True),
                 prof_a=model.profile(a, False), h2h=model.h2h(h, a), n_h=model.n_matches(h),
                 n_a=model.n_matches(a), abs={"h": ab_h, "a": ab_a}, adj=adj)
@@ -1197,7 +1222,7 @@ def match_payload(i, an):
     h2h = [[m["date"].strftime("%d.%m.%y"), m["home"], m["away"], {k: [v[0], v[1]] for k, v in m["stats"].items()}]
            for m in an["h2h"]]
     return dict(i=i, comp=an["comp"], country=country, kind=kind, date=an["date"].isoformat(), time=an.get("time", ""),
-                h=an["home"], a=an["away"], nh=an["n_h"], na=an["n_a"], low=low_conf(an),
+                h=an["home"], a=an["away"], nh=an["n_h"], na=an["n_a"], low=low_conf(an), fm=an.get("form") or {},
                 exp={s: [round(v[0], 2), round(v[1], 2)] for s, v in an["exp"].items()},
                 ph=prof(an["prof_h"]), pa=prof(an["prof_a"]), h2h=h2h, m=ms,
                 abs={"h": ab(an["abs"]["h"]), "a": ab(an["abs"]["a"])},
@@ -1317,6 +1342,12 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .cv{font-size:17px;font-weight:600;color:var(--dim)}.cv.r{text-align:right}.cv.hi{color:var(--tx);font-weight:800}
 .cl2{text-align:center;font-size:13px;color:var(--dim)}
 .cb{height:6px;border-radius:3px;background:#3d7bd6;margin-top:5px;overflow:hidden}.cb i{display:block;height:100%;background:var(--g2)}
+.fch{display:flex;gap:6px;margin:0 0 8px}
+.fc{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12.5px;font-weight:800;color:#fff;flex:none}
+.fw{background:#25804f}.fd{background:#8a7a2e}.fl{background:#b04848}
+.fr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.fo{flex:1;min-width:0}.fo b{display:block;font-size:14px;font-weight:600}.fo small{color:var(--dim);font-size:11.5px}
+.fs{font-weight:700;font-size:15px}
 .hide{display:none}
 .shr{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:4px 11px;font-size:12.5px;margin-left:8px}
 .toast{position:fixed;left:12px;right:12px;bottom:18px;background:#25804f;color:#fff;border-radius:12px;padding:12px 14px;
@@ -1498,9 +1529,18 @@ function statsTab(x){
  }
  if((nh>0||na>0)&&((nh!=null&&nh<4)||(na!=null&&na<4)))h+='<div class="note">Uwaga: mało meczów w roli gospodarza/gościa – średnie są mało pewne.</div>';
  return h}
+const RES={W:['W','fw'],D:['R','fd'],L:['P','fl']};
+function formBlock(name,list){
+ if(!list||!list.length)return`<div class="sc"><h4>${esc(name)}</h4><div class="cs">Brak danych o formie.</div></div>`;
+ const chips=list.map(e=>{const r=RES[e[0]]||['?','fd'];return`<span class="fc ${r[1]}">${r[0]}</span>`}).join('');
+ const rows=list.map(e=>{const r=RES[e[0]]||['?','fd'];
+  return`<div class="fr"><span class="fc ${r[1]}">${r[0]}</span><div class="fo"><b>${e[2]==='@'?'@ ':''}${esc(e[3])}</b><small>${esc(e[4].slice(8,10)+'.'+e[4].slice(5,7)+'.'+e[4].slice(2,4))} · ${esc(e[5])}</small></div><div class="fs">${esc(e[1])}</div></div>`}).join('');
+ return`<div class="sc"><h4>${esc(name)}</h4><div class="fch">${chips}</div>${rows}</div>`}
 function h2hTab(x){
- if(!x.h2h.length)return'<div class="empty">Brak bezpośrednich meczów w pobranych danych.</div>';
- return x.h2h.map(m=>{const s=m[3],p=k=>s[k]?`${s[k][0]}:${s[k][1]}`:'–';
+ const f=x.fm||{};
+ let out=`<div class="sh">Forma – ostatnie 5 meczów</div>`+formBlock(x.h,f.h)+formBlock(x.a,f.a)+`<div class="sh">Bezpośrednie spotkania (H2H)</div>`;
+ if(!x.h2h.length)return out+'<div class="empty" style="padding:18px 10px">Brak bezpośrednich meczów w pobranych danych.</div>';
+ return out+x.h2h.map(m=>{const s=m[3],p=k=>s[k]?`${s[k][0]}:${s[k][1]}`:'–';
   return `<div class="hh"><div class="s">${m[0]}</div><div><b>${esc(m[1])} ${p('goals')} ${esc(m[2])}</b></div>
   <div class="s">strzały ${p('shots')} · celne ${p('sot')} · rożne ${p('corners')} · faule ${p('fouls')} · kartki ${p('cards')}</div></div>`}).join('')}
 function absTab(x){
@@ -1514,7 +1554,7 @@ function detail(i){
  const body=S.dtab==='bets'?groups(x):S.dtab==='stats'?statsTab(x):S.dtab==='h2h'?h2hTab(x):absTab(x);
  const best=picksFor(x,S.minp).best.slice(0,4);
  const top=S.dtab==='bets'&&best.length?`<div class="top3"><h4>★ Najpewniejsze typy modelu</h4>${best.map(m=>`<div class="tp ${pcls(m[3])}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr">${m[4]?'kurs '+m[4].toFixed(2):'brak kursu'}</span>${histTxt(m)}</div></div>`).join('')}</div>`:'';
- const tabs=[['bets','Typy'],['stats','Statystyki'],['h2h','H2H'],['abs','Kadra'+(x.na_?' ('+x.na_+')':'')]];
+ const tabs=[['bets','Typy'],['stats','Statystyki'],['h2h','Forma i H2H'],['abs','Kadra'+(x.na_?' ('+x.na_+')':'')]];
  $('det').innerHTML=`<div class="dh"><button class="back" data-back="1">← Wróć</button>
  <div class="dt"><div class="mt"><span>${esc(x.country)} · ${esc(x.comp)}</span><span>${dfull(x.date)} ${x.time}</span></div>
  <div class="tm">${esc(x.h)} – ${esc(x.a)}</div><div>${badges(x)}</div></div>
