@@ -409,20 +409,26 @@ def parse_summary_odds(js):
 
 
 def parse_summary_form(js, home, away):
-    """Forma: ostatnie 5 meczów każdej drużyny z `lastFiveGames` (ESPN). Zwraca {"h": [...], "a": [...]}."""
+    """Forma: ostatnie 5 meczów każdej drużyny z `lastFiveGames` (ESPN).
+    Wpis: [wynik W/D/L, gospodarz, gość, gole gosp., gole gości, data, rozgrywki, czy_nasza_drużyna_gospodarzem]."""
     out = {"h": [], "a": []}
     blocks = [b for b in (js.get("lastFiveGames") or []) if isinstance(b, dict)]
     for i, b in enumerate(blocks[:2]):
-        nm = str((b.get("team") or {}).get("displayName", ""))
-        side = "h" if nm == home else "a" if nm == away else ("h" if i == 0 else "a")
+        me = str((b.get("team") or {}).get("displayName", ""))
+        side = "h" if me == home else "a" if me == away else ("h" if i == 0 else "a")
         evs = []
         for e in (b.get("events") or [])[:5]:
             if not isinstance(e, dict):
                 continue
-            opp = (e.get("opponent") or {}).get("displayName", "")
-            evs.append([str(e.get("gameResult", ""))[:1].upper(), str(e.get("score", "")), str(e.get("atVs", "")),
-                        opp, str(e.get("gameDate", ""))[:10],
-                        str(e.get("leagueAbbreviation") or e.get("leagueName") or "")])
+            opp = str((e.get("opponent") or {}).get("displayName", ""))
+            is_home = str(e.get("atVs", "")).lower() != "@"
+            hs, as_ = e.get("homeTeamScore"), e.get("awayTeamScore")
+            if hs is None or as_ is None:
+                m = re.match(r"\s*(\d+)\s*[-–:]\s*(\d+)", str(e.get("score", "")))
+                hs, as_ = (m.group(1), m.group(2)) if m else ("", "")
+            evs.append([str(e.get("gameResult", ""))[:1].upper(), me if is_home else opp, opp if is_home else me,
+                        str(hs), str(as_), str(e.get("gameDate", ""))[:10],
+                        str(e.get("leagueName") or e.get("leagueAbbreviation") or ""), is_home])
         out[side] = evs
     return out if (out["h"] or out["a"]) else {}
 
@@ -515,7 +521,7 @@ def update_espn(days, budget):
     for rec in sorted(cache["fixtures"].values(), key=lambda r: (r["date"], r["time"])):
         if calls >= budget + 80:
             break
-        if rec.get("odds") and rec.get("form") and now - rec.get("odds_ts", 0) < 6 * 3600:
+        if rec.get("odds") and rec.get("form_v") == 2 and now - rec.get("odds_ts", 0) < 6 * 3600:
             continue
         calls += 1
         try:
@@ -525,7 +531,7 @@ def update_espn(days, budget):
         except Exception:  # noqa
             continue
         if form:
-            rec["form"] = form
+            rec["form"], rec["form_v"] = form, 2
         rec["odds_ts"] = now
         if odds:
             rec["odds"] = odds
@@ -1134,7 +1140,7 @@ def build_fixtures(days, dom_played, fd_fix, espn_fix):
                 if fo and fo["odds"]:
                     odds = dict(fo["odds"])
             out.append(dict(comp=comp, date=pdate(r["date"]), time=r["time"], home=h, away=a, odds=odds,
-                            form=r.get("form")))
+                            form=r.get("form") if r.get("form_v") == 2 else None))
     else:
         for f in fd_fix:
             if today <= f["date"] <= end:
@@ -1356,6 +1362,15 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .fr{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
 .fo{flex:1;min-width:0}.fo b{display:block;font-size:14px;font-weight:600}.fo small{color:var(--dim);font-size:11.5px}
 .fs{font-weight:700;font-size:15px}
+.fo{flex:1;min-width:0}.ft{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--dim);line-height:1.5}
+.ft.me{color:var(--tx);font-weight:700}.ft b{font-weight:700;min-width:14px;text-align:right}
+.fd2{flex:none;text-align:right;font-size:11px;color:var(--dim);line-height:1.35}
+.ar{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.ai{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff}
+.ao1{background:#b04848}.ao2{background:#8a7a2e}.ao3{background:#25804f}
+.an{flex:1;min-width:0}.an b{display:block;font-size:14.5px}.an small{display:block;color:var(--dim);font-size:12px;margin-top:1px}
+.tg{flex:none;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:9px}.tg1{background:#5d2a2a;color:#ffb4b4}.tg2{background:#3a3220;color:var(--val)}
+.ef{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--dim)}
 .hide{display:none}
 .shr{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:4px 11px;font-size:12.5px;margin-left:8px}
 .toast{position:fixed;left:12px;right:12px;bottom:18px;background:#25804f;color:#fff;border-radius:12px;padding:12px 14px;
@@ -1541,8 +1556,9 @@ const RES={W:['W','fw'],D:['R','fd'],L:['P','fl']};
 function formBlock(name,list){
  if(!list||!list.length)return`<div class="sc"><h4>${esc(name)}</h4><div class="cs">Brak danych o formie.</div></div>`;
  const chips=list.map(e=>{const r=RES[e[0]]||['?','fd'];return`<span class="fc ${r[1]}">${r[0]}</span>`}).join('');
- const rows=list.map(e=>{const r=RES[e[0]]||['?','fd'];
-  return`<div class="fr"><span class="fc ${r[1]}">${r[0]}</span><div class="fo"><b>${e[2]==='@'?'@ ':''}${esc(e[3])}</b><small>${esc(e[4].slice(8,10)+'.'+e[4].slice(5,7)+'.'+e[4].slice(2,4))} · ${esc(e[5])}</small></div><div class="fs">${esc(e[1])}</div></div>`}).join('');
+ const rows=list.map(e=>{const r=RES[e[0]]||['?','fd'];if(e.length<8)return'';
+  const d=e[5]?e[5].slice(8,10)+'.'+e[5].slice(5,7)+'.'+e[5].slice(2,4):'';
+  return`<div class="fr"><span class="fc ${r[1]}">${r[0]}</span><div class="fo"><div class="ft${e[7]?' me':''}"><span>${esc(e[1])}</span><b>${esc(e[3])}</b></div><div class="ft${e[7]?'':' me'}"><span>${esc(e[2])}</span><b>${esc(e[4])}</b></div></div><div class="fd2">${esc(d)}<br>${esc(e[6])}</div></div>`}).join('');
  return`<div class="sc"><h4>${esc(name)}</h4><div class="fch">${chips}</div>${rows}</div>`}
 function h2hTab(x){
  const f=x.fm||{};
@@ -1551,12 +1567,16 @@ function h2hTab(x){
  return out+x.h2h.map(m=>{const s=m[3],p=k=>s[k]?`${s[k][0]}:${s[k][1]}`:'–';
   return `<div class="hh"><div class="s">${m[0]}</div><div><b>${esc(m[1])} ${p('goals')} ${esc(m[2])}</b></div>
   <div class="s">strzały ${p('shots')} · celne ${p('sot')} · rożne ${p('corners')} · faule ${p('fouls')} · kartki ${p('cards')}</div></div>`}).join('')}
+const ROLEPL={bramkarz:'Bramkarz',obrona:'Obrońca',pomoc:'Pomocnik',atak:'Napastnik'};
 function absTab(x){
  const blk=(name,list,adj)=>{
-  const eff=(adj[0]||adj[1])?`<div class="note" style="padding:6px 0 0">Wpływ na model: atak ${sgn(adj[0])}%, obrona ${adj[1]>0?'słabsza (+'+adj[1]+'% straconych)':'bez zmian'}.</div>`:'';
-  return `<div class="ab"><h4>${esc(name)}</h4>${list.length?'<ul>'+list.map(e=>`<li><b>${esc(e[0])}</b> <small>${esc(e[1]==='?'?'pozycja nieznana':e[1])} · ${esc(e[2])}${e[3]?' · '+esc(e[3]):''}</small></li>`).join('')+'</ul>':'<small>Brak zgłoszonych braków.</small>'}${eff}</div>`};
+  const rows=list.map(e=>{const out=e[2].startsWith('nie zagra');
+   const role=ROLEPL[e[1]]||'';
+   return`<div class="ar"><span class="ai ${out?'ao1':'ao2'}">${out?'✕':'?'}</span><div class="an"><b>${esc(e[0])}</b><small>${[role,e[3]].filter(Boolean).map(esc).join(' · ')}</small></div><span class="tg ${out?'tg1':'tg2'}">${out?'Nie zagra':'Wątpliwy'}</span></div>`}).join('');
+  const ef=[];if(Math.abs(adj[0])>=0.1)ef.push(`atak ${sgn(adj[0])}%`);if(adj[1]>=0.1)ef.push(`obrona: +${adj[1]}% traconych`);
+  return`<div class="sc"><h4>${esc(name)}</h4>${rows||'<div class="ar ok"><span class="ai ao3">✓</span><div class="an"><b>Brak zgłoszonych braków</b></div></div>'}${ef.length?`<div class="ef">Wpływ na model: ${ef.join(' · ')}</div>`:''}</div>`};
  return blk(x.h,x.abs.h,x.adj.h)+blk(x.a,x.abs.a,x.adj.a)+
- '<div class="note">Źródła: API-Football (jeśli ustawiono klucz) oraz własne wpisy komendą <b>python futbol.py brak dodaj "Drużyna" "Zawodnik" atak</b>. Korekta jest orientacyjna (nie znamy realnej roli zawodnika w składzie) i obejmuje gole, strzały celne i strzały. Brak wpisów nie znaczy, że wszyscy są zdrowi.</div>'}
+ '<div class="note">Źródło: zapowiedzi meczów (Flashscore), sprawdzane dwa razy dziennie. Brak wpisu nie oznacza, że wszyscy są zdrowi, a skład podany tuż przed meczem może wszystko zmienić.</div>'}
 function detail(i){
  const x=D.matches[i];
  const body=S.dtab==='bets'?groups(x):S.dtab==='stats'?statsTab(x):S.dtab==='h2h'?h2hTab(x):absTab(x);
