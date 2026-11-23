@@ -1004,6 +1004,7 @@ def run_backtest(dom_played, n_last=150):
     picks = defaultdict(lambda: [0, 0])                          # wybrane „najlepsze typy” (60-85%)
     groups = defaultdict(lambda: defaultdict(lambda: [0, 0]))   # grupa (gole, rożne...) -> przedział
     total = 0
+    roi = defaultdict(lambda: [0, 0, 0.0])                      # nazwa strategii -> [zakładów, trafionych, zysk przy stawce 1]
     t0 = time.time()
     for comp, played in dom_played.items():
         ms = sorted(played, key=lambda m: m["date"])
@@ -1018,12 +1019,32 @@ def run_backtest(dom_played, n_last=150):
             for m in lst:
                 if model.n_matches(m["home"]) < 5 or model.n_matches(m["away"]) < 5:
                     continue
-                pr = model.predict(m["home"], m["away"], {})
+                pr = model.predict(m["home"], m["away"], m.get("odds") or {})
                 if not pr:
                     continue
                 total += 1
                 best = {}
+                fav = None
                 for mkt in pr["markets"]:
+                    o = mkt.get("odds")
+                    if o and mkt["family"] in ("1x2", "goals:total"):
+                        hit = outcome(mkt["id"], m["stats"])
+                        if hit is not None:
+                            gain = (o - 1) if hit else -1.0
+                            kind = "1X2" if mkt["family"] == "1x2" else "Gole 2.5"
+                            names = [(kind, "wszystkie zakłady po kolei")]
+                            ev = mkt.get("ev")
+                            if ev is not None and mkt["p"] >= 0.35:
+                                for th in (0.03, 0.05, 0.10):
+                                    if ev >= th:
+                                        names.append((kind, f"przewaga ≥ {int(th * 100)}%"))
+                            if mkt["family"] == "1x2" and (fav is None or mkt["p"] > fav[0]):
+                                fav = (mkt["p"], gain, hit)
+                            for nm in names:
+                                r = roi[nm]
+                                r[0] += 1
+                                r[1] += int(hit)
+                                r[2] += gain
                     if mkt["family"] == "dc" or not (0.5 <= mkt["p"] <= 0.95):
                         continue
                     hit = outcome(mkt["id"], m["stats"])
@@ -1040,10 +1061,16 @@ def run_backtest(dom_played, n_last=150):
                 for p, hit in best.values():
                     picks[bucket_of(p)][0] += 1
                     picks[bucket_of(p)][1] += int(hit)
+                if fav:
+                    r = roi[("1X2", "zawsze faworyt modelu")]
+                    r[0] += 1
+                    r[1] += int(fav[2])
+                    r[2] += fav[1]
         log(f"  backtest {comp}: gotowe ({time.time() - t0:.0f}s)")
     res = {"generated": dt.date.today().isoformat(), "matches": total,
            "hist": {k: dict(v) for k, v in hist.items()}, "groups": {k: dict(v) for k, v in groups.items()},
-           "picks": dict(picks)}
+           "picks": dict(picks),
+           "roi": [[k[0], k[1], v[0], v[1], round(v[2], 2)] for k, v in sorted(roi.items())]}
     jsave(P("backtest.json"), res)
     return res
 
@@ -1382,6 +1409,7 @@ function listValue(){
  return '<div class="note">Typy, w których model daje przewagę ≥3% nad kursem (kursy: 1X2 oraz Over/Under 2.5 gdy są dostępne). Wysokie EV bywa efektem błędu modelu lub braku informacji (skład, kontuzje) – sprawdzaj ostrożnie.</div>'+
   (all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,true)).join(''):'<div class="empty">Brak typów z przewagą.</div>')}
 /* ---------- skuteczność (backtest) ---------- */
+const ROIORD=['wszystkie zakłady po kolei','zawsze faworyt modelu','przewaga ≥ 3%','przewaga ≥ 5%','przewaga ≥ 10%'];
 function listAcc(){
  const t=D.bt;
  if(!t)return'<div class="empty">Brak danych backtestu.<br>Uruchom w Termux:<br><b>python futbol.py backtest</b></div>';
@@ -1389,6 +1417,15 @@ function listAcc(){
  const rows=(obj,label)=>Object.keys(obj).map(Number).sort((a,b)=>a-b).filter(k=>obj[k][0]>=15).map(k=>{
   const [n,hit]=obj[k],r=hit/n,mid=(k+2.5)/100;
   return `<div class="br"><div>${k}–${k+5}%</div><div class="bar"><i style="width:${r*100}%"></i><u style="left:${mid*100}%"></u></div><div><b>${Math.round(r*100)}%</b> <span style="color:var(--dim)">n=${n}</span></div></div>`}).join('');
+ if(t.roi&&t.roi.length){
+  const byk={};t.roi.forEach(r=>(byk[r[0]]=byk[r[0]]||[]).push(r));
+  h+='<div class="bt"><h3>Czy dałoby to zysk? (stawka 1 zł na typ)</h3><div class="note" style="padding:0 0 8px">Test na prawdziwych kursach z historii. Zysk = suma wygranych minus stawki, w % od obstawionych złotych. Minus oznacza, że typy z kursami bukmachera przynosiłyby stratę.</div>';
+  for(const k of Object.keys(byk)){
+   h+=`<div class="sh">${esc(k)}</div>`;
+   byk[k].sort((a,b)=>ROIORD.indexOf(a[1])-ROIORD.indexOf(b[1])).forEach(([_,nm,n,hit,pr])=>{
+    if(n<20)return;const roi=pr/n*100;
+    h+=`<div class="br" style="grid-template-columns:1fr 70px 70px"><div>${esc(nm)}<br><span style="color:var(--dim);font-size:12px">${n} zakładów · trafione ${Math.round(hit/n*100)}%</span></div><div style="text-align:right;color:var(--dim);font-size:12px">${pr>=0?'+':''}${pr.toFixed(1)} zł</div><div style="text-align:right"><b style="color:${roi>=0?'#7fd49f':'#e07a7a'}">${roi>=0?'+':''}${roi.toFixed(1)}%</b></div></div>`})}
+  h+='<div class="note" style="padding:6px 0 0">Kursy: średnia z kilku bukmacherów (football-data.co.uk) – tylko 1X2 i Over/Under 2.5, bo do reszty rynków nie ma historycznych kursów. Dla kartek, fauli, rożnych nie da się tego sprawdzić.</div></div>'}
  h+=`<div class="bt"><h3>Najlepsze typy modelu (60–85%)</h3>${rows(t.picks)||'brak'}</div>`;
  for(const g of Object.keys(t.groups).sort((a,b)=>(GRP[a]||a).localeCompare(GRP[b]||b))){
   const o={};for(const k in t.groups[g])if(+k>=60)o[k]=t.groups[g][k];const r=rows(o);
@@ -1574,7 +1611,7 @@ def cmd_match(hname, aname, manual_odds, show_all):
 
 def maybe_backtest(args, force=False):
     bt = jload(P("backtest.json"), None)
-    stale = (not bt) or (dt.date.today() - dt.date.fromisoformat(bt["generated"])).days >= 7
+    stale = (not bt) or "roi" not in bt or (dt.date.today() - dt.date.fromisoformat(bt["generated"])).days >= 7
     if force or (stale and not getattr(args, "no_backtest", False)):
         log("Liczę historyczną skuteczność typów (backtest) – jednorazowo, potem co tydzień...")
         dom_played, _ = load_domestic()
