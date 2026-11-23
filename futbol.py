@@ -1371,14 +1371,6 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .an{flex:1;min-width:0}.an b{display:block;font-size:14.5px}.an small{display:block;color:var(--dim);font-size:12px;margin-top:1px}
 .tg{flex:none;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:9px}.tg1{background:#5d2a2a;color:#ffb4b4}.tg2{background:#3a3220;color:var(--val)}
 .ef{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--dim)}
-.cell{cursor:pointer}.sbo{font-size:12.5px;color:#ffd75e;font-weight:800}
-.oc.sb b{color:#ffd75e}.tk .kr.sbk{color:#ffd75e}
-.sheet{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;display:flex;align-items:flex-end}
-.shi{width:100%;background:var(--card);border-radius:18px 18px 0 0;padding:18px 16px 22px}
-.sht{font-size:17px;font-weight:700}.shs{font-size:13px;color:var(--dim);margin:6px 0 10px;min-height:18px}
-.shi input{width:100%;font-size:22px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--acc);background:var(--bg);color:var(--tx)}
-.shb{display:flex;gap:8px;margin-top:10px}.shb button{flex:1;padding:12px 6px;border-radius:12px;border:1px solid var(--line);background:var(--card2);font-size:15px;font-weight:600}
-.shb button.pri{background:var(--acc);border-color:var(--acc);color:#fff}
 .hide{display:none}
 .shr{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:4px 11px;font-size:12.5px;margin-left:8px}
 .toast{position:fixed;left:12px;right:12px;bottom:18px;background:#25804f;color:#fff;border-radius:12px;padding:12px 14px;
@@ -1412,26 +1404,16 @@ function hist(m){const b=String(Math.floor(m[3]*20)*5),t=D.bt;if(!t)return null;
  return h&&h[0]>=25?{r:h[1]/h[0],n:h[0]}:null}
 function histTxt(m){const h=hist(m);return h?`<span class="hs${h.r<m[3]-0.04?' w':''}">hist. ${Math.round(h.r*100)}%</span>`:''}
 const pcls=p=>p>=0.75?'p2':p>=0.65?'p1':'p0';
-let SB={};try{SB=JSON.parse(localStorage.getItem('sb')||'{}')}catch(e){}
-S.sbonly=false;try{S.sbonly=localStorage.getItem('sbonly')==='1'}catch(e){}
-const SBK=x=>x.date+'|'+x.h+'|'+x.a;
-const sbGet=(x,id)=>(SB[SBK(x)]||{})[id];
-function sbSet(x,id,v){const k=SBK(x);SB[k]=SB[k]||{};if(v)SB[k][id]=v;else delete SB[k][id];try{localStorage.setItem('sb',JSON.stringify(SB))}catch(e){}}
-function eodds(x,m){const s=sbGet(x,m[0]);if(s)return{o:s,src:'sb'};if(S.sbonly)return{o:null,src:''};return{o:m[4]||null,src:m[4]?'ref':''}}
-function evX(x,m){const o=eodds(x,m).o;return o?m[3]*o-1:null}
-function oddsTxt(x,m){const e=eodds(x,m);return e.src==='sb'?'Superbet '+e.o.toFixed(2):e.o?'ref '+e.o.toFixed(2):'brak kursu'}
-function cell(top,m,x){const p=m[3],e=eodds(x,m),o=e.o,ev=o?p*o-1:null,val=ev!=null&&ev>=0.03,g=p>=0.7?' g2':p>=0.6?' g1':'';
- const sm=e.src==='sb'?`<span class="sbo">SB ${o.toFixed(2)}</span>`:o?`<small>ref ${o.toFixed(2)}</small>`:`<small>~${fair(p)}</small>`;
- return `<div class="cell${g}${val?' val':''}" data-edit="${m[0]}"><span class="cl">${top}</span><b>${pc(p)}</b>${sm}${val?`<em>EV ${sgn(Math.round(ev*100))}%</em>`:''}</div>`}
+function cell(top,m){const p=m[3],o=m[4],ev=m[5],val=ev!=null&&ev>=0.03,g=p>=0.7?' g2':p>=0.6?' g1':'';
+ return `<div class="cell${g}${val?' val':''}"><span class="cl">${top}</span><b>${pc(p)}</b><small>${o?'kurs '+o.toFixed(2):'~'+fair(p)}</small>${val?`<em>EV ${sgn(Math.round(ev*100))}%</em>`:''}</div>`}
 function picksFor(x,minp){const best={},value=[];
- for(const m of x.m){if(m[1]==='dc')continue;if(S.sbonly&&!sbGet(x,m[0]))continue;const p=m[3];
+ for(const m of x.m){if(m[1]==='dc')continue;const p=m[3];
   if(p>=minp&&p<=D.maxp){const c=best[m[1]];if(!c||p>c[3])best[m[1]]=m}
-  const ev=evX(x,m);if(ev!=null&&ev>=0.03&&p>=0.35)value.push(m)}
+  if(m[5]!=null&&m[5]>=0.03&&p>=0.35)value.push(m)}
  return{best:Object.values(best).sort((a,b)=>b[3]-a[3]),value}}
-D.matches.forEach(x=>{x.na_=(x.abs.h.length+x.abs.a.length)});
-const nvOf=x=>x.m.filter(m=>{if(m[1]==='dc')return false;const ev=evX(x,m);return ev!=null&&ev>=0.03&&m[3]>=0.35}).length;
+D.matches.forEach(x=>{x.nv=x.m.filter(m=>m[1]!=='dc'&&m[5]!=null&&m[5]>=0.03&&m[3]>=0.35).length;x.na_=(x.abs.h.length+x.abs.a.length)});
 const vis=()=>D.matches.filter(x=>(S.day==='all'||x.date===S.day)&&(S.league==='all'||x.comp===S.league));
-const badges=x=>{const nv=nvOf(x);return(nv?`<span class="bd bv">VALUE ×${nv}</span>`:'')+(x.na_?`<span class="bd bi">braki ${x.na_}</span>`:'')+(x.low?`<span class="bd bl">mała próba</span>`:'')};
+const badges=x=>(x.nv?`<span class="bd bv">VALUE ×${x.nv}</span>`:'')+(x.na_?`<span class="bd bi">braki ${x.na_}</span>`:'')+(x.low?`<span class="bd bl">mała próba</span>`:'');
 /* ---------- nagłówek: dni i ligi ---------- */
 function bar(){
  let t='';[['matches','Mecze'],['picks','Typy'],['value','Value'],['acc','Skuteczność']].forEach(([k,n])=>t+=`<button class="${S.tab===k?'on':''}" data-tab="${k}">${n}</button>`);
@@ -1451,8 +1433,8 @@ function bar(){
  const a=document.querySelector('#dy .on');if(a&&a.scrollIntoView)a.scrollIntoView({inline:'center',block:'nearest'})}
 /* ---------- lista meczów ---------- */
 function oc(x,id,fav){const m=byId(x,id);if(!m)return'<div class="oc"></div>';
- const p=m[3],e=eodds(x,m),o=e.o,v=o&&p*o-1>=0.03;
- return `<div class="oc${id===fav?' fv':''}${v?' val':''}${e.src==='sb'?' sb':''}">${o?`<b>${o.toFixed(2)}</b>`:`<b class="nb">~${fair(p)}</b>`}<small>${pc(p)}</small></div>`}
+ const p=m[3],v=m[5]!=null&&m[5]>=0.03;
+ return `<div class="oc${id===fav?' fv':''}${v?' val':''}">${m[4]?`<b>${m[4].toFixed(2)}</b>`:`<b class="nb">~${fair(p)}</b>`}<small>${pc(p)}</small></div>`}
 function row(x){
  const b=picksFor(x,S.minp).best[0];
  const three=['1x2:1','1x2:X','1x2:2'].map(id=>byId(x,id)),fav=three.filter(Boolean).sort((a,c)=>c[3]-a[3])[0];
@@ -1471,23 +1453,22 @@ function listMatches(){
   <div class="lcols"><i>1</i><i>X</i><i>2</i></div><span class="car">${S.coll[c]?'▸':'▾'}</span></div>${S.coll[c]?'':L.map(row).join('')}</section>`}
  return h+'<div class="note">W polu: kurs bukmachera, pod nim szansa wg modelu (~ = brak kursu, pokazany kurs uczciwy). Zielone tło = faworyt modelu, żółta ramka = przewaga nad kursem. ★ = najpewniejszy typ modelu w meczu.</div>'}
 /* ---------- typy ---------- */
-function tipRow(x,m,showEv){const ev=evX(x,m);
+function tipRow(x,m,showEv){const o=m[4];
  return `<div class="tp ${pcls(m[3])}" data-m="${x.i}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div><div class="ts">${esc(x.h)} – ${esc(x.a)}<br>${dfull(x.date)} ${x.time} · ${esc(x.comp)}${x.low?' · mała próba':''}</div></div>
- <div class="tk"><b>${pc(m[3])}</b><span class="kr${sbGet(x,m[0])?' sbk':''}">${oddsTxt(x,m)}</span>${showEv&&ev!=null?`<em>EV ${sgn(Math.round(ev*100))}%</em>`:histTxt(m)}</div></div>`}
-const sbBar=()=>`<div class="flt"><button class="chip${S.sbonly?' on':''}" data-sbonly="1">Tylko kursy Superbet</button><span class="note">${S.sbonly?'pokazuję typy, którym wpisałeś kurs':'wpisz kurs w szczegółach meczu (dotknij pola)'}</span></div>`;
+ <div class="tk"><b>${pc(m[3])}</b><span class="kr">${o?'kurs '+o.toFixed(2):'brak kursu'}</span>${showEv&&m[5]!=null?`<em>EV ${sgn(Math.round(m[5]*100))}%</em>`:histTxt(m)}</div></div>`}
 function listPicks(){
  let all=[];for(const x of vis())for(const m of picksFor(x,S.minp).best)all.push([x,m]);
  if(S.cat!=='all')all=all.filter(([x,m])=>m[1].split(':')[0]===S.cat);
  all.sort((a,b)=>b[1][3]-a[1][3]);
  if(S.per>0){const cnt={};all=all.filter(([x,m])=>{cnt[x.i]=(cnt[x.i]||0)+1;return cnt[x.i]<=S.per})}
- let h=sbBar()+'<div class="flt">'+CAT.map(([k,n])=>`<button class="chip${S.cat===k?' on':''}" data-cat="${k}">${n}</button>`).join('')+'</div>';
+ let h='<div class="flt">'+CAT.map(([k,n])=>`<button class="chip${S.cat===k?' on':''}" data-cat="${k}">${n}</button>`).join('')+'</div>';
  h+='<div class="flt"><span class="note">Min.</span>'+[0.55,0.6,0.65,0.7,0.75].map(v=>`<button class="chip${S.minp===v?' on':''}" data-minp="${v}">${Math.round(v*100)}%</button>`).join('')+'<span class="note">Na mecz</span>'+[[1,'1'],[3,'3'],[0,'wsz.']].map(([v,n])=>`<button class="chip${S.per===v?' on':''}" data-per="${v}">${n}</button>`).join('')+'</div>';
  h+=`<div class="note">Najpewniejsze typy modelu, bez „oczywistych” powyżej ${Math.round(D.maxp*100)}%. hist. = jak często podobne typy trafiały w przeszłości.</div>`;
- return h+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,false)).join(''):`<div class="empty">${S.sbonly?'Brak typów z Twoim kursem Superbet. Wejdź w mecz i dotknij pola typu, żeby wpisać kurs.':'Brak typów w tym przedziale.'}</div>`)}
+ return h+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,false)).join(''):'<div class="empty">Brak typów w tym przedziale.</div>')}
 function listValue(){
  let all=[];for(const x of vis())for(const m of picksFor(x,0).value)all.push([x,m]);
- all.sort((a,b)=>evX(b[0],b[1])-evX(a[0],a[1]));
- return sbBar()+'<div class="note">Typy, w których model daje przewagę ≥3% nad kursem. Kurs Superbet (żółty) ma pierwszeństwo, a „ref” to kurs pomocniczy z zewnętrznego źródła, tylko dla 1X2 i Over/Under 2.5. Wysokie EV bywa błędem modelu lub brakiem informacji (skład, kontuzje), więc sprawdzaj ostrożnie.</div>'+
+ all.sort((a,b)=>b[1][5]-a[1][5]);
+ return '<div class="note">Typy, w których model daje przewagę ≥3% nad kursem (kursy: 1X2 oraz Over/Under 2.5 gdy są dostępne). Wysokie EV bywa efektem błędu modelu lub braku informacji (skład, kontuzje) – sprawdzaj ostrożnie.</div>'+
   (all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,true)).join(''):'<div class="empty">Brak typów z przewagą.</div>')}
 /* ---------- skuteczność (backtest) ---------- */
 const ROIORD=['wszystkie zakłady po kolei','zawsze faworyt modelu','przewaga ≥ 3%','przewaga ≥ 5%','przewaga ≥ 10%'];
@@ -1530,7 +1511,7 @@ function render(){bar();
  $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():listAcc()}
 /* ---------- szczegóły meczu ---------- */
 function groups(x){
- const tri=(ids,tops)=>ids.map((id,k)=>{const m=byId(x,id);return m?cell(tops[k],m,x):''}).join('');
+ const tri=(ids,tops)=>ids.map((id,k)=>{const m=byId(x,id);return m?cell(tops[k],m):''}).join('');
  let out=`<details open><summary>Wynik meczu</summary><div class="in"><div class="rl">1X2</div><div class="o3">${tri(['1x2:1','1x2:X','1x2:2'],['1','X','2'])}</div>
  <div class="rl" style="margin-top:10px">Podwójna szansa</div><div class="o3">${tri(['dc:1X','dc:12','dc:X2'],['1X','12','X2'])}</div>
  <div class="rl" style="margin-top:10px">Obie drużyny strzelą</div><div class="o2">${tri(['btts:yes','btts:no'],['Tak','Nie'])}</div></div></details>`;
@@ -1542,7 +1523,7 @@ function groups(x){
    const ks=Object.keys(lines).map(Number).sort((a,b)=>a-b);if(!ks.length)continue;
    inner+=`<div class="sh">${sc==='total'?'Łącznie':esc(sc==='home'?x.h:x.a)}</div>`;
    for(const k of ks){const l=lines[k];
-    inner+=`<div class="row"><div class="ln">${k}</div>${l.over?cell('Powyżej',l.over,x):'<div></div>'}${l.under?cell('Poniżej',l.under,x):'<div></div>'}</div>`}}
+    inner+=`<div class="row"><div class="ln">${k}</div>${l.over?cell('Powyżej',l.over):'<div></div>'}${l.under?cell('Poniżej',l.under):'<div></div>'}</div>`}}
   const e=x.exp[stat];
   out+=`<details${stat==='goals'?' open':''}><summary>${ST[stat]}<span style="font-weight:400;color:var(--dim);font-size:13px;margin-left:auto">Σ ${(e[0]+e[1]).toFixed(1)}</span></summary><div class="in">${inner}</div></details>`}
  return out}
@@ -1600,37 +1581,19 @@ function detail(i){
  const x=D.matches[i];
  const body=S.dtab==='bets'?groups(x):S.dtab==='stats'?statsTab(x):S.dtab==='h2h'?h2hTab(x):absTab(x);
  const best=picksFor(x,S.minp).best.slice(0,4);
- const top=S.dtab==='bets'&&best.length?`<div class="top3"><h4>★ Najpewniejsze typy modelu</h4>${best.map(m=>`<div class="tp ${pcls(m[3])}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr${sbGet(x,m[0])?' sbk':''}">${oddsTxt(x,m)}</span>${histTxt(m)}</div></div>`).join('')}</div>`:'';
+ const top=S.dtab==='bets'&&best.length?`<div class="top3"><h4>★ Najpewniejsze typy modelu</h4>${best.map(m=>`<div class="tp ${pcls(m[3])}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr">${m[4]?'kurs '+m[4].toFixed(2):'brak kursu'}</span>${histTxt(m)}</div></div>`).join('')}</div>`:'';
  const tabs=[['bets','Typy'],['stats','Statystyki'],['h2h','Forma i H2H'],['abs','Kadra'+(x.na_?' ('+x.na_+')':'')]];
  $('det').innerHTML=`<div class="dh"><button class="back" data-back="1">← Wróć</button>
  <div class="dt"><div class="mt"><span>${esc(x.country)} · ${esc(x.comp)}</span><span>${dfull(x.date)} ${x.time}</span></div>
  <div class="tm">${esc(x.h)} – ${esc(x.a)}</div><div>${badges(x)}</div></div>
  <div class="sub">${tabs.map(([k,n])=>`<button class="${S.dtab===k?'on':''}" data-dtab="${k}">${n}</button>`).join('')}</div></div>
- <div class="dc">${top}${body}<div class="note">${S.dtab==='bets'?'Dotknij pola typu, żeby wpisać kurs z Superbet (nie wszystkie rynki i linie są tam dostępne, wpisuj tylko te, które masz). Kursy zapisują się na tym telefonie i nie są widoczne dla osób, którym wyślesz link. ':''}Mecze w modelu: ${esc(x.h)} ${x.nh}, ${esc(x.a)} ${x.na}. „~” = uczciwy kurs (1/prawdopodobieństwo).</div></div>`;
+ <div class="dc">${top}${body}<div class="note">Mecze w modelu: ${esc(x.h)} ${x.nh}, ${esc(x.a)} ${x.na}. „~” / „fair” = uczciwy kurs (1/prawdopodobieństwo). Model uwzględnia osobno formę u siebie i na wyjeździe.</div></div>`;
  $('det').classList.remove('hide');document.body.style.overflow='hidden'}
 function route(){
  const m=location.hash.match(/^#m(\d+)$/);
  if(m&&D.matches[+m[1]])detail(+m[1]);
  else{$('det').classList.add('hide');document.body.style.overflow='';render();window.scrollTo(0,S.scroll)}}
-let EDIT=null;
-function sbPreview(){const x=D.matches[EDIT.i],m=byId(x,EDIT.id),v=parseFloat(String($('sbin').value).replace(',','.'));
- $('sbev').textContent=v>1?`Przewaga względem modelu (EV): ${sgn(Math.round((m[3]*v-1)*100))}%`:''}
-function openSheet(i,id){const x=D.matches[i],m=byId(x,id);if(!m)return;EDIT={i,id};const cur=sbGet(x,id);
- $('sheet').innerHTML=`<div class="shi"><div class="sht">${esc(lab(m,x))}</div><div class="shs">${esc(x.h)} – ${esc(x.a)}<br>Model: ${pc(m[3])} (uczciwy kurs ${fair(m[3])})${m[4]?' · ref '+m[4].toFixed(2):''}</div>
- <input id="sbin" type="text" inputmode="decimal" placeholder="Kurs w Superbet, np. 1.85" value="${cur||''}" oninput="sbPreview()"><div id="sbev" class="shs"></div>
- <div class="shb"><button data-sheet="save" class="pri">Zapisz</button><button data-sheet="clear">Usuń kurs</button><button data-sheet="close">Anuluj</button></div></div>`;
- $('sheet').classList.remove('hide');sbPreview();setTimeout(()=>{try{$('sbin').focus()}catch(e){}},50)}
-function closeSheet(){$('sheet').classList.add('hide');EDIT=null}
-function sheetAct(a){if(!EDIT)return;const x=D.matches[EDIT.i];
- if(a==='close'){closeSheet();return}
- if(a==='clear')sbSet(x,EDIT.id,null);
- if(a==='save'){const v=parseFloat(String($('sbin').value).replace(',','.'));if(!(v>=1.01&&v<=1000)){toast('Wpisz kurs, np. 1.85');return}sbSet(x,EDIT.id,v)}
- const i=EDIT.i,st=$('det').scrollTop;closeSheet();detail(i);$('det').scrollTop=st}
 document.addEventListener('click',e=>{
- const sh=e.target.closest('[data-sheet]');if(sh){sheetAct(sh.dataset.sheet);return}
- if(e.target.id==='sheet'){closeSheet();return}
- const ed=e.target.closest('[data-edit]');if(ed){const mm=location.hash.match(/^#m(\d+)$/);if(mm)openSheet(+mm[1],ed.dataset.edit);return}
- const so=e.target.closest('[data-sbonly]');if(so){S.sbonly=!S.sbonly;try{localStorage.setItem('sbonly',S.sbonly?'1':'0')}catch(err){}render();return}
  const t=e.target.closest('[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
  const d=t.dataset;
  if(d.share!==undefined){shareReport()}
@@ -1668,7 +1631,7 @@ def build_report(analyses, min_p, max_p, top=None):
             "(Poisson / ujemny dwumianowy, z wagą świeżości meczów, osobno formą u siebie i na wyjeździe), "
             "nie gwarancja. EV = p × kurs − 1. Kursy bukmacherów pochodzą z zewnętrznych źródeł i mogą się różnić "
             "od Twojego bukmachera. Graj odpowiedzialnie.</div>"
-            f"<div id='det' class='det hide'></div><div id='sheet' class='sheet hide'></div><script>{js}</script></body></html>")
+            f"<div id='det' class='det hide'></div><script>{js}</script></body></html>")
 
 
 # --------------------------------------------------------------------------------------
