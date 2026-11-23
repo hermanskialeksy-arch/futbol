@@ -1,0 +1,47 @@
+name: Odśwież typy
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"   # co 3 godziny
+  workflow_dispatch:          # przycisk „Run workflow” = odśwież teraz
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: dane
+          key: dane-${{ github.run_id }}
+          restore-keys: dane-
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pobierz dane i zbuduj stronę
+        run: python futbol.py report
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+      - run: mkdir site && cp raport.html site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.d.outputs.page_url }}
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4
