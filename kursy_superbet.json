@@ -1,0 +1,53 @@
+{
+ "_info": "Kursy Superbet.pl (odczyt strony). Klucz: Gospodarz|Gość. Id rynków jak w programie.",
+ "Arsenal|Borussia Dortmund": {
+  "1x2:1": 1.39,
+  "1x2:X": 4.8,
+  "1x2:2": 6.9,
+  "dc:1X": 1.08,
+  "dc:X2": 2.82,
+  "dc:12": 1.16,
+  "btts:yes": 1.92,
+  "btts:no": 1.83
+ },
+ "Como|AEK Athens": {
+  "1x2:1": 1.24,
+  "1x2:X": 6.6,
+  "1x2:2": 9.8
+ },
+ "Real Madrid|PSV Eindhoven": {
+  "1x2:1": 1.17,
+  "1x2:X": 8.6,
+  "1x2:2": 11.0
+ },
+ "Manchester City|Napoli": {
+  "1x2:1": 1.28,
+  "1x2:X": 6.3,
+  "1x2:2": 8.4
+ },
+ "RB Leipzig|Lens": {
+  "1x2:1": 1.39,
+  "1x2:X": 5.55,
+  "1x2:2": 6.3
+ },
+ "Slovan Bratislava|Real Betis": {
+  "1x2:1": 9.6,
+  "1x2:X": 6.5,
+  "1x2:2": 1.25
+ },
+ "Galatasaray|Aston Villa": {
+  "1x2:1": 2.87,
+  "1x2:X": 3.85,
+  "1x2:2": 2.27
+ },
+ "Bodo/Glimt|LASK": {
+  "1x2:1": 1.51,
+  "1x2:X": 5.0,
+  "1x2:2": 5.2
+ },
+ "Feyenoord|Porto": {
+  "1x2:1": 2.92,
+  "1x2:X": 3.65,
+  "1x2:2": 2.3
+ }
+}

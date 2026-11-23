@@ -1123,6 +1123,17 @@ def fd_time_to_pl(t):
         return ""
 
 
+def superbet_odds(h, a):
+    """Kursy z Superbet (kursy_superbet.json w repozytorium) – główne źródło, nadpisują inne."""
+    for k, v in jload(os.path.join(HERE, "kursy_superbet.json"), {}).items():
+        if k.startswith("_") or "|" not in k:
+            continue
+        kh, ka = k.split("|", 1)
+        if same_team(kh, h) and same_team(ka, a):
+            return {i: o for i, o in v.items() if isinstance(o, (int, float)) and o > 1}
+    return {}
+
+
 def build_fixtures(days, dom_played, fd_fix, espn_fix):
     today = dt.date.today()
     end = today + dt.timedelta(days=days)
@@ -1139,6 +1150,7 @@ def build_fixtures(days, dom_played, fd_fix, espn_fix):
                 fo = fd_idx.get((comp, h, a))
                 if fo and fo["odds"]:
                     odds = dict(fo["odds"])
+            odds.update(superbet_odds(h, a))
             out.append(dict(comp=comp, date=pdate(r["date"]), time=r["time"], home=h, away=a, odds=odds,
                             form=r.get("form") if r.get("form_v") == 2 else None))
     else:
