@@ -1186,56 +1186,61 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.35 system-ui,Segoe UI,Roboto,sans-serif}
 button{font-family:inherit;color:inherit}
 .top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
-.hd{display:flex;justify-content:space-between;align-items:center;padding:8px 14px 2px}
-.hd b{font-size:18px}.hd span{font-size:11.5px;color:var(--dim)}
-.tabs{display:flex;padding:4px 8px 0}
-.tabs button{flex:1;padding:10px 2px 9px;border:0;background:none;color:var(--dim);font-size:14.5px;font-weight:600;
+.hd{display:flex;justify-content:space-between;align-items:center;padding:6px 12px 0}
+.hd b{font-size:17px}.hd span{font-size:11px;color:var(--dim)}
+.tabs{display:flex;padding:2px 6px 0}
+.tabs button{flex:1;padding:8px 2px 7px;border:0;background:none;color:var(--dim);font-size:14.5px;font-weight:600;
 border-bottom:3px solid transparent}
 .tabs button.on{color:var(--tx);border-bottom-color:var(--acc)}
-.strip{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;scrollbar-width:none}
+.strip{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
 .strip::-webkit-scrollbar{display:none}
-.dy{flex:none;min-width:58px;padding:6px 8px;border-radius:12px;border:1px solid var(--line);background:var(--card);
+.dy{flex:none;min-width:54px;padding:4px 7px;border-radius:11px;border:1px solid var(--line);background:var(--card);
 text-align:center;line-height:1.2}
-.dy span{display:block;font-size:11px;color:var(--dim);text-transform:uppercase}.dy b{font-size:14.5px}
-.dy small{display:block;font-size:10.5px;color:var(--dim)}
+.dy span{display:block;font-size:10.5px;color:var(--dim);text-transform:uppercase}.dy b{font-size:14px}
+.dy small{display:none}
 .dy.on{background:var(--acc);border-color:var(--acc)}.dy.on span,.dy.on small{color:#dcebff}
-.chip{flex:none;padding:7px 13px;border-radius:18px;border:1px solid var(--line);background:var(--card);font-size:13.5px;
+.chip{flex:none;padding:6px 12px;border-radius:17px;border:1px solid var(--line);background:var(--card);font-size:13.5px;
 white-space:nowrap}
 .chip.on{background:var(--tx);color:#0d1117;border-color:var(--tx);font-weight:700}
 .chip small{opacity:.6;margin-left:4px}
-main{padding:4px 8px 90px}
+main{padding:0 8px 90px}
 .lgs{background:var(--card);border-radius:14px;margin:10px 0;overflow:hidden}
 .lgh{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--card2);cursor:pointer}
 .lgh>div:first-child{flex:1;min-width:0}.lgh small{display:block;font-size:10.5px;letter-spacing:.06em;
 text-transform:uppercase;color:var(--dim)}.lgh b{font-size:15px}
 .lcols{display:flex;gap:5px}.lcols i{width:46px;text-align:center;font-style:normal;font-size:12px;color:var(--dim)}
 .car{color:var(--dim);width:14px;text-align:right}
-.mr{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;padding:10px 12px;
+.mr{display:grid;grid-template-columns:42px 1fr auto;gap:6px 8px;align-items:center;padding:11px 12px 10px;
 border-top:1px solid var(--line);cursor:pointer}
 .mr:active{background:var(--card2)}
-.tc{text-align:center;font-weight:700;font-size:13.5px;line-height:1.2}.tc small{display:block;font-weight:400;
+.tc{text-align:center;font-weight:700;font-size:14px;line-height:1.2}.tc small{display:block;font-weight:400;
 color:var(--dim);font-size:10.5px}
-.tn{min-width:0}.tn div{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.5}
-.o3c{display:flex;gap:5px}
-.oc{width:46px;padding:5px 0;border-radius:9px;background:var(--card2);text-align:center;border:1.5px solid transparent;
-line-height:1.15}
-.oc b{display:block;font-size:14.5px}.oc small{font-size:10.5px;color:var(--dim)}
-.oc.g1{background:var(--g1)}.oc.g2{background:var(--g2)}.oc.g1 small,.oc.g2 small{color:#cfe9d9}
+.tn{min-width:0}.tn div{font-size:15px;line-height:1.28;padding:2px 0;overflow-wrap:anywhere}
+.o3c{display:flex;gap:4px}
+.oc{width:50px;padding:5px 0 4px;border-radius:9px;background:var(--card2);text-align:center;border:1.5px solid transparent;line-height:1.15}
+.oc b{display:block;font-size:15px}.oc small{font-size:11px;color:var(--dim)}
+.oc b.nb{font-size:13px;color:var(--dim);font-weight:500}
+.oc.fv{background:var(--g1)}.oc.fv small{color:#cfe9d9}
 .oc.val{border-color:var(--val)}
-.tip{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--dim);
-margin-top:-2px;padding-left:52px}.tip span{min-width:0}.tip b{color:var(--tx);white-space:nowrap}
-.bd{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:7px;margin-left:5px;vertical-align:1px}
+.tip{grid-column:2/-1;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font-size:13px;
+color:var(--dim);border-top:1px dashed var(--line);padding-top:6px}.tip span{min-width:0}
+.pill{flex:none;text-align:right;color:var(--tx);white-space:nowrap}
+.pill b{display:inline-block;background:var(--g1);padding:1px 8px;border-radius:9px;font-size:13.5px}
+.pill b.p2{background:var(--g2)}.pill b.p0{background:#5b4a1f}
+.pill i{display:block;font-style:normal;font-size:11px;color:var(--dim);margin-top:1px}
+.bds{grid-column:2/-1;margin-top:-2px}
+.bd{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:7px;margin-right:5px}
 .bv{background:var(--val);color:#222}.bl{background:#5d2a2a;color:#fff}.bi{background:#3a3220;color:var(--val)}
 .empty{color:var(--dim);text-align:center;padding:46px 10px}
-.flt{display:flex;gap:7px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:none}.flt::-webkit-scrollbar{display:none}
+.flt{display:flex;gap:6px;align-items:center;overflow-x:auto;padding:3px 2px 6px;scrollbar-width:none}.flt::-webkit-scrollbar{display:none}
 .note{font-size:12px;color:var(--dim);padding:6px 6px}
-.tp{display:flex;gap:10px;align-items:center;background:var(--card);border-radius:14px;padding:11px 12px;margin:8px 0}
-.pp{flex:none;width:60px;text-align:center}.pp b{font-size:20px;display:block;line-height:1.1}
-.pp small{font-size:10.5px;color:var(--dim)}.pp .hs{display:block;margin-top:2px;font-size:10.5px;font-weight:700;color:#7fd49f}
-.pp .hs.w{color:#e8b36a}
-.ti{flex:1;min-width:0}.tt{font-weight:600;font-size:14.5px}.ts{font-size:12px;color:var(--dim);margin-top:2px}
-.tk{flex:none;text-align:right;font-size:12px;color:var(--dim)}.tk b{display:block;font-size:15px;color:var(--tx)}
-.tk em{font-style:normal;color:var(--val);font-weight:700;font-size:12px}
+.tp{display:flex;gap:10px;align-items:center;background:var(--card);border-radius:12px;padding:11px 12px;margin:7px 0;
+border-left:4px solid #6b5a2a}
+.tp.p1{border-left-color:var(--g1)}.tp.p2{border-left-color:#3fcf7f}
+.ti{flex:1;min-width:0}.tt{font-weight:600;font-size:15px;line-height:1.3}.ts{font-size:12px;color:var(--dim);margin-top:3px}
+.tk{flex:none;text-align:right;font-size:12px;color:var(--dim);line-height:1.35}.tk b{display:block;font-size:20px;color:var(--tx)}
+.tk .kr{display:block;color:var(--tx);font-size:12.5px;font-weight:600}.tk em{font-style:normal;color:var(--val);font-weight:700}
+.hs{color:#7fd49f}.hs.w{color:#e8b36a}
 .det{position:fixed;inset:0;background:var(--bg);overflow-y:auto;z-index:10}
 .dh{position:sticky;top:0;background:var(--bg);z-index:2;padding:8px 10px 0;border-bottom:1px solid var(--line)}
 .back{border:0;background:var(--card);border-radius:10px;padding:8px 14px;font-size:14px}
@@ -1308,8 +1313,8 @@ const byId=(x,id)=>x.m.find(m=>m[0]===id);
 function hist(m){const b=String(Math.floor(m[3]*20)*5),t=D.bt;if(!t)return null;
  let h=t.hist[m[1]]&&t.hist[m[1]][b];if(!h||h[0]<25){const g=t.groups[m[1].split(':')[0]];h=g&&g[b]}
  return h&&h[0]>=25?{r:h[1]/h[0],n:h[0]}:null}
-function histPill(m){const h=hist(m);if(!h)return'';const w=h.r<m[3]-0.04;
- return `<span class="hs${w?' w':''}">hist. ${Math.round(h.r*100)}%</span>`}
+function histTxt(m){const h=hist(m);return h?`<span class="hs${h.r<m[3]-0.04?' w':''}">hist. ${Math.round(h.r*100)}%</span>`:''}
+const pcls=p=>p>=0.75?'p2':p>=0.65?'p1':'p0';
 function cell(top,m){const p=m[3],o=m[4],ev=m[5],val=ev!=null&&ev>=0.03,g=p>=0.7?' g2':p>=0.6?' g1':'';
  return `<div class="cell${g}${val?' val':''}"><span class="cl">${top}</span><b>${pc(p)}</b><small>${o?'kurs '+o.toFixed(2):'~'+fair(p)}</small>${val?`<em>EV ${sgn(Math.round(ev*100))}%</em>`:''}</div>`}
 function picksFor(x,minp){const best={},value=[];
@@ -1338,15 +1343,17 @@ function bar(){
  $('lc').innerHTML=h;
  const a=document.querySelector('#dy .on');if(a&&a.scrollIntoView)a.scrollIntoView({inline:'center',block:'nearest'})}
 /* ---------- lista meczów ---------- */
-function oc(x,id){const m=byId(x,id);if(!m)return'<div class="oc"></div>';
- const p=m[3],g=p>=0.5?' g2':p>=0.4?' g1':'',v=m[5]!=null&&m[5]>=0.03;
- return `<div class="oc${g}${v?' val':''}"><b>${pc(p)}</b><small>${m[4]?m[4].toFixed(2):'~'+fair(p)}</small></div>`}
+function oc(x,id,fav){const m=byId(x,id);if(!m)return'<div class="oc"></div>';
+ const p=m[3],v=m[5]!=null&&m[5]>=0.03;
+ return `<div class="oc${id===fav?' fv':''}${v?' val':''}">${m[4]?`<b>${m[4].toFixed(2)}</b>`:`<b class="nb">~${fair(p)}</b>`}<small>${pc(p)}</small></div>`}
 function row(x){
  const b=picksFor(x,S.minp).best[0];
- const tip=b?`<div class="tip"><span>★ ${esc(lab(b,x))}</span><b>${pc(b[3])}${(hist(b)?' · hist. '+Math.round(hist(b).r*100)+'%':'')}</b></div>`:'';
+ const three=['1x2:1','1x2:X','1x2:2'].map(id=>byId(x,id)),fav=three.filter(Boolean).sort((a,c)=>c[3]-a[3])[0];
+ const hb=b&&hist(b);
+ const tip=b?`<div class="tip"><span>★ ${esc(lab(b,x))}</span><div class="pill"><b class="${pcls(b[3])}">${pc(b[3])}</b>${hb?`<i>hist. ${Math.round(hb.r*100)}%</i>`:''}</div></div>`:'';
  return `<div class="mr" data-m="${x.i}"><div class="tc">${x.time||'–'}${S.day==='all'?`<small>${x.date.slice(8)}.${x.date.slice(5,7)}</small>`:''}</div>
- <div class="tn"><div>${esc(x.h)}${badges(x)}</div><div>${esc(x.a)}</div></div>
- <div class="o3c">${oc(x,'1x2:1')}${oc(x,'1x2:X')}${oc(x,'1x2:2')}</div>${tip}</div>`}
+ <div class="tn"><div>${esc(x.h)}</div><div>${esc(x.a)}</div></div>
+ <div class="o3c">${['1x2:1','1x2:X','1x2:2'].map(id=>oc(x,id,fav&&fav[0])).join('')}</div>${tip}${badges(x)?`<div class="bds">${badges(x)}</div>`:''}</div>`}
 function listMatches(){
  const ms=vis();if(!ms.length)return'<div class="empty">Brak meczów dla wybranych filtrów.</div>';
  const g={};ms.forEach(x=>(g[x.comp]=g[x.comp]||[]).push(x));
@@ -1355,21 +1362,19 @@ function listMatches(){
   const L=g[c].sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)||a.h.localeCompare(b.h));
   h+=`<section class="lgs"><div class="lgh" data-coll="${esc(c)}"><div><small>${esc(L[0].country)}</small><b>${esc(c)}</b></div>
   <div class="lcols"><i>1</i><i>X</i><i>2</i></div><span class="car">${S.coll[c]?'▸':'▾'}</span></div>${S.coll[c]?'':L.map(row).join('')}</section>`}
- return h+'<div class="note">Procent = szansa wg modelu; pod nim kurs bukmachera, a „~” oznacza kurs uczciwy z modelu (brak kursu). Żółta ramka = przewaga nad kursem (EV ≥ 3%). ★ = najpewniejszy typ modelu na mecz.</div>'}
+ return h+'<div class="note">W polu: kurs bukmachera, pod nim szansa wg modelu (~ = brak kursu, pokazany kurs uczciwy). Zielone tło = faworyt modelu, żółta ramka = przewaga nad kursem. ★ = najpewniejszy typ modelu w meczu.</div>'}
 /* ---------- typy ---------- */
 function tipRow(x,m,showEv){const o=m[4];
- return `<div class="tp" data-m="${x.i}"><div class="pp"><b>${pc(m[3])}</b>${histPill(m)}</div>
- <div class="ti"><div class="tt">${esc(lab(m,x))}</div><div class="ts">${dfull(x.date)} ${x.time} · ${esc(x.h)} – ${esc(x.a)} · ${esc(x.comp)}${x.low?' · mała próba':''}</div></div>
- <div class="tk">${o?`kurs<b>${o.toFixed(2)}</b>`:`fair<b>${fair(m[3])}</b>`}${showEv&&m[5]!=null?`<em>EV ${sgn(Math.round(m[5]*100))}%</em>`:''}</div></div>`}
+ return `<div class="tp ${pcls(m[3])}" data-m="${x.i}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div><div class="ts">${esc(x.h)} – ${esc(x.a)}<br>${dfull(x.date)} ${x.time} · ${esc(x.comp)}${x.low?' · mała próba':''}</div></div>
+ <div class="tk"><b>${pc(m[3])}</b><span class="kr">${o?'kurs '+o.toFixed(2):'brak kursu'}</span>${showEv&&m[5]!=null?`<em>EV ${sgn(Math.round(m[5]*100))}%</em>`:histTxt(m)}</div></div>`}
 function listPicks(){
  let all=[];for(const x of vis())for(const m of picksFor(x,S.minp).best)all.push([x,m]);
  if(S.cat!=='all')all=all.filter(([x,m])=>m[1].split(':')[0]===S.cat);
  all.sort((a,b)=>b[1][3]-a[1][3]);
  if(S.per>0){const cnt={};all=all.filter(([x,m])=>{cnt[x.i]=(cnt[x.i]||0)+1;return cnt[x.i]<=S.per})}
  let h='<div class="flt">'+CAT.map(([k,n])=>`<button class="chip${S.cat===k?' on':''}" data-cat="${k}">${n}</button>`).join('')+'</div>';
- h+='<div class="flt">'+[0.55,0.6,0.65,0.7,0.75].map(v=>`<button class="chip${S.minp===v?' on':''}" data-minp="${v}">≥ ${Math.round(v*100)}%</button>`).join('')+'</div>';
- h+='<div class="flt"><span class="note" style="align-self:center;white-space:nowrap">Na mecz:</span>'+[[1,'1 typ'],[3,'3 typy'],[0,'wszystkie']].map(([v,n])=>`<button class="chip${S.per===v?' on':''}" data-per="${v}">${n}</button>`).join('')+'</div>';
- h+=`<div class="note">Po jednym najpewniejszym typie na rynek w meczu (bez typów „oczywistych” powyżej ${Math.round(D.maxp*100)}%). „hist.” = jak często trafiały w przeszłości typy modelu o podobnej szansie (backtest).</div>`;
+ h+='<div class="flt"><span class="note">Min.</span>'+[0.55,0.6,0.65,0.7,0.75].map(v=>`<button class="chip${S.minp===v?' on':''}" data-minp="${v}">${Math.round(v*100)}%</button>`).join('')+'<span class="note">Na mecz</span>'+[[1,'1'],[3,'3'],[0,'wsz.']].map(([v,n])=>`<button class="chip${S.per===v?' on':''}" data-per="${v}">${n}</button>`).join('')+'</div>';
+ h+=`<div class="note">Najpewniejsze typy modelu, bez „oczywistych” powyżej ${Math.round(D.maxp*100)}%. hist. = jak często podobne typy trafiały w przeszłości.</div>`;
  return h+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,false)).join(''):'<div class="empty">Brak typów w tym przedziale.</div>')}
 function listValue(){
  let all=[];for(const x of vis())for(const m of picksFor(x,0).value)all.push([x,m]);
@@ -1391,6 +1396,11 @@ function listAcc(){
  return h}
 function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),4500)}
 async function shareReport(){
+ const hst=location.hostname,hosted=location.protocol.startsWith('http')&&!/^(localhost|127\.|10\.|192\.168\.)/.test(hst);
+ if(hosted){const u=location.href.split('#')[0];
+  try{if(navigator.share){await navigator.share({title:'Typy piłkarskie',url:u});return}}catch(e){if(e&&e.name==='AbortError')return}
+  try{await navigator.clipboard.writeText(u);toast('Skopiowano link – wklej go znajomym.');return}catch(e){}
+  toast('Link do strony: '+u);return}
  let src;try{src=await (await fetch(location.href.split('#')[0],{cache:'no-store'})).text()}catch(e){src='<!doctype html>'+document.documentElement.outerHTML}
  const name='typy_'+D.today+'.html';
  try{const f=new File([src],name,{type:'text/html'});
@@ -1444,7 +1454,7 @@ function detail(i){
  const x=D.matches[i];
  const body=S.dtab==='bets'?groups(x):S.dtab==='stats'?statsTab(x):S.dtab==='h2h'?h2hTab(x):absTab(x);
  const best=picksFor(x,S.minp).best.slice(0,4);
- const top=S.dtab==='bets'&&best.length?`<div class="top3"><h4>★ Najpewniejsze typy modelu</h4>${best.map(m=>`<div class="tp"><div class="pp"><b>${pc(m[3])}</b>${histPill(m)}</div><div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk">${m[4]?`kurs<b>${m[4].toFixed(2)}</b>`:`fair<b>${fair(m[3])}</b>`}</div></div>`).join('')}</div>`:'';
+ const top=S.dtab==='bets'&&best.length?`<div class="top3"><h4>★ Najpewniejsze typy modelu</h4>${best.map(m=>`<div class="tp ${pcls(m[3])}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr">${m[4]?'kurs '+m[4].toFixed(2):'brak kursu'}</span>${histTxt(m)}</div></div>`).join('')}</div>`:'';
  const tabs=[['bets','Typy'],['stats','Statystyki'],['h2h','H2H'],['abs','Kadra'+(x.na_?' ('+x.na_+')':'')]];
  $('det').innerHTML=`<div class="dh"><button class="back" data-back="1">← Wróć</button>
  <div class="dt"><div class="mt"><span>${esc(x.country)} · ${esc(x.comp)}</span><span>${dfull(x.date)} ${x.time}</span></div>
@@ -1489,8 +1499,7 @@ def build_report(analyses, min_p, max_p, top=None):
             "<meta name='color-scheme' content='dark'><title>Typy</title>"
             f"<style>{APP_CSS}</style></head><body>"
             "<div class='top'><div class='hd'><b>⚽ Typy</b><span>Aktualizacja: <span id='gen'></span><button class='shr' data-share='1'>↗ Udostępnij</button></span></div>"
-            "<div class='tabs' id='tb'></div><div class='strip' id='dy'></div><div class='strip' id='lc' "
-            "style='padding-top:0'></div></div><main id='main'></main>"
+            "<div class='tabs' id='tb'></div><div class='strip' id='dy'></div></div><div class='strip' id='lc'></div><main id='main'></main>"
             "<div class='note' style='padding:0 16px 30px'>Prawdopodobieństwa to wynik modelu statystycznego "
             "(Poisson / ujemny dwumianowy, z wagą świeżości meczów, osobno formą u siebie i na wyjeździe), "
             "nie gwarancja. EV = p × kurs − 1. Kursy bukmacherów pochodzą z zewnętrznych źródeł i mogą się różnić "

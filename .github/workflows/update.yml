@@ -1,6 +1,8 @@
 name: Odśwież typy
 
 on:
+  push:
+    branches: [main]
   schedule:
     - cron: "17 */3 * * *"   # co 3 godziny
   workflow_dispatch:          # przycisk „Run workflow” = odśwież teraz
@@ -30,6 +32,7 @@ jobs:
       - name: Pobierz dane i zbuduj stronę
         run: python futbol.py run
         env:
+          TZ: Europe/Warsaw
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
       - run: mkdir site && cp raport.html site/index.html
       - uses: actions/upload-pages-artifact@v3
