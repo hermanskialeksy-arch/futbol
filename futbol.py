@@ -614,7 +614,12 @@ def update_injuries(days, budget):
 
 
 def manual_absences():
-    return jload(P("braki.json"), {})
+    """Wpisy ręczne: braki.json w katalogu programu (wersjonowany w repozytorium) + dane/braki.json (komenda `brak`)."""
+    out = {}
+    for path in (os.path.join(HERE, "braki.json"), P("braki.json")):
+        for k, lst in jload(path, {}).items():
+            out.setdefault(k, []).extend(lst)
+    return out
 
 
 def absences_for(team, date_iso, api_cache, manual):
@@ -628,8 +633,11 @@ def absences_for(team, date_iso, api_cache, manual):
     for k, lst in manual.items():
         if same_team(k, team):
             for e in lst:
-                out.append(dict(n=e.get("gracz", "?"), role=e.get("rola", "?"), st="nie zagra (wpis ręczny)",
-                                reason="", w=float(e.get("waga", 1.0))))
+                if e.get("do") and date_iso > e["do"]:
+                    continue
+                w = float(e.get("waga", 1.0))
+                out.append(dict(n=e.get("gracz", "?"), role=e.get("rola", "?"),
+                                st="nie zagra" if w >= 0.9 else "wątpliwy", reason=e.get("powod", ""), w=w))
     return out
 
 

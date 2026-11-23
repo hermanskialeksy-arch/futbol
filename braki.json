@@ -1,0 +1,35 @@
+{
+  "Arsenal": [
+    {"gracz": "David Raya", "rola": "bramkarz", "waga": 0.7, "powod": "uraz w meczu z Newcastle, raczej nie zagra", "do": "2026-11-25"},
+    {"gracz": "Martín Zubimendi", "rola": "pomoc", "waga": 0.5, "powod": "wymieniony jako nieobecny, bez podanej przyczyny", "do": "2026-11-25"}
+  ],
+  "LASK Linz": [
+    {"gracz": "Andrés Andrade", "rola": "obrona", "waga": 0.4, "powod": "uraz w ostatnim meczu, status niepewny", "do": "2026-11-25"}
+  ],
+  "PSV Eindhoven": [
+    {"gracz": "Mauro Júnior", "rola": "?", "waga": 0.4, "powod": "zszedł z boiska w 1. połowie, występ pod znakiem zapytania", "do": "2026-11-25"}
+  ],
+  "Feyenoord Rotterdam": [
+    {"gracz": "Anis Hadj Moussa", "rola": "atak", "waga": 0.4, "powod": "wraca po urazie, klub liczy na jego występ", "do": "2026-11-25"}
+  ],
+  "FC Porto": [
+    {"gracz": "William Gomes", "rola": "atak", "waga": 0.4, "powod": "występ wątpliwy, bliski powrotu", "do": "2026-11-25"}
+  ],
+  "Slovan Bratislava": [
+    {"gracz": "Roman Čerepkai", "rola": "?", "waga": 0.8, "powod": "prawdopodobnie nadal nie zagra", "do": "2026-11-25"},
+    {"gracz": "Suleiman Camara", "rola": "?", "waga": 0.8, "powod": "prawdopodobnie nadal nie zagra", "do": "2026-11-25"}
+  ],
+  "Real Betis": [
+    {"gracz": "Antony", "rola": "atak", "waga": 0.4, "powod": "zszedł z boiska w derbach Sewilli", "do": "2026-11-25"},
+    {"gracz": "Dani Ceballos", "rola": "pomoc", "waga": 0.6, "powod": "występ bardzo wątpliwy", "do": "2026-11-25"}
+  ],
+  "RB Leipzig": [
+    {"gracz": "Assan Ouedraogo", "rola": "pomoc", "waga": 1.0, "powod": "pauza do Nowego Roku", "do": "2026-11-25"}
+  ],
+  "Lens": [
+    {"gracz": "Franjo Ivanović", "rola": "atak", "waga": 0.6, "powod": "nie grał w sobotę, klub liczy na powrót", "do": "2026-11-25"}
+  ],
+  "AEK Athens": [
+    {"gracz": "Aboubakary Koita", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-25"}
+  ]
+}
