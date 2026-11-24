@@ -1343,6 +1343,7 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .row{display:grid;grid-template-columns:46px 1fr 1fr;gap:6px;margin:6px 0}
 .row .ln{display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--dim)}
 .rl{font-size:12.5px;color:var(--dim);margin:0 2px 4px}
+.cps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--card);border-radius:14px;padding:12px 8px;margin:8px 0;text-align:center}.cps small{display:block;color:var(--dim);font-size:11px}.cps b{font-size:17px}
 .top3{background:var(--card);border-radius:14px;padding:6px 10px;margin:8px 0}
 .top3 h4{margin:6px 2px;font-size:12.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
 .top3 .tp,.sc .tp{background:var(--card2);margin:6px 0}
@@ -1397,7 +1398,7 @@ const CAT=[['all','Wszystko'],['1x2','1X2'],['goals','Gole'],['btts','Obie strze
 const POL={over:'powyżej',under:'poniżej'};
 const WD=['ndz','pon','wt','śr','czw','pt','sob'];
 const DAYS=[...new Set(D.matches.map(x=>x.date))].sort();
-const S={per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0};
+const S={per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0,cn:4,cm:'safe'};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pc=p=>Math.round(p*100)+'%';
@@ -1428,7 +1429,7 @@ const vis=()=>D.matches.filter(x=>(S.day==='all'||x.date===S.day)&&(S.league==='
 const badges=x=>(x.nv?`<span class="bd bv">VALUE ×${x.nv}</span>`:'')+(x.na_?`<span class="bd bi">braki ${x.na_}</span>`:'')+(x.low?`<span class="bd bl">mała próba</span>`:'');
 /* ---------- nagłówek: dni i ligi ---------- */
 function bar(){
- let t='';[['matches','Mecze'],['picks','Typy'],['value','Value'],['acc','Skuteczność']].forEach(([k,n])=>t+=`<button class="${S.tab===k?'on':''}" data-tab="${k}">${n}</button>`);
+ let t='';[['matches','Mecze'],['picks','Typy'],['value','Value'],['cpn','Kupon'],['acc','Skuteczność']].forEach(([k,n])=>t+=`<button class="${S.tab===k?'on':''}" data-tab="${k}">${n}</button>`);
  $('tb').innerHTML=t;
  const showf=S.tab!=='acc';
  $('dy').classList.toggle('hide',!showf);$('lc').classList.toggle('hide',!showf);
@@ -1505,6 +1506,34 @@ function listAcc(){
   const o={};for(const k in t.groups[g])if(+k>=60)o[k]=t.groups[g][k];const r=rows(o);
   if(r)h+=`<div class="bt"><h3>${esc(GRP[g]||g)} – typy ≥60%</h3>${r}</div>`}
  return h}
+/* ---------- kupon: propozycja zakładu na wybrany dzień ---------- */
+function couponLegs(n,mode){
+ const L=[];
+ for(const x of vis()){let best=null,bs=-1;
+  for(const m of x.m){const p=m[3],o=m[4],ev=m[5];
+   if(p>0.93)continue;
+   let sc;
+   if(mode==='safe'){if(p<0.6||(o&&o<1.1))continue;sc=p}
+   else{if(ev==null||ev<0.03||p<0.45)continue;sc=ev*Math.min(1,p/0.6)}
+   if(x.low)sc*=0.8;
+   if(sc>bs){bs=sc;best=m}}
+  if(best)L.push([x,best,bs])}
+ L.sort((a,b)=>b[2]-a[2]);return L.slice(0,n)}
+function listCoupon(){
+ let h='<div class="flt"><span class="note">Typów</span>'+[2,3,4,5].map(v=>`<button class="chip${S.cn===v?' on':''}" data-cn="${v}">${v}</button>`).join('')+
+ '<span class="note">Styl</span>'+[['safe','Pewniaki'],['value','Value']].map(([k,n])=>`<button class="chip${S.cm===k?' on':''}" data-cm="${k}">${n}</button>`).join('')+'</div>';
+ const L=couponLegs(S.cn,S.cm);
+ if(!L.length)return h+'<div class="empty">Brak typów spełniających kryteria dla wybranego dnia i ligi.<br>Zmień dzień u góry albo styl kuponu.</div>';
+ let P=1,O=1,est=false;
+ const rows=L.map(([x,m],j)=>{const p=m[3],o=m[4]||1/p;if(!m[4])est=true;P*=p;O*=o;const v=m[5]!=null&&m[5]>=0.03;
+  return `<div class="tp ${pcls(p)}" data-m="${x.i}"><div class="ti"><div class="tt">${j+1}. ${esc(lab(m,x))}</div><div class="ts">${esc(x.h)} – ${esc(x.a)}<br>${dfull(x.date)} ${x.time} · ${esc(x.comp)}${x.low?' · mała próba':''}</div></div>
+  <div class="tk"><b>${pc(p)}</b><span class="kr">${m[4]?'kurs '+m[4].toFixed(2):'~'+o.toFixed(2)+' (szac.)'}</span>${v?`<em>EV ${sgn(Math.round(m[5]*100))}%</em>`:histTxt(m)}</div></div>`}).join('');
+ const ev=P*O-1;
+ h+=`<div class="cps"><div><small>Kurs łączny</small><b>${est?'~':''}${O.toFixed(2)}</b></div><div><small>Szansa wejścia</small><b>${pc(P)}</b></div><div><small>EV kuponu</small><b style="color:${ev>=0?'#7fd49f':'#e07a7a'}">${est?'~':''}${sgn(Math.round(ev*100))}%</b></div><div><small>10 zł wygra</small><b>${est?'~':''}${(10*O).toFixed(0)} zł</b></div></div>`;
+ h+=rows;
+ if(L.length<S.cn)h+=`<div class="note">Znalazłem tylko ${L.length} typ(y) spełniające kryteria – nie dobijałem słabszymi.</div>`;
+ h+=`<div class="note">Najlepszy typ z każdego meczu (jeden na mecz), ${S.cm==='safe'?'wybrane wg najwyższej szansy modelu (min. 60%, bez „oczywistych” powyżej 93%)':'wybrane wg przewagi nad kursem (EV ≥ 3%, szansa ≥ 45%)'}. Szansa wejścia to iloczyn szans pojedynczych typów – im więcej typów, tym szybciej spada. ${est?'„~” = część typów nie ma kursu bukmachera, użyłem kursu uczciwego, więc wynik jest orientacyjny. ':''}To propozycja z modelu, nie gwarancja – sprawdź składy tuż przed meczem i graj odpowiedzialnie. Kliknij typ, żeby zobaczyć mecz.</div>`;
+ return h}
 function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),4500)}
 async function shareReport(){
  const hst=location.hostname,hosted=location.protocol.startsWith('http')&&!/^(localhost|127\.|10\.|192\.168\.)/.test(hst);
@@ -1520,7 +1549,7 @@ async function shareReport(){
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([src],{type:'text/html'}));a.download=name;
  document.body.appendChild(a);a.click();a.remove();toast('Zapisano plik '+name+' w Pobranych – wyślij go znajomym (np. WhatsApp, Messenger, e-mail).')}
 function render(){bar();
- $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():listAcc()}
+ $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():S.tab==='cpn'?listCoupon():listAcc()}
 /* ---------- szczegóły meczu ---------- */
 function groups(x){
  const tri=(ids,tops)=>ids.map((id,k)=>{const m=byId(x,id);return m?cell(tops[k],m):''}).join('');
@@ -1619,7 +1648,7 @@ function route(){
  if(m&&D.matches[+m[1]])detail(+m[1]);
  else{$('det').classList.add('hide');document.body.style.overflow='';render();window.scrollTo(0,S.scroll)}}
 document.addEventListener('click',e=>{
- const t=e.target.closest('[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
+ const t=e.target.closest('[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
  const d=t.dataset;
  if(d.share!==undefined){shareReport()}
  else if(d.day!==undefined){S.day=d.day;render()}
@@ -1627,6 +1656,8 @@ document.addEventListener('click',e=>{
  else if(d.tab!==undefined){S.tab=d.tab;render();window.scrollTo(0,0)}
  else if(d.minp!==undefined){S.minp=parseFloat(d.minp);render()}
  else if(d.cat!==undefined){S.cat=d.cat;render()}
+ else if(d.cn!==undefined){S.cn=parseInt(d.cn);render()}
+ else if(d.cm!==undefined){S.cm=d.cm;render()}
  else if(d.per!==undefined){S.per=parseInt(d.per);render()}
  else if(d.coll!==undefined){S.coll[d.coll]=!S.coll[d.coll];render()}
  else if(d.dtab!==undefined){S.dtab=d.dtab;const m=location.hash.match(/^#m(\d+)$/);if(m){detail(+m[1]);$('det').scrollTop=0}}
