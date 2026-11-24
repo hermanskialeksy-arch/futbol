@@ -30,6 +30,75 @@
     {"gracz": "Franjo Ivanović", "rola": "atak", "waga": 0.6, "powod": "nie grał w sobotę, klub liczy na powrót", "do": "2026-11-25"}
   ],
   "AEK Athens": [
-    {"gracz": "Aboubakary Koita", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-25"}
+    {"gracz": "Aboubakary Koita", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-25"},
+    {"gracz": "Kervin Arriaga", "rola": "?", "waga": 0.4, "powod": "zszedł z boiska w weekend", "do": "2026-11-25"}
+  ],
+  "Galatasaray": [
+    {"gracz": "Victor Osimhen", "rola": "?", "waga": 1.0, "powod": "kontuzja, na liście nieobecnych", "do": "2026-11-25"}
+  ],
+  "Aston Villa": [
+    {"gracz": "Matty Cash", "rola": "?", "waga": 1.0, "powod": "kontuzja z kadry, nie zagra", "do": "2026-11-25"}
+  ],
+  "Manchester City": [
+    {"gracz": "Matheus Nunes", "rola": "?", "waga": 0.4, "powod": "nie grał z Fulham, przyczyna nieznana", "do": "2026-11-25"}
+  ],
+  "Napoli": [
+    {"gracz": "Antonio Vergara", "rola": "?", "waga": 0.7, "powod": "zszedł z urazem w meczu z Torino", "do": "2026-11-25"}
+  ],
+  "Borussia Dortmund": [
+    {"gracz": "Serhou Guirassy", "rola": "?", "waga": 0.4, "powod": "nieobecny w weekend, status niejasny", "do": "2026-11-25"},
+    {"gracz": "Carney Chukwuemeka", "rola": "?", "waga": 0.4, "powod": "nieobecny w weekend, status niejasny", "do": "2026-11-25"}
+  ],
+  "Sabah": [
+    {"gracz": "Aden McCarthy", "rola": "?", "waga": 1.0, "powod": "czerwona kartka w meczu z Vikingiem", "do": "2026-11-26"}
+  ],
+  "Barcelona": [
+    {"gracz": "Andreas Christensen", "rola": "?", "waga": 1.0, "powod": "nadal nie może zagrać", "do": "2026-11-26"}
+  ],
+  "Slavia Prague": [
+    {"gracz": "Štěpán Chaloupek", "rola": "?", "waga": 0.4, "powod": "problemy zdrowotne", "do": "2026-11-26"},
+    {"gracz": "Lukáš Provod", "rola": "?", "waga": 0.4, "powod": "problemy zdrowotne", "do": "2026-11-26"},
+    {"gracz": "Daniel Šturm", "rola": "?", "waga": 0.4, "powod": "problemy zdrowotne", "do": "2026-11-26"},
+    {"gracz": "David Moses", "rola": "?", "waga": 0.4, "powod": "kontuzja w meczu z Sigmą", "do": "2026-11-26"}
+  ],
+  "Villarreal": [
+    {"gracz": "Juan Foyth", "rola": "?", "waga": 0.7, "powod": "prawdopodobnie nie wystąpi", "do": "2026-11-26"},
+    {"gracz": "Gerard Moreno", "rola": "?", "waga": 0.7, "powod": "prawdopodobnie nie wystąpi", "do": "2026-11-26"}
+  ],
+  "Inter Milan": [
+    {"gracz": "Hakan Çalhanoğlu", "rola": "?", "waga": 0.4, "powod": "uraz, zszedł w ostatnim meczu", "do": "2026-11-26"},
+    {"gracz": "Piotr Zieliński", "rola": "?", "waga": 0.4, "powod": "nie grał w ostatnim meczu", "do": "2026-11-26"}
+  ],
+  "VfB Stuttgart": [
+    {"gracz": "Luca Jaquez", "rola": "?", "waga": 0.4, "powod": "nie grał w weekend, przyczyna nieznana", "do": "2026-11-26"}
+  ],
+  "Atlético Madrid": [
+    {"gracz": "Cristian Romero", "rola": "?", "waga": 0.4, "powod": "nie grał w niedzielę, przyczyna nieznana", "do": "2026-11-26"}
+  ],
+  "Paris Saint-Germain": [
+    {"gracz": "Désiré Doué", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana, kilka miesięcy", "do": "2026-11-26"}
+  ],
+  "AS Roma": [
+    {"gracz": "Leonardo Balerdi", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w weekend", "do": "2026-11-26"}
+  ],
+  "Club Brugge": [
+    {"gracz": "Jan Virgili", "rola": "?", "waga": 0.4, "powod": "uraz pachwiny, pod znakiem zapytania", "do": "2026-11-26"}
+  ],
+  "Liverpool": [
+    {"gracz": "Cody Gakpo", "rola": "?", "waga": 0.7, "powod": "opuścił mecz z United, najpewniej nie zagra", "do": "2026-11-26"},
+    {"gracz": "Ryan Gravenberch", "rola": "?", "waga": 0.7, "powod": "opuścił mecz z United, najpewniej nie zagra", "do": "2026-11-26"}
+  ],
+  "Lille": [
+    {"gracz": "Tanguy Nianzou", "rola": "?", "waga": 0.4, "powod": "zszedł z kontuzją w weekend", "do": "2026-11-26"}
+  ],
+  "Bayern Munich": [
+    {"gracz": "Michael Olise", "rola": "?", "waga": 0.4, "powod": "zszedł z kontuzją w weekend", "do": "2026-11-26"},
+    {"gracz": "Harry Kane", "rola": "?", "waga": 1.0, "powod": "kontuzja, dłuższa przerwa", "do": "2026-11-26"}
+  ],
+  "Manchester United": [
+    {"gracz": "Matheus Cunha", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26"}
+  ],
+  "Fenerbahçe": [
+    {"gracz": "Nathan Aké", "rola": "?", "waga": 0.7, "powod": "wszystko wskazuje na brak", "do": "2026-11-26"}
   ]
 }
