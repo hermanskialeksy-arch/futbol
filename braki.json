@@ -4,7 +4,12 @@
     {"gracz": "Martín Zubimendi", "rola": "pomoc", "waga": 0.5, "powod": "wymieniony jako nieobecny, bez podanej przyczyny", "do": "2026-11-25"}
   ],
   "LASK Linz": [
-    {"gracz": "Andrés Andrade", "rola": "obrona", "waga": 0.4, "powod": "uraz w ostatnim meczu, status niepewny", "do": "2026-11-25"}
+    {"gracz": "Andrade A.", "rola": "obrona", "waga": 1.0, "powod": "kontuzja kostki", "do": "2026-11-25"},
+    {"gracz": "Bello G.", "rola": "?", "waga": 1.0, "powod": "kontuzja mięśnia", "do": "2026-11-25"},
+    {"gracz": "Cheikne K.", "rola": "?", "waga": 1.0, "powod": "poza kadrą", "do": "2026-11-25"},
+    {"gracz": "Harakate R.", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-25"},
+    {"gracz": "Smakaj A.", "rola": "?", "waga": 1.0, "powod": "poza kadrą", "do": "2026-11-25"},
+    {"gracz": "Flecker F.", "rola": "?", "waga": 0.4, "powod": "występ wątpliwy, kontuzja łydki", "do": "2026-11-25"}
   ],
   "PSV Eindhoven": [
     {"gracz": "Mauro Júnior", "rola": "?", "waga": 0.4, "powod": "zszedł z boiska w 1. połowie, występ pod znakiem zapytania", "do": "2026-11-25"}
@@ -100,5 +105,10 @@
   ],
   "Fenerbahçe": [
     {"gracz": "Nathan Aké", "rola": "?", "waga": 0.7, "powod": "wszystko wskazuje na brak", "do": "2026-11-26"}
+  ],
+  "Bodo/Glimt": [
+    {"gracz": "Evjen H.", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-25"},
+    {"gracz": "Mikkelsen A.", "rola": "?", "waga": 1.0, "powod": "kontuzja pachwiny", "do": "2026-11-25"},
+    {"gracz": "Sjong I.", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-25"}
   ]
 }

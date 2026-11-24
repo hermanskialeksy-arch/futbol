@@ -1345,7 +1345,7 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .rl{font-size:12.5px;color:var(--dim);margin:0 2px 4px}
 .top3{background:var(--card);border-radius:14px;padding:6px 10px;margin:8px 0}
 .top3 h4{margin:6px 2px;font-size:12.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-.top3 .tp{background:var(--card2);margin:6px 0}
+.top3 .tp,.sc .tp{background:var(--card2);margin:6px 0}
 .sc{background:var(--card);border-radius:14px;padding:12px;margin:8px 0}.sc h4{margin:0 0 8px;font-size:15px}
 .ex{display:grid;grid-template-columns:1fr auto auto auto 1fr;gap:8px;align-items:center;text-align:center}
 .ex span{font-size:13px;color:var(--dim)}.ex b{font-size:21px}
@@ -1589,12 +1589,25 @@ function absTab(x){
   return`<div class="sc"><h4>${esc(name)}</h4>${rows||'<div class="ar ok"><span class="ai ao3">✓</span><div class="an"><b>Brak zgłoszonych braków</b></div></div>'}${ef.length?`<div class="ef">Wpływ na model: ${ef.join(' · ')}</div>`:''}</div>`};
  return blk(x.h,x.abs.h,x.adj.h)+blk(x.a,x.abs.a,x.adj.a)+
  '<div class="note">Źródło: zapowiedzi meczów (Flashscore), sprawdzane dwa razy dziennie. Brak wpisu nie oznacza, że wszyscy są zdrowi, a skład podany tuż przed meczem może wszystko zmienić.</div>'}
+/* ---------- karta "Top typy": 2-3 najlepsze typy w każdej kategorii ---------- */
+const TOPCAT=[['1x2','Wynik meczu',['1x2','dc']],['btts','Obie strzelą',['btts']],['goals','Gole',['goals']],['corners','Rożne',['corners']],['shots','Strzały',['shots']],['sot','Strzały celne',['sot']],['fouls','Faule',['fouls']],['cards','Kartki',['cards']],['offsides','Spalone',['offsides']]];
+function topPicks(x,fams,n){const seen={},out=[];
+ const c=x.m.filter(m=>fams.includes(m[1].split(':')[0])&&m[3]>=0.5&&m[3]<=0.93).sort((a,b)=>b[3]-a[3]);
+ for(const m of c){const q=pid(m[0]),k=q?q.stat+q.scope+q.dir:m[0].split(':')[0]==='dc'?'dc':m[0];
+  if(seen[k])continue;seen[k]=1;out.push(m);if(out.length>=n)break}
+ return out}
+function topTab(x){
+ let h='<div class="note">Dla każdej kategorii: 2–3 najpewniejsze typy modelu (bez powtarzania tej samej linii i bez „oczywistych” powyżej 93%). EV = przewaga modelu nad kursem bukmachera.</div>';let any=false;
+ for(const [k,name,fams] of TOPCAT){const L=topPicks(x,fams,3);if(!L.length)continue;any=true;
+  h+=`<div class="sc"><h4>${name}</h4>`+L.map((m,j)=>{const o=m[4],v=m[5]!=null&&m[5]>=0.03;
+   return `<div class="tp ${pcls(m[3])}"><div class="ti"><div class="tt">${j+1}. ${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr">${o?'kurs '+o.toFixed(2):'uczciwy ~'+fair(m[3])}</span>${v?`<em>EV ${sgn(Math.round(m[5]*100))}%</em>`:histTxt(m)}</div></div>`}).join('')+'</div>'}
+ return any?h:h+'<div class="empty">Brak typów o szansie ≥50% w tym meczu.</div>'}
 function detail(i){
  const x=D.matches[i];
- const body=S.dtab==='bets'?groups(x):S.dtab==='stats'?statsTab(x):S.dtab==='h2h'?h2hTab(x):absTab(x);
+ const body=S.dtab==='bets'?groups(x):S.dtab==='top'?topTab(x):S.dtab==='stats'?statsTab(x):S.dtab==='h2h'?h2hTab(x):absTab(x);
  const best=picksFor(x,S.minp).best.slice(0,4);
  const top=S.dtab==='bets'&&best.length?`<div class="top3"><h4>★ Najpewniejsze typy modelu</h4>${best.map(m=>`<div class="tp ${pcls(m[3])}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr">${m[4]?'kurs '+m[4].toFixed(2):'brak kursu'}</span>${histTxt(m)}</div></div>`).join('')}</div>`:'';
- const tabs=[['bets','Typy'],['stats','Statystyki'],['h2h','Forma i H2H'],['abs','Kadra'+(x.na_?' ('+x.na_+')':'')]];
+ const tabs=[['bets','Typy'],['top','Top typy'],['stats','Statystyki'],['h2h','Forma i H2H'],['abs','Kadra'+(x.na_?' ('+x.na_+')':'')]];
  $('det').innerHTML=`<div class="dh"><button class="back" data-back="1">← Wróć</button>
  <div class="dt"><div class="mt"><span>${esc(x.country)} · ${esc(x.comp)}</span><span>${dfull(x.date)} ${x.time}</span></div>
  <div class="tm">${esc(x.h)} – ${esc(x.a)}</div><div>${badges(x)}</div></div>
