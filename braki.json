@@ -109,11 +109,18 @@
     {"gracz": "Matheus Cunha", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26"}
   ],
   "Fenerbahçe": [
-    {"gracz": "Nathan Aké", "rola": "?", "waga": 0.7, "powod": "wszystko wskazuje na brak", "do": "2026-11-26"}
+    {"gracz": "Marco Asensio", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Nathan Aké", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Bodo/Glimt": [
     {"gracz": "Evjen H.", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-25"},
     {"gracz": "Mikkelsen A.", "rola": "?", "waga": 1.0, "powod": "kontuzja pachwiny", "do": "2026-11-25"},
     {"gracz": "Sjong I.", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-25"}
+  ],
+  "Shakhtar Donetsk": [
+    {"gracz": "Eguinaldo", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Kaua Elias", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Marlon", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Pedro Henrique", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ]
 }
