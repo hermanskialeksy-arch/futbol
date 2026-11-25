@@ -1442,7 +1442,7 @@ const CAT=[['all','Wszystko'],['1x2','1X2'],['goals','Gole'],['btts','Obie strze
 const POL={over:'powyżej',under:'poniżej'};
 const WD=['ndz','pon','wt','śr','czw','pt','sob'];
 const DAYS=[...new Set(D.matches.map(x=>x.date))].sort();
-const S={per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0,cn:4,cm:'safe'};
+const S={per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0,cn:4,cm:'safe',co:1.3};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pc=p=>Math.round(p*100)+'%';
@@ -1554,32 +1554,37 @@ function listAcc(){
   if(r)h+=`<div class="bt"><h3>${esc(GRP[g]||g)} – typy ≥60%</h3>${r}</div>`}
  return h}
 /* ---------- kupon: propozycja zakładu na wybrany dzień ---------- */
+/* kurs szacowany (gdy brak kursu bukmachera): kurs uczciwy pomniejszony o typową marżę */
+const estOdds=p=>0.93/p;
 function couponLegs(n,mode){
  const L=[];
  for(const x of visA()){let best=null,bs=-1;
   for(const m of x.m){const p=m[3],o=m[4],ev=m[5];
    if(p>0.93)continue;
    let sc;
-   if(mode==='safe'){if(p<0.6||(o&&o<1.1))continue;sc=p}
+   if(mode==='safe'){if((o||estOdds(p))<S.co||(o&&ev!=null&&ev<-0.1))continue;sc=p}
    else{if(ev==null||ev<0.03||p<0.45)continue;sc=ev*Math.min(1,p/0.6)}
    if(x.low)sc*=0.8;
+   /* w „Pewniakach” typ z prawdziwym kursem ma pierwszeństwo przed szacowanym */
+   if(mode==='safe'&&o)sc+=1;
    if(sc>bs){bs=sc;best=m}}
   if(best)L.push([x,best,bs])}
  L.sort((a,b)=>b[2]-a[2]);return L.slice(0,n)}
 function listCoupon(){
  let h='<div class="flt"><span class="note">Typów</span>'+[2,3,4,5].map(v=>`<button class="chip${S.cn===v?' on':''}" data-cn="${v}">${v}</button>`).join('')+
  '<span class="note">Styl</span>'+[['safe','Pewniaki'],['value','Value']].map(([k,n])=>`<button class="chip${S.cm===k?' on':''}" data-cm="${k}">${n}</button>`).join('')+'</div>';
+ if(S.cm==='safe')h+='<div class="flt"><span class="note">Min. kurs typu</span>'+[1.2,1.3,1.5].map(v=>`<button class="chip${S.co===v?' on':''}" data-co="${v}">${v.toFixed(2)}</button>`).join('')+'</div>';
  const L=couponLegs(S.cn,S.cm);
  if(!L.length)return h+'<div class="empty">Brak typów spełniających kryteria dla wybranego dnia i ligi.<br>Zmień dzień u góry albo styl kuponu.</div>';
  let P=1,O=1,est=false;
- const rows=L.map(([x,m],j)=>{const p=m[3],o=m[4]||1/p;if(!m[4])est=true;P*=p;O*=o;const v=m[5]!=null&&m[5]>=0.03;
+ const rows=L.map(([x,m],j)=>{const p=m[3],o=m[4]||estOdds(p);if(!m[4])est=true;P*=p;O*=o;const v=m[5]!=null&&m[5]>=0.03;
   return `<div class="tp ${pcls(p)}" data-m="${x.i}"><div class="ti"><div class="tt">${j+1}. ${esc(lab(m,x))}</div><div class="ts">${esc(x.h)} – ${esc(x.a)}<br>${dfull(x.date)} ${x.time} · ${esc(x.comp)}${x.low?' · mała próba':''}</div></div>
   <div class="tk"><b>${pc(p)}</b><span class="kr">${m[4]?'kurs '+m[4].toFixed(2):'~'+o.toFixed(2)+' (szac.)'}</span>${v?`<em>EV ${sgn(Math.round(m[5]*100))}%</em>`:histTxt(m)}</div></div>`}).join('');
  const ev=P*O-1;
  h+=`<div class="cps"><div><small>Kurs łączny</small><b>${est?'~':''}${O.toFixed(2)}</b></div><div><small>Szansa wejścia</small><b>${pc(P)}</b></div><div><small>EV kuponu</small><b style="color:${ev>=0?'#7fd49f':'#e07a7a'}">${est?'~':''}${sgn(Math.round(ev*100))}%</b></div><div><small>10 zł wygra</small><b>${est?'~':''}${(10*O).toFixed(0)} zł</b></div></div>`;
  h+=rows;
  if(L.length<S.cn)h+=`<div class="note">Znalazłem tylko ${L.length} typ(y) spełniające kryteria – nie dobijałem słabszymi.</div>`;
- h+=`<div class="note">Najlepszy typ z każdego meczu (jeden na mecz), ${S.cm==='safe'?'wybrane wg najwyższej szansy modelu (min. 60%, bez „oczywistych” powyżej 93%)':'wybrane wg przewagi nad kursem (EV ≥ 3%, szansa ≥ 45%)'}. Szansa wejścia to iloczyn szans pojedynczych typów – im więcej typów, tym szybciej spada. ${est?'„~” = część typów nie ma kursu bukmachera, użyłem kursu uczciwego, więc wynik jest orientacyjny. ':''}To propozycja z modelu, nie gwarancja – sprawdź składy tuż przed meczem i graj odpowiedzialnie. Kliknij typ, żeby zobaczyć mecz.</div>`;
+ h+=`<div class="note">Najlepszy typ z każdego meczu (jeden na mecz), ${S.cm==='safe'?`wybrane wg najwyższej szansy modelu wśród typów z kursem min. ${S.co.toFixed(2)} (najpierw z prawdziwym kursem bukmachera)`:'wybrane wg przewagi nad kursem (EV ≥ 3%, szansa ≥ 45%)'}. Szansa wejścia to iloczyn szans pojedynczych typów – im więcej typów, tym szybciej spada. ${est?'„~” = część typów nie ma kursu bukmachera, użyłem kursu szacowanego z szansy modelu (z odjętą marżą), więc wynik jest orientacyjny. ':''}To propozycja z modelu, nie gwarancja – sprawdź składy tuż przed meczem i graj odpowiedzialnie. Kliknij typ, żeby zobaczyć mecz.</div>`;
  return h}
 function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),4500)}
 async function shareReport(){
@@ -1695,7 +1700,7 @@ function route(){
  if(m&&D.matches[+m[1]])detail(+m[1]);
  else{$('det').classList.add('hide');document.body.style.overflow='';render();window.scrollTo(0,S.scroll)}}
 document.addEventListener('click',e=>{
- const t=e.target.closest('[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
+ const t=e.target.closest('[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-co],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
  const d=t.dataset;
  if(d.share!==undefined){shareReport()}
  else if(d.day!==undefined){S.day=d.day;render()}
@@ -1705,6 +1710,7 @@ document.addEventListener('click',e=>{
  else if(d.cat!==undefined){S.cat=d.cat;render()}
  else if(d.cn!==undefined){S.cn=parseInt(d.cn);render()}
  else if(d.cm!==undefined){S.cm=d.cm;render()}
+ else if(d.co!==undefined){S.co=+d.co;render()}
  else if(d.per!==undefined){S.per=parseInt(d.per);render()}
  else if(d.coll!==undefined){S.coll[d.coll]=!S.coll[d.coll];render()}
  else if(d.dtab!==undefined){S.dtab=d.dtab;const m=location.hash.match(/^#m(\d+)$/);if(m){detail(+m[1]);$('det').scrollTop=0}}
