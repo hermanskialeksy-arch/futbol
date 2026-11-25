@@ -109,6 +109,8 @@
     {"gracz": "Michael Olise", "rola": "?", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Manchester United": [
+    {"gracz": "Benjamin Šeško", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Carlos Baleba", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
     {"gracz": "Matheus Cunha", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26"}
   ],
   "Fenerbahçe": [
