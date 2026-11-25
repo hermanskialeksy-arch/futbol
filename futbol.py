@@ -567,8 +567,10 @@ class ApiFootball:
 
 
 ROLE_MAP = {"Goalkeeper": "bramkarz", "Defender": "obrona", "Midfielder": "pomoc", "Attacker": "atak"}
-ROLE_EFFECT = {"atak": (-0.030, 0.0), "pomoc": (-0.015, 0.005), "obrona": (0.0, 0.025),
-               "bramkarz": (0.0, 0.045), "?": (-0.008, 0.008)}
+# wpływ jednego pewnego braku: (zmiana siły ataku własnej drużyny, zmiana siły ataku rywala)
+ROLE_EFFECT = {"atak": (-0.045, 0.0), "pomoc": (-0.025, 0.010), "obrona": (0.0, 0.035),
+               "bramkarz": (0.0, 0.060), "?": (-0.015, 0.012)}
+KEY_MULT = 2.0   # wpis z "klucz": true (gwiazda / pewniak w składzie) liczy się podwójnie
 
 
 def update_injuries(days, budget):
@@ -635,7 +637,7 @@ def absences_for(team, date_iso, api_cache, manual):
         if same_team(it["team"], team):
             q = "question" in str(it.get("type", "")).lower()
             out.append(dict(n=it["name"], role=ROLE_MAP.get(pos.get(str(it["pid"])), "?"),
-                            st="wątpliwy" if q else "nie zagra", reason=it.get("reason") or "", w=0.5 if q else 1.0))
+                            st="wątpliwy" if q else "nie zagra", reason=it.get("reason") or "", w=0.5 if q else 1.0, k=1.0))
     for k, lst in manual.items():
         if same_team(k, team):
             for e in lst:
@@ -643,7 +645,8 @@ def absences_for(team, date_iso, api_cache, manual):
                     continue
                 w = float(e.get("waga", 1.0))
                 out.append(dict(n=e.get("gracz", "?"), role=e.get("rola", "?"),
-                                st="nie zagra" if w >= 0.9 else "wątpliwy", reason=e.get("powod", ""), w=w))
+                                st="nie zagra" if w >= 0.9 else "wątpliwy", reason=e.get("powod", ""), w=w,
+                                k=KEY_MULT if e.get("klucz") else 1.0))
     return out
 
 
@@ -651,9 +654,10 @@ def absence_mult(lst):
     a = d = 0.0
     for e in lst:
         ea, ed = ROLE_EFFECT.get(e["role"], ROLE_EFFECT["?"])
-        a += ea * e["w"]
-        d += ed * e["w"]
-    return max(0.88, 1 + a), min(1.12, 1 + d)
+        f = e["w"] * e.get("k", 1.0)
+        a += ea * f
+        d += ed * f
+    return max(0.80, 1 + a), min(1.20, 1 + d)
 
 
 def cmd_brak(args):
@@ -908,7 +912,7 @@ def auto_lines(mu, step, count):
     return [base + step * i for i in idx if base + step * i >= 0.5]
 
 
-ADJ_EXP = {"goals": 1.0, "sot": 1.0, "shots": 0.5}
+ADJ_EXP = {"goals": 1.0, "sot": 1.0, "shots": 0.6, "corners": 0.3}
 
 
 class Model:

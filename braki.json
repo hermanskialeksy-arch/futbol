@@ -70,52 +70,52 @@
     {"gracz": "Alassane Diatta", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Inter Milan": [
-    {"gracz": "Ange-Yoan Bonny", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+    {"gracz": "Ange-Yoan Bonny", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "VfB Stuttgart": [
-    {"gracz": "Justin Diehl", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+    {"gracz": "Justin Diehl", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Atlético Madrid": [
-    {"gracz": "Ademola Lookman", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Marc Pubill", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+    {"gracz": "Ademola Lookman", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26", "klucz": true},
+    {"gracz": "Marc Pubill", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Paris Saint-Germain": [
-    {"gracz": "Désiré Doué", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Khvicha Kvaratskhelia", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+    {"gracz": "Désiré Doué", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26", "klucz": true},
+    {"gracz": "Khvicha Kvaratskhelia", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26", "klucz": true}
   ],
   "AS Roma": [
-    {"gracz": "Devyne Rensch", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Lorenzo Pellegrini", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Devyne Rensch", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Lorenzo Pellegrini", "rola": "pomoc", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
     {"gracz": "Leonardo Balerdi", "rola": "?", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Club Brugge": [
-    {"gracz": "Jan Virgili", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+    {"gracz": "Jan Virgili", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Liverpool": [
     {"gracz": "Cody Gakpo", "rola": "?", "waga": 0.7, "powod": "opuścił mecz z United, najpewniej nie zagra", "do": "2026-11-26"},
     {"gracz": "Ryan Gravenberch", "rola": "?", "waga": 0.7, "powod": "opuścił mecz z United, najpewniej nie zagra", "do": "2026-11-26"}
   ],
   "Lille": [
-    {"gracz": "Hamza Igamane", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Hamza Igamane", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
     {"gracz": "Nianzou Tanguy Kouassi", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
     {"gracz": "Tiago Santos", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Bayern Munich": [
     {"gracz": "Alphonso Davies", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Harry Kane", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Harry Kane", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26", "klucz": true},
     {"gracz": "Ismael Saibari", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Manuel Neuer", "rola": "bramkarz", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Serge Gnabry", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Michael Olise", "rola": "?", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
+    {"gracz": "Manuel Neuer", "rola": "bramkarz", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26", "klucz": true},
+    {"gracz": "Serge Gnabry", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Michael Olise", "rola": "atak", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Manchester United": [
-    {"gracz": "Benjamin Šeško", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Carlos Baleba", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Matheus Cunha", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26"}
+    {"gracz": "Benjamin Šeško", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Carlos Baleba", "rola": "pomoc", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Matheus Cunha", "rola": "atak", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26", "klucz": true}
   ],
   "Fenerbahçe": [
-    {"gracz": "Marco Asensio", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Nathan Aké", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+    {"gracz": "Marco Asensio", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Nathan Aké", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Bodo/Glimt": [
     {"gracz": "Evjen H.", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-25"},
