@@ -1430,6 +1430,9 @@ function picksFor(x,minp){const best={},value=[];
  return{best:Object.values(best).sort((a,b)=>b[3]-a[3]),value}}
 D.matches.forEach(x=>{x.nv=x.m.filter(m=>m[1]!=='dc'&&m[5]!=null&&m[5]>=0.03&&m[3]>=0.35).length;x.na_=(x.abs.h.length+x.abs.a.length)});
 const vis=()=>D.matches.filter(x=>(S.day==='all'||x.date===S.day)&&(S.league==='all'||x.comp===S.league));
+/* mecz już rozpoczęty (czas meczu jest w czasie polskim, jak na telefonie) – nie pokazujemy go w typach, value i kuponie */
+function started(x){if(!x.time||!/^\d{1,2}:\d{2}$/.test(x.time))return x.date<D.today;const t=new Date(x.date+'T'+x.time.padStart(5,'0')+':00');return t<new Date()}
+const visA=()=>vis().filter(x=>!started(x));
 const badges=x=>(x.nv?`<span class="bd bv">VALUE ×${x.nv}</span>`:'')+(x.na_?`<span class="bd bi">braki ${x.na_}</span>`:'')+(x.low?`<span class="bd bl">mała próba</span>`:'');
 /* ---------- nagłówek: dni i ligi ---------- */
 function bar(){
@@ -1473,20 +1476,20 @@ function listMatches(){
 function tipRow(x,m,showEv){const o=m[4];
  return `<div class="tp ${pcls(m[3])}" data-m="${x.i}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div><div class="ts">${esc(x.h)} – ${esc(x.a)}<br>${dfull(x.date)} ${x.time} · ${esc(x.comp)}${x.low?' · mała próba':''}</div></div>
  <div class="tk"><b>${pc(m[3])}</b><span class="kr">${o?'kurs '+o.toFixed(2):'brak kursu'}</span>${showEv&&m[5]!=null?`<em>EV ${sgn(Math.round(m[5]*100))}%</em>`:histTxt(m)}</div></div>`}
-function listPicks(){
- let all=[];for(const x of vis())for(const m of picksFor(x,S.minp).best)all.push([x,m]);
+function listPicks(){const hid=vis().length-visA().length;
+ let all=[];for(const x of visA())for(const m of picksFor(x,S.minp).best)all.push([x,m]);
  if(S.cat!=='all')all=all.filter(([x,m])=>m[1].split(':')[0]===S.cat);
  all.sort((a,b)=>b[1][3]-a[1][3]);
  if(S.per>0){const cnt={};all=all.filter(([x,m])=>{cnt[x.i]=(cnt[x.i]||0)+1;return cnt[x.i]<=S.per})}
  let h='<div class="flt">'+CAT.map(([k,n])=>`<button class="chip${S.cat===k?' on':''}" data-cat="${k}">${n}</button>`).join('')+'</div>';
  h+='<div class="flt"><span class="note">Min.</span>'+[0.55,0.6,0.65,0.7,0.75].map(v=>`<button class="chip${S.minp===v?' on':''}" data-minp="${v}">${Math.round(v*100)}%</button>`).join('')+'<span class="note">Na mecz</span>'+[[1,'1'],[3,'3'],[0,'wsz.']].map(([v,n])=>`<button class="chip${S.per===v?' on':''}" data-per="${v}">${n}</button>`).join('')+'</div>';
  h+=`<div class="note">Najpewniejsze typy modelu, bez „oczywistych” powyżej ${Math.round(D.maxp*100)}%. hist. = jak często podobne typy trafiały w przeszłości.</div>`;
- return h+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,false)).join(''):'<div class="empty">Brak typów w tym przedziale.</div>')}
-function listValue(){
- let all=[];for(const x of vis())for(const m of picksFor(x,0).value)all.push([x,m]);
+ return h+(hid?`<div class="note">Ukryto ${hid} mecz(e), które już się rozpoczęły.</div>`:'')+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,false)).join(''):'<div class="empty">Brak typów w tym przedziale.</div>')}
+function listValue(){const hid=vis().length-visA().length;
+ let all=[];for(const x of visA())for(const m of picksFor(x,0).value)all.push([x,m]);
  all.sort((a,b)=>b[1][5]-a[1][5]);
  return '<div class="note">Typy, w których model daje przewagę ≥3% nad kursem (kursy: 1X2 oraz Over/Under 2.5 gdy są dostępne). Wysokie EV bywa efektem błędu modelu lub braku informacji (skład, kontuzje) – sprawdzaj ostrożnie.</div>'+
-  (all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,true)).join(''):'<div class="empty">Brak typów z przewagą.</div>')}
+  (hid?`<div class="note">Ukryto ${hid} mecz(e), które już się rozpoczęły.</div>`:'')+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,true)).join(''):'<div class="empty">Brak typów z przewagą.</div>')}
 /* ---------- skuteczność (backtest) ---------- */
 const ROIORD=['wszystkie zakłady po kolei','zawsze faworyt modelu','przewaga ≥ 3%','przewaga ≥ 5%','przewaga ≥ 10%'];
 function listAcc(){
@@ -1513,7 +1516,7 @@ function listAcc(){
 /* ---------- kupon: propozycja zakładu na wybrany dzień ---------- */
 function couponLegs(n,mode){
  const L=[];
- for(const x of vis()){let best=null,bs=-1;
+ for(const x of visA()){let best=null,bs=-1;
   for(const m of x.m){const p=m[3],o=m[4],ev=m[5];
    if(p>0.93)continue;
    let sc;
