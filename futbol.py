@@ -1556,13 +1556,17 @@ function listAcc(){
 /* ---------- kupon: propozycja zakładu na wybrany dzień ---------- */
 /* kurs szacowany (gdy brak kursu bukmachera): kurs uczciwy pomniejszony o typową marżę */
 const estOdds=p=>0.93/p;
+const PLUS=[1.4,2]; /* zakres kursów pojedynczego typu w stylu „Mocne+” */
 function couponLegs(n,mode){
  const L=[];
- for(const x of visA()){let best=null,bs=-1;
+ /* „Mocne+” bierze wszystkie mecze wybranego dnia – bez filtra ligi */
+ const pool=mode==='plus'?D.matches.filter(x=>(S.day==='all'||x.date===S.day)&&!started(x)):visA();
+ for(const x of pool){let best=null,bs=-1;
   for(const m of x.m){const p=m[3],o=m[4],ev=m[5];
    if(p>0.93)continue;
    let sc;
    if(mode==='safe'){if((o||estOdds(p))<S.co||(o&&ev!=null&&ev<-0.1))continue;sc=p}
+   else if(mode==='plus'){if(!o||o<PLUS[0]||o>PLUS[1]||p<0.5||(ev!=null&&ev<-0.1))continue;sc=p}
    else{if(ev==null||ev<0.03||p<0.45)continue;sc=ev*Math.min(1,p/0.6)}
    if(x.low)sc*=0.8;
    /* w „Pewniakach” typ z prawdziwym kursem ma pierwszeństwo przed szacowanym */
@@ -1572,7 +1576,7 @@ function couponLegs(n,mode){
  L.sort((a,b)=>b[2]-a[2]);return L.slice(0,n)}
 function listCoupon(){
  let h='<div class="flt"><span class="note">Typów</span>'+[2,3,4,5].map(v=>`<button class="chip${S.cn===v?' on':''}" data-cn="${v}">${v}</button>`).join('')+
- '<span class="note">Styl</span>'+[['safe','Pewniaki'],['value','Value']].map(([k,n])=>`<button class="chip${S.cm===k?' on':''}" data-cm="${k}">${n}</button>`).join('')+'</div>';
+ '<span class="note">Styl</span>'+[['safe','Pewniaki'],['plus','Mocne+'],['value','Value']].map(([k,n])=>`<button class="chip${S.cm===k?' on':''}" data-cm="${k}">${n}</button>`).join('')+'</div>';
  if(S.cm==='safe')h+='<div class="flt"><span class="note">Min. kurs typu</span>'+[1.2,1.3,1.5].map(v=>`<button class="chip${S.co===v?' on':''}" data-co="${v}">${v.toFixed(2)}</button>`).join('')+'</div>';
  const L=couponLegs(S.cn,S.cm);
  if(!L.length)return h+'<div class="empty">Brak typów spełniających kryteria dla wybranego dnia i ligi.<br>Zmień dzień u góry albo styl kuponu.</div>';
@@ -1584,7 +1588,7 @@ function listCoupon(){
  h+=`<div class="cps"><div><small>Kurs łączny</small><b>${est?'~':''}${O.toFixed(2)}</b></div><div><small>Szansa wejścia</small><b>${pc(P)}</b></div><div><small>EV kuponu</small><b style="color:${ev>=0?'#7fd49f':'#e07a7a'}">${est?'~':''}${sgn(Math.round(ev*100))}%</b></div><div><small>10 zł wygra</small><b>${est?'~':''}${(10*O).toFixed(0)} zł</b></div></div>`;
  h+=rows;
  if(L.length<S.cn)h+=`<div class="note">Znalazłem tylko ${L.length} typ(y) spełniające kryteria – nie dobijałem słabszymi.</div>`;
- h+=`<div class="note">Najlepszy typ z każdego meczu (jeden na mecz), ${S.cm==='safe'?`wybrane wg najwyższej szansy modelu wśród typów z kursem min. ${S.co.toFixed(2)} (najpierw z prawdziwym kursem bukmachera)`:'wybrane wg przewagi nad kursem (EV ≥ 3%, szansa ≥ 45%)'}. Szansa wejścia to iloczyn szans pojedynczych typów – im więcej typów, tym szybciej spada. ${est?'„~” = część typów nie ma kursu bukmachera, użyłem kursu szacowanego z szansy modelu (z odjętą marżą), więc wynik jest orientacyjny. ':''}To propozycja z modelu, nie gwarancja – sprawdź składy tuż przed meczem i graj odpowiedzialnie. Kliknij typ, żeby zobaczyć mecz.</div>`;
+ h+=`<div class="note">Najlepszy typ z każdego meczu (jeden na mecz), ${S.cm==='safe'?`wybrane wg najwyższej szansy modelu wśród typów z kursem min. ${S.co.toFixed(2)} (najpierw z prawdziwym kursem bukmachera)`:S.cm==='plus'?`najwyższe szanse ze wszystkich meczów dnia (filtr ligi pominięty), tylko prawdziwe kursy bukmachera ${PLUS[0].toFixed(2)}–${PLUS[1].toFixed(2)}, szansa ≥ 50%. Wyższy kurs = mniejsza pewność niż w „Pewniakach”`:'wybrane wg przewagi nad kursem (EV ≥ 3%, szansa ≥ 45%)'}. Szansa wejścia to iloczyn szans pojedynczych typów – im więcej typów, tym szybciej spada. ${est?'„~” = część typów nie ma kursu bukmachera, użyłem kursu szacowanego z szansy modelu (z odjętą marżą), więc wynik jest orientacyjny. ':''}To propozycja z modelu, nie gwarancja – sprawdź składy tuż przed meczem i graj odpowiedzialnie. Kliknij typ, żeby zobaczyć mecz.</div>`;
  return h}
 function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),4500)}
 async function shareReport(){
