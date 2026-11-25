@@ -94,11 +94,17 @@
     {"gracz": "Ryan Gravenberch", "rola": "?", "waga": 0.7, "powod": "opuścił mecz z United, najpewniej nie zagra", "do": "2026-11-26"}
   ],
   "Lille": [
-    {"gracz": "Tanguy Nianzou", "rola": "?", "waga": 0.4, "powod": "zszedł z kontuzją w weekend", "do": "2026-11-26"}
+    {"gracz": "Hamza Igamane", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Nianzou Tanguy Kouassi", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Tiago Santos", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Bayern Munich": [
-    {"gracz": "Michael Olise", "rola": "?", "waga": 0.4, "powod": "zszedł z kontuzją w weekend", "do": "2026-11-26"},
-    {"gracz": "Harry Kane", "rola": "?", "waga": 1.0, "powod": "kontuzja, dłuższa przerwa", "do": "2026-11-26"}
+    {"gracz": "Alphonso Davies", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Harry Kane", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Ismael Saibari", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Manuel Neuer", "rola": "bramkarz", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Serge Gnabry", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Michael Olise", "rola": "?", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Manchester United": [
     {"gracz": "Matheus Cunha", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26"}
