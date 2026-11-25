@@ -55,10 +55,12 @@
     {"gracz": "Carney Chukwuemeka", "rola": "?", "waga": 0.4, "powod": "nieobecny w weekend, status niejasny", "do": "2026-11-25"}
   ],
   "Sabah": [
-    {"gracz": "Aden McCarthy", "rola": "?", "waga": 1.0, "powod": "czerwona kartka w meczu z Vikingiem", "do": "2026-11-26"}
+    {"gracz": "A McCarthy", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26"}
   ],
   "Barcelona": [
-    {"gracz": "Andreas Christensen", "rola": "?", "waga": 1.0, "powod": "nadal nie może zagrać", "do": "2026-11-26"}
+    {"gracz": "Rodri", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Xavi Espart Font", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Andreas Christensen", "rola": "obrona", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Slavia Prague": [
     {"gracz": "Štěpán Chaloupek", "rola": "?", "waga": 0.4, "powod": "problemy zdrowotne", "do": "2026-11-26"},
