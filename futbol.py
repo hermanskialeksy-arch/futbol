@@ -906,6 +906,46 @@ def mk(mid, family, label, p, odds):
                 odds=o, ev=(p * o - 1 if o else None))
 
 
+MARKET_W = 0.6   # ile z końcowej szansy pochodzi z rynku (kursy bez marży), gdy kursy są znane
+
+
+def _pair_id(mid):
+    """Id przeciwnego wyniku w tym samym rynku (do wyliczenia szansy z kursów bez marży)."""
+    if mid.startswith("btts:"):
+        return "btts:no" if mid.endswith("yes") else "btts:yes"
+    p = mid.split(":")
+    if len(p) == 4 and p[2] in ("over", "under"):
+        p[2] = "under" if p[2] == "over" else "over"
+        return ":".join(p)
+    return None
+
+
+def blend_with_market(ms, odds):
+    """Model liczy z historii, a rynek zna skład i kontekst. Tam, gdzie mamy kursy po obu stronach rynku,
+    szansę modelu uśredniamy z szansą wynikającą z kursów po usunięciu marży – to ucina przesadnie
+    optymistyczne typy i fałszywe „value”."""
+    if not odds:
+        return ms
+    tri = {k: odds.get(k) for k in ("1x2:1", "1x2:X", "1x2:2")}
+    tri_ok = all(v and v > 1 for v in tri.values())
+    inv = sum(1 / v for v in tri.values()) if tri_ok else 0
+    for m in ms:
+        mid, pm = m["id"], None
+        if mid in tri and tri_ok and inv > 0:
+            pm = (1 / tri[mid]) / inv
+        else:
+            q = _pair_id(mid)
+            o1, o2 = odds.get(mid), odds.get(q) if q else None
+            if o1 and o2 and o1 > 1 and o2 > 1:
+                pm = (1 / o1) / (1 / o1 + 1 / o2)
+        if pm is not None:
+            m["p_model"] = m["p"]
+            m["p"] = (1 - MARKET_W) * m["p"] + MARKET_W * pm
+            m["fair"] = 1 / m["p"] if m["p"] > 0.001 else None
+            m["ev"] = m["p"] * m["odds"] - 1 if m["odds"] else None
+    return ms
+
+
 def auto_lines(mu, step, count):
     base = math.floor(mu) + 0.5
     idx = range(-(count // 2), count // 2 + 1)
@@ -982,7 +1022,7 @@ class Model:
                     po = over_prob(d, L)
                     ms.append(mk(f"{stat}:{side}:over:{L}", f"{stat}:{side}", "", po, odds))
                     ms.append(mk(f"{stat}:{side}:under:{L}", f"{stat}:{side}", "", 1 - po, odds))
-        return dict(exp=exp, markets=ms)
+        return dict(exp=exp, markets=blend_with_market(ms, odds))
 
     def profile(self, team, as_home):
         rows = [m for m in self.played if team in (m["home"], m["away"])]
@@ -1488,7 +1528,7 @@ function listPicks(){const hid=vis().length-visA().length;
 function listValue(){const hid=vis().length-visA().length;
  let all=[];for(const x of visA())for(const m of picksFor(x,0).value)all.push([x,m]);
  all.sort((a,b)=>b[1][5]-a[1][5]);
- return '<div class="note">Typy, w których model daje przewagę ≥3% nad kursem (kursy: 1X2 oraz Over/Under 2.5 gdy są dostępne). Wysokie EV bywa efektem błędu modelu lub braku informacji (skład, kontuzje) – sprawdzaj ostrożnie.</div>'+
+ return '<div class="note">Typy, w których model daje przewagę ≥3% nad kursem (kursy: 1X2 oraz Over/Under 2.5 gdy są dostępne). Szansa to średnia z modelu i z kursów bukmachera bez marży (tam, gdzie kursy są po obu stronach rynku), więc skrajne przewagi są ucięte. Backtest pokazuje, że sam model z kursami przynosił stratę – traktuj value jako podpowiedź, nie pewniak.</div>'+
   (hid?`<div class="note">Ukryto ${hid} mecz(e), które już się rozpoczęły.</div>`:'')+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,true)).join(''):'<div class="empty">Brak typów z przewagą.</div>')}
 /* ---------- skuteczność (backtest) ---------- */
 const ROIORD=['wszystkie zakłady po kolei','zawsze faworyt modelu','przewaga ≥ 3%','przewaga ≥ 5%','przewaga ≥ 10%'];
