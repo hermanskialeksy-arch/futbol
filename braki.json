@@ -63,14 +63,11 @@
     {"gracz": "Andreas Christensen", "rola": "obrona", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Slavia Prague": [
-    {"gracz": "Štěpán Chaloupek", "rola": "?", "waga": 0.4, "powod": "problemy zdrowotne", "do": "2026-11-26"},
-    {"gracz": "Lukáš Provod", "rola": "?", "waga": 0.4, "powod": "problemy zdrowotne", "do": "2026-11-26"},
-    {"gracz": "Daniel Šturm", "rola": "?", "waga": 0.4, "powod": "problemy zdrowotne", "do": "2026-11-26"},
-    {"gracz": "David Moses", "rola": "?", "waga": 0.4, "powod": "kontuzja w meczu z Sigmą", "do": "2026-11-26"}
+    {"gracz": "Adonija Ouanda", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Ogbu Igoh", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Villarreal": [
-    {"gracz": "Juan Foyth", "rola": "?", "waga": 0.7, "powod": "prawdopodobnie nie wystąpi", "do": "2026-11-26"},
-    {"gracz": "Gerard Moreno", "rola": "?", "waga": 0.7, "powod": "prawdopodobnie nie wystąpi", "do": "2026-11-26"}
+    {"gracz": "Alassane Diatta", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Inter Milan": [
     {"gracz": "Hakan Çalhanoğlu", "rola": "?", "waga": 0.4, "powod": "uraz, zszedł w ostatnim meczu", "do": "2026-11-26"},
