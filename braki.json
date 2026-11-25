@@ -77,7 +77,8 @@
     {"gracz": "Luca Jaquez", "rola": "?", "waga": 0.4, "powod": "nie grał w weekend, przyczyna nieznana", "do": "2026-11-26"}
   ],
   "Atlético Madrid": [
-    {"gracz": "Cristian Romero", "rola": "?", "waga": 0.4, "powod": "nie grał w niedzielę, przyczyna nieznana", "do": "2026-11-26"}
+    {"gracz": "Ademola Lookman", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Marc Pubill", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Paris Saint-Germain": [
     {"gracz": "Désiré Doué", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana, kilka miesięcy", "do": "2026-11-26"}
@@ -122,5 +123,11 @@
     {"gracz": "Kaua Elias", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
     {"gracz": "Marlon", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
     {"gracz": "Pedro Henrique", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+  ],
+  "Viking": [
+    {"gracz": "Anders Baertelsen", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Martin Ove Roseth", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Nick D'Agostino", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Sondre Bjorshol", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ]
 }
