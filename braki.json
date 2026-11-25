@@ -81,10 +81,13 @@
     {"gracz": "Marc Pubill", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Paris Saint-Germain": [
-    {"gracz": "Désiré Doué", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana, kilka miesięcy", "do": "2026-11-26"}
+    {"gracz": "Désiré Doué", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Khvicha Kvaratskhelia", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "AS Roma": [
-    {"gracz": "Leonardo Balerdi", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w weekend", "do": "2026-11-26"}
+    {"gracz": "Devyne Rensch", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Lorenzo Pellegrini", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
+    {"gracz": "Leonardo Balerdi", "rola": "?", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Club Brugge": [
     {"gracz": "Jan Virgili", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
