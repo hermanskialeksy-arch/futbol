@@ -1557,18 +1557,29 @@ function listAcc(){
 /* kurs szacowany (gdy brak kursu bukmachera): kurs uczciwy pomniejszony o typową marżę */
 const estOdds=p=>0.93/p;
 const PLUS=[1.4,2]; /* zakres kursów pojedynczego typu w stylu „Mocne+” */
+/* szansa z samego kursu: bez marży, gdy znamy kursy wszystkich wyników rynku; inaczej kurs z typową marżą */
+function marketP(x,m){const id=m[0],o=m[4],od=i=>{const k=byId(x,i);return k&&k[4]};
+ if(id.startsWith('1x2:')){const t=['1x2:1','1x2:X','1x2:2'].map(od);if(t.every(v=>v))return (1/o)/t.reduce((a,v)=>a+1/v,0)}
+ const q=id.endsWith(':yes')?id.slice(0,-3)+'no':id.endsWith(':no')?id.slice(0,-2)+'yes':id.includes(':over:')?id.replace(':over:',':under:'):id.includes(':under:')?id.replace(':under:',':over:'):null;
+ const o2=q&&od(q);return o2?(1/o)/(1/o+1/o2):0.93/o}
+/* ostrożna szansa do kuponu: model nie może przebić rynku o więcej niż CAP, a gdy jest ostrożniejszy – liczy się model */
+const CAP=0.03;
+const realP=(x,m)=>m[4]?Math.min(m[3],marketP(x,m)+CAP):m[3];
 function couponLegs(n,mode){
  const L=[];
  /* „Mocne+” bierze wszystkie mecze wybranego dnia – bez filtra ligi */
  const pool=mode==='plus'?D.matches.filter(x=>(S.day==='all'||x.date===S.day)&&!started(x)):visA();
  for(const x of pool){let best=null,bs=-1;
-  for(const m of x.m){const p=m[3],o=m[4],ev=m[5];
+  for(const m0 of x.m){
+   /* w „Pewniakach” i „Mocne+” liczy się ostrożna szansa, w „Value” bez zmian */
+   let m=m0;if(mode!=='value'&&m0[4]){const r=realP(x,m0);m=[m0[0],m0[1],m0[2],r,m0[4],r*m0[4]-1]}
+   const p=m[3],o=m[4],ev=m[5];
    if(p>0.93)continue;
    let sc;
    if(mode==='safe'){if((o||estOdds(p))<S.co||(o&&ev!=null&&ev<-0.1))continue;sc=p}
    else if(mode==='plus'){if(!o||o<PLUS[0]||o>PLUS[1]||p<0.5||(ev!=null&&ev<-0.1))continue;sc=p}
    else{if(ev==null||ev<0.03||p<0.45)continue;sc=ev*Math.min(1,p/0.6)}
-   if(x.low)sc*=0.8;
+   if(mode==='value'&&x.low)sc*=0.8;
    /* w „Pewniakach” typ z prawdziwym kursem ma pierwszeństwo przed szacowanym */
    if(mode==='safe'&&o)sc+=1;
    if(sc>bs){bs=sc;best=m}}
@@ -1588,7 +1599,7 @@ function listCoupon(){
  h+=`<div class="cps"><div><small>Kurs łączny</small><b>${est?'~':''}${O.toFixed(2)}</b></div><div><small>Szansa wejścia</small><b>${pc(P)}</b></div><div><small>EV kuponu</small><b style="color:${ev>=0?'#7fd49f':'#e07a7a'}">${est?'~':''}${sgn(Math.round(ev*100))}%</b></div><div><small>10 zł wygra</small><b>${est?'~':''}${(10*O).toFixed(0)} zł</b></div></div>`;
  h+=rows;
  if(L.length<S.cn)h+=`<div class="note">Znalazłem tylko ${L.length} typ(y) spełniające kryteria – nie dobijałem słabszymi.</div>`;
- h+=`<div class="note">Najlepszy typ z każdego meczu (jeden na mecz), ${S.cm==='safe'?`wybrane wg najwyższej szansy modelu wśród typów z kursem min. ${S.co.toFixed(2)} (najpierw z prawdziwym kursem bukmachera)`:S.cm==='plus'?`najwyższe szanse ze wszystkich meczów dnia (filtr ligi pominięty), tylko prawdziwe kursy bukmachera ${PLUS[0].toFixed(2)}–${PLUS[1].toFixed(2)}, szansa ≥ 50%. Wyższy kurs = mniejsza pewność niż w „Pewniakach”`:'wybrane wg przewagi nad kursem (EV ≥ 3%, szansa ≥ 45%)'}. Szansa wejścia to iloczyn szans pojedynczych typów – im więcej typów, tym szybciej spada. ${est?'„~” = część typów nie ma kursu bukmachera, użyłem kursu szacowanego z szansy modelu (z odjętą marżą), więc wynik jest orientacyjny. ':''}To propozycja z modelu, nie gwarancja – sprawdź składy tuż przed meczem i graj odpowiedzialnie. Kliknij typ, żeby zobaczyć mecz.</div>`;
+ h+=`<div class="note">Najlepszy typ z każdego meczu (jeden na mecz), ${S.cm==='safe'?`wybrane wg najwyższej ostrożnej szansy wśród typów z kursem min. ${S.co.toFixed(2)} (najpierw z prawdziwym kursem bukmachera)`:S.cm==='plus'?`najwyższe szanse ze wszystkich meczów dnia (filtr ligi pominięty), tylko prawdziwe kursy bukmachera ${PLUS[0].toFixed(2)}–${PLUS[1].toFixed(2)}, szansa ≥ 50%. Wyższy kurs = mniejsza pewność niż w „Pewniakach”`:'wybrane wg przewagi nad kursem (EV ≥ 3%, szansa ≥ 45%)'}. Szansa wejścia to iloczyn szans pojedynczych typów – im więcej typów, tym szybciej spada. ${est?'„~” = część typów nie ma kursu bukmachera, użyłem kursu szacowanego z szansy modelu (z odjętą marżą), więc wynik jest orientacyjny. ':''}${S.cm!=='value'?`Szansa w tym stylu jest ostrożna: model nie może przebić szansy z kursu bukmachera o więcej niż ${Math.round(CAP*100)} pkt proc., dlatego może być niższa niż w innych zakładkach. `:''}To propozycja z modelu, nie gwarancja – sprawdź składy tuż przed meczem i graj odpowiedzialnie. Kliknij typ, żeby zobaczyć mecz.</div>`;
  return h}
 function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),4500)}
 async function shareReport(){
