@@ -86,7 +86,7 @@
     {"gracz": "Leonardo Balerdi", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w weekend", "do": "2026-11-26"}
   ],
   "Club Brugge": [
-    {"gracz": "Jan Virgili", "rola": "?", "waga": 0.4, "powod": "uraz pachwiny, pod znakiem zapytania", "do": "2026-11-26"}
+    {"gracz": "Jan Virgili", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Liverpool": [
     {"gracz": "Cody Gakpo", "rola": "?", "waga": 0.7, "powod": "opuścił mecz z United, najpewniej nie zagra", "do": "2026-11-26"},
