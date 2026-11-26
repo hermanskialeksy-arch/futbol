@@ -21,8 +21,10 @@
     {"gracz": "Justin Diehl", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
   ],
   "Atlético Madrid": [
-    {"gracz": "Ademola Lookman", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26", "klucz": true},
-    {"gracz": "Marc Pubill", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
+    {"gracz": "Ademola Lookman", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-29", "klucz": true},
+    {"gracz": "Marc Pubill", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-29"},
+    {"gracz": "Cristian Romero", "rola": "obrona", "waga": 0.9, "powod": "wraca po urazie, prawie na pewno nie zagra", "do": "2026-11-29"},
+    {"gracz": "Alexander Sørloth", "rola": "atak", "waga": 0.3, "powod": "dolegliwości łydki", "do": "2026-11-29"}
   ],
   "Paris Saint-Germain": [
     {"gracz": "Désiré Doué", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26", "klucz": true},
@@ -54,9 +56,14 @@
     {"gracz": "Michael Olise", "rola": "atak", "waga": 0.4, "powod": "wątpliwy", "do": "2026-11-26"}
   ],
   "Manchester United": [
-    {"gracz": "Benjamin Šeško", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Carlos Baleba", "rola": "pomoc", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
-    {"gracz": "Matheus Cunha", "rola": "atak", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26", "klucz": true}
+    {"gracz": "Benjamin Šeško", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-29"},
+    {"gracz": "Carlos Baleba", "rola": "pomoc", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-29"},
+    {"gracz": "Matheus Cunha", "rola": "atak", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-29", "klucz": true},
+    {"gracz": "Manuel Ugarte", "rola": "pomoc", "waga": 1.0, "powod": "zerwane więzadło kolana", "do": "2026-11-29"},
+    {"gracz": "Marcus Rashford", "rola": "atak", "waga": 0.6, "powod": "uraz biodra, występ mało pewny", "do": "2026-11-29"},
+    {"gracz": "Amad", "rola": "atak", "waga": 0.4, "powod": "wątpliwy po stłuczeniu w meczu ze Sportingiem", "do": "2026-11-29"},
+    {"gracz": "Luke Shaw", "rola": "obrona", "waga": 0.3, "powod": "wątpliwy, stłuczenie", "do": "2026-11-29"},
+    {"gracz": "Karl Darlow", "rola": "bramkarz", "waga": 0.3, "powod": "wątpliwy, stłuczenie", "do": "2026-11-29"}
   ],
   "Fenerbahçe": [
     {"gracz": "Marco Asensio", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
@@ -78,7 +85,14 @@
     {"gracz": "Olivier Boscagli", "rola": "obrona", "waga": 1.0, "powod": "choroba", "do": "2026-11-27"},
     {"gracz": "Jaouen Hadjam", "rola": "obrona", "waga": 1.0, "powod": "drobny uraz", "do": "2026-11-27"},
     {"gracz": "Diego Gómez", "rola": "pomoc", "waga": 1.0, "powod": "odpoczynek po kadrze", "do": "2026-11-27"},
-    {"gracz": "Malik Yalcouyé", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"}
+    {"gracz": "Malik Yalcouyé", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Kaoru Mitoma", "rola": "atak", "waga": 1.0, "powod": "ścięgno udowe", "do": "2026-11-27"},
+    {"gracz": "Stefanos Tzimas", "rola": "atak", "waga": 1.0, "powod": "kolano", "do": "2026-11-27"},
+    {"gracz": "Evan Ferguson", "rola": "atak", "waga": 1.0, "powod": "kostka", "do": "2026-11-27"},
+    {"gracz": "Zadok Yohanna", "rola": "?", "waga": 1.0, "powod": "udo", "do": "2026-11-27"},
+    {"gracz": "Pascal Struijk", "rola": "obrona", "waga": 0.7, "powod": "udo, jeszcze niegotowy", "do": "2026-11-27"},
+    {"gracz": "Yankuba Minteh", "rola": "atak", "waga": 1.0, "powod": "niezgłoszony do Ligi Konferencji", "do": "2026-11-27"},
+    {"gracz": "Mats Wieffer", "rola": "?", "waga": 1.0, "powod": "niezgłoszony do Ligi Konferencji", "do": "2026-11-27"}
   ],
   "Atalanta": [
     {"gracz": "Marco Carnesecchi", "rola": "bramkarz", "waga": 1.0, "powod": "uraz łąkotki, po zabiegu", "do": "2026-11-27"},
@@ -91,39 +105,53 @@
     {"gracz": "Max Bruns", "rola": "obrona", "waga": 1.0, "powod": "nie zagra wg zapowiedzi Freiburga, bez podanej przyczyny", "do": "2026-11-27"},
     {"gracz": "Filip Thorvaldsen", "rola": "?", "waga": 1.0, "powod": "nie zagra wg zapowiedzi Freiburga, bez podanej przyczyny", "do": "2026-11-27"},
     {"gracz": "Thomas van den Belt", "rola": "pomoc", "waga": 1.0, "powod": "nie zagra wg zapowiedzi Freiburga, bez podanej przyczyny", "do": "2026-11-27"},
-    {"gracz": "Krzysztof Kurowski", "rola": "?", "waga": 1.0, "powod": "nie zagra wg zapowiedzi Freiburga, bez podanej przyczyny", "do": "2026-11-27"}
+    {"gracz": "Krzysztof Kurowski", "rola": "?", "waga": 1.0, "powod": "nie zagra wg zapowiedzi Freiburga, bez podanej przyczyny", "do": "2026-11-27"},
+    {"gracz": "Naci Ünüvar", "rola": "?", "waga": 1.0, "powod": "poza kadrą (odsunięty, nie kontuzja)", "do": "2026-11-27"}
   ],
   "Benfica": [
     {"gracz": "Barreiro", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
-    {"gracz": "Prestianni", "rola": "?", "waga": 0.8, "powod": "rehabilitacja, ćwiczenia indywidualne", "do": "2026-11-27"},
+    {"gracz": "Prestianni", "rola": "atak", "waga": 1.0, "powod": "dolegliwości fizyczne, poza kadrą", "do": "2026-11-27"},
     {"gracz": "Jhon Durán", "rola": "atak", "waga": 0.8, "powod": "tylko zajęcia na siłowni", "do": "2026-11-27"},
-    {"gracz": "Aursnes", "rola": "pomoc", "waga": 0.5, "powod": "wątpliwy", "do": "2026-11-27"}
+    {"gracz": "Aursnes", "rola": "pomoc", "waga": 1.0, "powod": "uraz mięśnia uda, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Jaden Umeh", "rola": "?", "waga": 0.8, "powod": "uraz mięśniowy; brak w kadrze wg Record", "do": "2026-11-27"}
   ],
   "Celta Vigo": [
-    {"gracz": "Carl Starfelt", "rola": "obrona", "waga": 1.0, "powod": "uraz mięśnia uda", "do": "2026-11-27"},
-    {"gracz": "Borja Iglesias", "rola": "atak", "waga": 0.5, "powod": "uraz, występ pod znakiem zapytania", "do": "2026-11-27"},
+    {"gracz": "Carl Starfelt", "rola": "obrona", "waga": 0.8, "powod": "uraz uda, brak zgody lekarzy (część źródeł: wątpliwy)", "do": "2026-11-27"},
+    {"gracz": "Borja Iglesias", "rola": "atak", "waga": 1.0, "powod": "uraz mięśniowy łydki", "do": "2026-11-27"},
     {"gracz": "Miguel Román", "rola": "pomoc", "waga": 1.0, "powod": "po artroskopii kolana", "do": "2026-11-27"},
     {"gracz": "Hugo González", "rola": "?", "waga": 1.0, "powod": "uraz uda, poza kadrą", "do": "2026-11-27"}
   ],
   "Crystal Palace": [
-    {"gracz": "Ismaïla Sarr", "rola": "?", "waga": 0.8, "powod": "uraz pachwiny", "do": "2026-11-27"},
-    {"gracz": "Takehiro Tomiyasu", "rola": "obrona", "waga": 0.8, "powod": "jeszcze nie trenuje z drużyną", "do": "2026-11-27"},
-    {"gracz": "Adam Wharton", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"}
+    {"gracz": "Ismaïla Sarr", "rola": "atak", "waga": 1.0, "powod": "uraz pachwiny", "do": "2026-11-27"},
+    {"gracz": "Takehiro Tomiyasu", "rola": "obrona", "waga": 0.9, "powod": "uraz łydki, blisko powrotu do treningów", "do": "2026-11-27"},
+    {"gracz": "Adam Wharton", "rola": "pomoc", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"},
+    {"gracz": "Chadi Riad", "rola": "obrona", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-27"},
+    {"gracz": "Oscar Mingueza", "rola": "obrona", "waga": 0.4, "powod": "niepewny po urazie (sprzeczne informacje)", "do": "2026-11-27"}
   ],
   "Juventus": [
     {"gracz": "Kenan Yildiz", "rola": "atak", "waga": 1.0, "powod": "rekonwalescencja, trener potwierdza brak", "do": "2026-11-27"},
-    {"gracz": "Kerim Alajbegovic", "rola": "?", "waga": 0.5, "powod": "uraz w weekendowym meczu", "do": "2026-11-27"},
-    {"gracz": "Pierre Kalulu", "rola": "?", "waga": 0.8, "powod": "na liście kontuzjowanych", "do": "2026-11-27"}
+    {"gracz": "Kerim Alajbegovic", "rola": "?", "waga": 0.3, "powod": "po urazie, dostępny z ławki", "do": "2026-11-27"},
+    {"gracz": "Pierre Kalulu", "rola": "obrona", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-27"},
+    {"gracz": "Nico González", "rola": "atak", "waga": 1.0, "powod": "niedostępny (uraz)", "do": "2026-11-27"},
+    {"gracz": "Kenan Yıldız", "rola": "atak", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"},
+    {"gracz": "Khéphren Thuram", "rola": "pomoc", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"},
+    {"gracz": "Manuel Locatelli", "rola": "pomoc", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"},
+    {"gracz": "Kamil Grabara", "rola": "bramkarz", "waga": 1.0, "powod": "zerwane więzadło (ACL)", "do": "2026-11-27"}
   ],
   "Lech Poznan": [
     {"gracz": "Mateusz Pruchniewski", "rola": "bramkarz", "waga": 1.0, "powod": "operacja łokcia", "do": "2026-11-27"},
-    {"gracz": "João Moutinho", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "João Moutinho", "rola": "obrona", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
     {"gracz": "Patrik Wålemark", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
-    {"gracz": "Pablo Rodríguez", "rola": "?", "waga": 0.4, "powod": "decyzja tuż przed meczem", "do": "2026-11-27"}
+    {"gracz": "Pablo Rodríguez", "rola": "pomoc", "waga": 0.6, "powod": "występ niepewny, sprzeczne źródła", "do": "2026-11-27"},
+    {"gracz": "Ali Gholizadeh", "rola": "?", "waga": 1.0, "powod": "zerwane więzadło / kontuzja", "do": "2026-11-27"},
+    {"gracz": "Mikael Ishak", "rola": "atak", "waga": 0.9, "powod": "kontuzja, trening indywidualny", "do": "2026-11-27"},
+    {"gracz": "Alex Douglas", "rola": "obrona", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Allahyar Sayyadmanesh", "rola": "atak", "waga": 0.4, "powod": "po urazie pachwiny; źródła sprzeczne (KKSLech: wraca do kadry, DH: nieobecny)", "do": "2026-11-27"}
   ],
   "Bayer Leverkusen": [
-    {"gracz": "Guéla Doué", "rola": "?", "waga": 0.3, "powod": "niepewny, klub liczy na jego występ", "do": "2026-11-27"},
-    {"gracz": "Martin Terrier", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"}
+    {"gracz": "Guéla Doué", "rola": "obrona", "waga": 0.4, "powod": "po urazie łydki, w kadrze, możliwy powrót", "do": "2026-11-27"},
+    {"gracz": "Martin Terrier", "rola": "atak", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Kennet Eichhorn", "rola": "pomoc", "waga": 0.8, "powod": "choroba, odbudowa formy", "do": "2026-11-27"}
   ],
   "Werder Bremen": [
     {"gracz": "Musah", "rola": "?", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-28"},
@@ -144,92 +172,193 @@
     {"gracz": "Hashioka", "rola": "obrona", "waga": 0.4, "powod": "uraz mięśniowy", "do": "2026-11-28"}
   ],
   "Chelsea": [
-    {"gracz": "Reece James", "rola": "obrona", "waga": 0.7, "powod": "po zabiegu kolana (informacja sprzed poprzedniego meczu)", "do": "2026-11-28"},
-    {"gracz": "Maxence Lacroix", "rola": "obrona", "waga": 0.7, "powod": "uraz ścięgna udowego (informacja sprzed poprzedniego meczu)", "do": "2026-11-28"},
-    {"gracz": "Moisés Caicedo", "rola": "?", "waga": 0.5, "powod": "uraz pleców, pod znakiem zapytania", "do": "2026-11-28"}
+    {"gracz": "Reece James", "rola": "obrona", "waga": 1.0, "powod": "kolano po operacji", "do": "2026-11-28"},
+    {"gracz": "Maxence Lacroix", "rola": "obrona", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-28"},
+    {"gracz": "Moisés Caicedo", "rola": "pomoc", "waga": 0.5, "powod": "uraz pleców, pod znakiem zapytania", "do": "2026-11-28"},
+    {"gracz": "João Pedro", "rola": "atak", "waga": 1.0, "powod": "uraz uda", "do": "2026-11-28"},
+    {"gracz": "Jorrel Hato", "rola": "obrona", "waga": 1.0, "powod": "uraz pleców", "do": "2026-11-28"},
+    {"gracz": "Jamie Gittens", "rola": "atak", "waga": 0.8, "powod": "kostka, wrócił do treningów, raczej za wcześnie", "do": "2026-11-28"}
   ],
   "Olympiacos": [
-    {"gracz": "Leon Bailey", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w weekend", "do": "2026-11-27"}
+    {"gracz": "Leon Bailey", "rola": "atak", "waga": 1.0, "powod": "naciągnięcie mięśnia, poza kadrą (2-3 tyg.)", "do": "2026-11-27"},
+    {"gracz": "Santiago Hezze", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Gustavo Puerta", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Chiquinho", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Ayoub El Kaabi", "rola": "atak", "waga": 1.0, "powod": "poza kadrą; złamanie nogi wg Khelnow (Yahoo: brak uprawnienia)", "do": "2026-11-27"},
+    {"gracz": "Yusuf Yazici", "rola": "pomoc", "waga": 1.0, "powod": "poza kadrą; więzadło krzyżowe wg Khelnow (Yahoo: brak uprawnienia)", "do": "2026-11-27"}
   ],
   "AC Milan": [
-    {"gracz": "Luka Modrić", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"},
-    {"gracz": "Strahinja Pavlović", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"}
+    {"gracz": "Luka Modrić", "rola": "pomoc", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"},
+    {"gracz": "Strahinja Pavlović", "rola": "obrona", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"},
+    {"gracz": "Davide Bartesaghi", "rola": "obrona", "waga": 1.0, "powod": "zapalenie ścięgna prawej nogi", "do": "2026-11-27"},
+    {"gracz": "Francesco Camarda", "rola": "atak", "waga": 1.0, "powod": "dolegliwości kostki", "do": "2026-11-27"},
+    {"gracz": "Alexis Saelemaekers", "rola": "?", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"},
+    {"gracz": "Matteo Gabbia", "rola": "obrona", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"},
+    {"gracz": "Pietro Terracciano", "rola": "bramkarz", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"},
+    {"gracz": "Samuel Chukwueze", "rola": "atak", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"},
+    {"gracz": "Ruben Loftus-Cheek", "rola": "pomoc", "waga": 1.0, "powod": "długotrwała kontuzja", "do": "2026-11-27"}
   ],
   "AFC Bournemouth": [
-    {"gracz": "Juanlu Sánchez", "rola": "?", "waga": 1.0, "powod": "poza kadrą", "do": "2026-11-27"}
+    {"gracz": "Juanlu Sánchez", "rola": "obrona", "waga": 1.0, "powod": "poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Julián Araujo", "rola": "obrona", "waga": 1.0, "powod": "uraz uda", "do": "2026-11-27"},
+    {"gracz": "Alex Tóth", "rola": "pomoc", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-27"},
+    {"gracz": "Veljko Milosavljević", "rola": "obrona", "waga": 0.9, "powod": "uraz uda (dane FPL)", "do": "2026-11-27"}
   ],
   "Besiktas": [
-    {"gracz": "Umit Akdag", "rola": "?", "waga": 1.0, "powod": "zawieszony za kartki", "do": "2026-11-27"}
+    {"gracz": "Umit Akdag", "rola": "obrona", "waga": 1.0, "powod": "zawieszony za kartki", "do": "2026-11-27"},
+    {"gracz": "Emmanuel Agbadou", "rola": "obrona", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Milot Rashica", "rola": "atak", "waga": 1.0, "powod": "niezgłoszony do Ligi Europy", "do": "2026-11-27"}
   ],
   "Hapoel Be'er Sheva": [
-    {"gracz": "Eliel Peretz", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"}
+    {"gracz": "Eliel Peretz", "rola": "pomoc", "waga": 0.7, "powod": "uraz pachwiny; Walla: z drużyną, nie zacznie", "do": "2026-11-27"},
+    {"gracz": "Ofir Marciano", "rola": "bramkarz", "waga": 1.0, "powod": "uraz łydki", "do": "2026-11-27"},
+    {"gracz": "Lucas Ventura", "rola": "?", "waga": 1.0, "powod": "kontuzja, został w Izraelu", "do": "2026-11-27"},
+    {"gracz": "Dan Biton", "rola": "pomoc", "waga": 1.0, "powod": "problem medyczny", "do": "2026-11-27"},
+    {"gracz": "Itay Rotman", "rola": "?", "waga": 0.9, "powod": "poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Matan Baltaxa", "rola": "obrona", "waga": 0.4, "powod": "występ wątpliwy", "do": "2026-11-27"},
+    {"gracz": "Stoyanov", "rola": "?", "waga": 0.5, "powod": "wymieniony jako brak (Ajansspor)", "do": "2026-11-27"}
   ],
   "Marseille": [
-    {"gracz": "Pierre-Emile Højbjerg", "rola": "?", "waga": 0.4, "powod": "po chorobie, klub liczy na jego występ", "do": "2026-11-27"}
+    {"gracz": "Emerson Palmieri", "rola": "obrona", "waga": 1.0, "powod": "kolano, powrót do treningów", "do": "2026-11-27"},
+    {"gracz": "Derek Cornelius", "rola": "obrona", "waga": 1.0, "powod": "uraz biodra/uda, rehabilitacja", "do": "2026-11-27"},
+    {"gracz": "Timothy Weah", "rola": "?", "waga": 0.9, "powod": "wypadł w ostatniej chwili", "do": "2026-11-27"},
+    {"gracz": "Geoffrey Kondogbia", "rola": "pomoc", "waga": 0.8, "powod": "wypadł w ostatniej chwili (inne źródło widzi go jako rezerwową opcję)", "do": "2026-11-27"}
   ],
   "Sunderland": [
-    {"gracz": "Dan Ballard", "rola": "?", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
-    {"gracz": "Brian Brobbey", "rola": "?", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
-    {"gracz": "Granit Xhaka", "rola": "?", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"}
+    {"gracz": "Dan Ballard", "rola": "obrona", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Brian Brobbey", "rola": "atak", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Granit Xhaka", "rola": "pomoc", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Habib Diarra", "rola": "pomoc", "waga": 1.0, "powod": "uraz mięśniowy", "do": "2026-11-27"},
+    {"gracz": "Romaine Mundle", "rola": "atak", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-27"}
   ],
   "Sparta Prague": [
-    {"gracz": "Tobias Guddal", "rola": "?", "waga": 1.0, "powod": "zawieszony za kartki", "do": "2026-11-27"}
+    {"gracz": "Tobias Guddal", "rola": "?", "waga": 1.0, "powod": "zawieszony za kartki", "do": "2026-11-27"},
+    {"gracz": "Magnus Kofod Andersen", "rola": "?", "waga": 1.0, "powod": "problemy zdrowotne", "do": "2026-11-27"},
+    {"gracz": "Ondřej Penxa", "rola": "?", "waga": 1.0, "powod": "problemy zdrowotne", "do": "2026-11-27"},
+    {"gracz": "Emmanuel Uchenna", "rola": "?", "waga": 1.0, "powod": "problemy zdrowotne", "do": "2026-11-27"},
+    {"gracz": "Adam Karabec", "rola": "?", "waga": 1.0, "powod": "problemy zdrowotne", "do": "2026-11-27"},
+    {"gracz": "Matěj Ryneš", "rola": "?", "waga": 1.0, "powod": "problemy zdrowotne", "do": "2026-11-27"},
+    {"gracz": "Santiago Eneme", "rola": "?", "waga": 0.6, "powod": "problemy zdrowotne; ČTK: niepewny, Livesport: nieobecny", "do": "2026-11-27"},
+    {"gracz": "Hugo Sochůrek", "rola": "?", "waga": 0.6, "powod": "problemy zdrowotne; ČTK: niepewny, Livesport: nieobecny", "do": "2026-11-27"}
   ],
   "AZ Alkmaar": [
     {"gracz": "Lewis Schouten", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"},
     {"gracz": "Kees Smit", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"},
-    {"gracz": "Weslley Patati", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"}
+    {"gracz": "Weslley Patati", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-27"},
+    {"gracz": "Mexx Meerdink", "rola": "?", "waga": 1.0, "powod": "niezdolny do gry", "do": "2026-11-27"},
+    {"gracz": "Elijah Dijkstra", "rola": "?", "waga": 1.0, "powod": "niezdolny do gry", "do": "2026-11-27"},
+    {"gracz": "Stije Resink", "rola": "?", "waga": 1.0, "powod": "nieobecny (kontuzja)", "do": "2026-11-27"},
+    {"gracz": "Jizz Hornkamp", "rola": "?", "waga": 1.0, "powod": "nieobecny (kontuzja)", "do": "2026-11-27"}
   ],
   "Jablonec": [
-    {"gracz": "Jan Hanuš", "rola": "bramkarz", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"}
+    {"gracz": "Jan Hanuš", "rola": "bramkarz", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Kevin-Prince Milla", "rola": "?", "waga": 0.3, "powod": "kontuzja wg Tipsterio; trener: poza Hanušem wszyscy zdrowi", "do": "2026-11-27"}
   ],
   "Lugano": [
-    {"gracz": "Hannes Delcroix", "rola": "obrona", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"}
+    {"gracz": "Hannes Delcroix", "rola": "obrona", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Claudio Cassano", "rola": "?", "waga": 0.7, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-27"},
+    {"gracz": "David von Ballmoos", "rola": "bramkarz", "waga": 0.4, "powod": "problemy z plecami, niepewny", "do": "2026-11-27"},
+    {"gracz": "Dereck Moncada", "rola": "?", "waga": 0.4, "powod": "uraz kostki, niepewny", "do": "2026-11-27"}
   ],
   "KAA Gent": [
-    {"gracz": "Mouhamed El Bachir Ngom", "rola": "?", "waga": 0.7, "powod": "na liście kontuzjowanych", "do": "2026-11-27"},
-    {"gracz": "Christian Burgess", "rola": "?", "waga": 0.7, "powod": "na liście kontuzjowanych", "do": "2026-11-27"}
+    {"gracz": "Mouhamed El Bachir Ngom", "rola": "?", "waga": 1.0, "powod": "niedostępny (kontuzja)", "do": "2026-11-27"},
+    {"gracz": "Christian Burgess", "rola": "obrona", "waga": 1.0, "powod": "niedostępny (kontuzja)", "do": "2026-11-27"},
+    {"gracz": "László Bénes", "rola": "pomoc", "waga": 1.0, "powod": "uraz stopy", "do": "2026-11-27"},
+    {"gracz": "Tibe De Vlieger", "rola": "?", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-27"},
+    {"gracz": "Michel-Ange Balikwisha", "rola": "?", "waga": 1.0, "powod": "niedostępny (kontuzja)", "do": "2026-11-27"},
+    {"gracz": "Ayinde", "rola": "?", "waga": 1.0, "powod": "niedostępny (kontuzja)", "do": "2026-11-27"},
+    {"gracz": "Pieter Gerkens", "rola": "pomoc", "waga": 0.5, "powod": "niedostępny wg 22.11, brak na liście z 26.11", "do": "2026-11-27"}
   ],
   "Red Star Belgrade": [
-    {"gracz": "Timi Elšnik", "rola": "?", "waga": 0.7, "powod": "prawdopodobnie nie zagra", "do": "2026-11-27"},
-    {"gracz": "Bamba Dieng", "rola": "?", "waga": 0.7, "powod": "prawdopodobnie nie zagra", "do": "2026-11-27"},
-    {"gracz": "Aleksandar Katai", "rola": "pomoc", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-27"}
+    {"gracz": "Timi Elšnik", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja, nie poleciał", "do": "2026-11-27"},
+    {"gracz": "Bamba Dieng", "rola": "atak", "waga": 1.0, "powod": "kontuzja (mięsień uda)", "do": "2026-11-27"},
+    {"gracz": "Aleksandar Katai", "rola": "pomoc", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-27"},
+    {"gracz": "Derrick Luckassen", "rola": "obrona", "waga": 1.0, "powod": "kontuzja, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Marko Arnautović", "rola": "atak", "waga": 0.3, "powod": "po chorobie, w kadrze, występ niepewny", "do": "2026-11-27"}
   ],
   "Ferencvaros": [
-    {"gracz": "Bamidele Yusuf", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"}
+    {"gracz": "Bamidele Yusuf", "rola": "atak", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"},
+    {"gracz": "Bence Otvos", "rola": "pomoc", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Dániel Radnóti", "rola": "?", "waga": 0.7, "powod": "uraz mięśnia brzucha (jedno źródło)", "do": "2026-11-27"},
+    {"gracz": "Franko Kovacevic", "rola": "atak", "waga": 0.3, "powod": "RTV SLO: raczej poza kadrą; M4 Sport: wrócił po urazie", "do": "2026-11-27"}
   ],
   "Torreense": [
-    {"gracz": "Adama Baradji", "rola": "?", "waga": 1.0, "powod": "niedostępny", "do": "2026-11-27"}
+    {"gracz": "Adama Baradji", "rola": "?", "waga": 1.0, "powod": "niedostępny", "do": "2026-11-27"},
+    {"gracz": "Jorge Aguirre", "rola": "?", "waga": 1.0, "powod": "zawieszenie po czerwonej kartce", "do": "2026-11-27"},
+    {"gracz": "Lucas Paes", "rola": "bramkarz", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Nuha Jatta", "rola": "pomoc", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Malik", "rola": "?", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"}
   ],
   "Heart of Midlothian": [
-    {"gracz": "Stephen Kingsley", "rola": "?", "waga": 0.7, "powod": "kontuzja", "do": "2026-11-27"},
-    {"gracz": "Tómás Magnússon", "rola": "?", "waga": 0.7, "powod": "kontuzja", "do": "2026-11-27"}
+    {"gracz": "Stephen Kingsley", "rola": "obrona", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Tómás Magnússon", "rola": "?", "waga": 0.9, "powod": "kontuzja, raczej nie zagra", "do": "2026-11-27"},
+    {"gracz": "Harry Milne", "rola": "obrona", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-27"},
+    {"gracz": "Tom Renaud", "rola": "?", "waga": 1.0, "powod": "kontuzja kostki", "do": "2026-11-27"},
+    {"gracz": "Craig Halkett", "rola": "obrona", "waga": 1.0, "powod": "brak: kontuzja / nieuprawniony (źródła różne)", "do": "2026-11-27"},
+    {"gracz": "Elton Kabangu", "rola": "atak", "waga": 1.0, "powod": "nieuprawniony do gry", "do": "2026-11-27"},
+    {"gracz": "Calvin Miller", "rola": "?", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Malachi Fagan-Walcott", "rola": "obrona", "waga": 0.9, "powod": "kontuzja, raczej nie zagra", "do": "2026-11-27"},
+    {"gracz": "Oisin McEntee", "rola": "?", "waga": 0.9, "powod": "kontuzja, raczej nie zagra", "do": "2026-11-27"},
+    {"gracz": "Blair Spittal", "rola": "pomoc", "waga": 0.9, "powod": "kontuzja, raczej nie zagra", "do": "2026-11-27"}
   ],
   "AS Monaco": [
-    {"gracz": "Aleksandr Golovin", "rola": "?", "waga": 0.4, "powod": "uraz w sobotnim meczu", "do": "2026-11-27"},
-    {"gracz": "Christian Mawissa", "rola": "?", "waga": 0.4, "powod": "uraz w sobotnim meczu", "do": "2026-11-27"}
+    {"gracz": "Aleksandr Golovin", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Christian Mawissa", "rola": "?", "waga": 0.4, "powod": "uraz w sobotnim meczu", "do": "2026-11-27"},
+    {"gracz": "Ansu Fati", "rola": "atak", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Stanis Idumbo", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Paris Brunner", "rola": "atak", "waga": 1.0, "powod": "uraz mięśnia dwugłowego uda", "do": "2026-11-27"},
+    {"gracz": "Philipp Köhn", "rola": "bramkarz", "waga": 1.0, "powod": "dolegliwości mięśniowe", "do": "2026-11-27"},
+    {"gracz": "Mohammed Salisu", "rola": "obrona", "waga": 1.0, "powod": "dolegliwości lewego kolana", "do": "2026-11-27"}
   ],
   "Inter Club d'Escaldes": [
     {"gracz": "Domi Berlanga", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-27"}
   ],
   "FC Copenhagen": [
-    {"gracz": "Diant Ramaj", "rola": "bramkarz", "waga": 0.8, "powod": "uraz w weekend, spodziewana absencja", "do": "2026-11-27"}
+    {"gracz": "Diant Ramaj", "rola": "bramkarz", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Magnus Mattsson", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja (więzadło krzyżowe)", "do": "2026-11-27"},
+    {"gracz": "Marvin Nasnas", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Andreas Cornelius", "rola": "atak", "waga": 1.0, "powod": "został w Kopenhadze (nie kontuzja)", "do": "2026-11-27"},
+    {"gracz": "Asger Sørensen", "rola": "obrona", "waga": 1.0, "powod": "został w Kopenhadze (nie kontuzja)", "do": "2026-11-27"},
+    {"gracz": "Thapelo Maseko", "rola": "atak", "waga": 0.3, "powod": "uraz ścięgna udowego wg prasy, ale jest w kadrze", "do": "2026-11-27"}
   ],
   "Panathinaikos": [
-    {"gracz": "Santino Andino", "rola": "?", "waga": 0.4, "powod": "uraz w weekend", "do": "2026-11-27"}
+    {"gracz": "Santino Andino", "rola": "?", "waga": 1.0, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-27"},
+    {"gracz": "Stefan de Vrij", "rola": "obrona", "waga": 1.0, "powod": "uraz nadgarstka, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Giorgos Kyriakopoulos", "rola": "obrona", "waga": 1.0, "powod": "poza kadrą (uraz łydki wg athina984)", "do": "2026-11-27"},
+    {"gracz": "Anass Salah-Eddine", "rola": "obrona", "waga": 1.0, "powod": "niezgłoszony do rozgrywek", "do": "2026-11-27"},
+    {"gracz": "Azzedine Ounahi", "rola": "pomoc", "waga": 1.0, "powod": "poważna kontuzja (więzadło krzyżowe)", "do": "2026-11-27"},
+    {"gracz": "Pavlos Pantelidis", "rola": "?", "waga": 0.9, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Sverrir Ingason", "rola": "obrona", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"}
   ],
   "Hajduk Split": [
     {"gracz": "Abdoulie Sanyang", "rola": "?", "waga": 0.3, "powod": "opuścił weekend, może zagrać", "do": "2026-11-27"},
-    {"gracz": "Marin Šotiček", "rola": "?", "waga": 0.3, "powod": "opuścił weekend, może zagrać", "do": "2026-11-27"}
+    {"gracz": "Marin Šotiček", "rola": "?", "waga": 0.3, "powod": "opuścił weekend, może zagrać", "do": "2026-11-27"},
+    {"gracz": "Marko Livaja", "rola": "atak", "waga": 1.0, "powod": "ból pleców", "do": "2026-11-27"},
+    {"gracz": "Roko Brajković", "rola": "?", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Ivica Ivušić", "rola": "bramkarz", "waga": 0.9, "powod": "nieobecny, wznowił treningi", "do": "2026-11-27"}
   ],
   "CSKA Sofia": [
-    {"gracz": "Léo Pereira", "rola": "?", "waga": 0.8, "powod": "kontuzja", "do": "2026-11-27"}
+    {"gracz": "Léo Pereira", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Teodor Ivanov", "rola": "obrona", "waga": 1.0, "powod": "kontuzja ze zgrupowania kadry", "do": "2026-11-27"},
+    {"gracz": "Barry Cotter", "rola": "obrona", "waga": 1.0, "powod": "niezgłoszony do rozgrywek", "do": "2026-11-27"},
+    {"gracz": "Isak Solet", "rola": "?", "waga": 0.3, "powod": "nie dołączył jeszcze do treningów (stan na 20.11)", "do": "2026-11-27"}
   ],
   "Trabzonspor": [
-    {"gracz": "Franculino", "rola": "?", "waga": 0.4, "powod": "uraz, pod znakiem zapytania", "do": "2026-11-27"}
+    {"gracz": "Franculino", "rola": "atak", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"},
+    {"gracz": "Stefan Savic", "rola": "obrona", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"},
+    {"gracz": "Ernest Muçi", "rola": "?", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"},
+    {"gracz": "Aral Şimşir", "rola": "?", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"},
+    {"gracz": "Tim Jabol-Folcarelli", "rola": "pomoc", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"},
+    {"gracz": "Arseniy Batagov", "rola": "obrona", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"},
+    {"gracz": "Ruslan Malinovskyi", "rola": "pomoc", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"},
+    {"gracz": "Okay Yokuşlu", "rola": "pomoc", "waga": 1.0, "powod": "poza kadrą, w trakcie leczenia", "do": "2026-11-27"}
   ],
   "Nottingham Forest": [
-    {"gracz": "Callum Hudson-Odoi", "rola": "?", "waga": 0.4, "powod": "klub liczy na jego gotowość", "do": "2026-11-28"}
+    {"gracz": "Callum Hudson-Odoi", "rola": "?", "waga": 0.4, "powod": "klub liczy na jego gotowość", "do": "2026-11-28"},
+    {"gracz": "Nicolás Domínguez", "rola": "pomoc", "waga": 1.0, "powod": "uraz mięśniowy", "do": "2026-11-28"},
+    {"gracz": "Nicolò Savona", "rola": "obrona", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-28"},
+    {"gracz": "Igor Jesus", "rola": "atak", "waga": 0.5, "powod": "wg jednego źródła nie zagra (uraz niepodany)", "do": "2026-11-28"},
+    {"gracz": "Neco Williams", "rola": "obrona", "waga": 0.3, "powod": "wątpliwy, uraz kostki", "do": "2026-11-28"}
   ],
   "Levante": [
     {"gracz": "Manu Sánchez", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w meczu z Elche", "do": "2026-11-28"},
@@ -239,75 +368,129 @@
     {"gracz": "Ivan Lima", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-28"}
   ],
   "Gornik Zabrze": [
-    {"gracz": "Sadilek", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-28"},
-    {"gracz": "Sacek", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-28"},
-    {"gracz": "Janża", "rola": "?", "waga": 1.0, "powod": "po operacji", "do": "2026-11-28"}
+    {"gracz": "Sadilek", "rola": "pomoc", "waga": 0.9, "powod": "nie zagra / nie wrócił do treningów", "do": "2026-11-28"},
+    {"gracz": "Sacek", "rola": "?", "waga": 0.9, "powod": "problemy zdrowotne", "do": "2026-11-28"},
+    {"gracz": "Janża", "rola": "obrona", "waga": 1.0, "powod": "po operacji", "do": "2026-11-28"}
   ],
   "Wisla Plock": [
-    {"gracz": "Jimenez", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-28"},
-    {"gracz": "Pacheco", "rola": "?", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-28"}
+    {"gracz": "Jimenez", "rola": "pomoc", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-28"},
+    {"gracz": "Pacheco", "rola": "pomoc", "waga": 1.0, "powod": "nie zagra", "do": "2026-11-28"}
   ],
   "Union St.-Gilloise": [
-    {"gracz": "Kevin Mac Allister", "rola": "?", "waga": 1.0, "powod": "długotrwała absencja", "do": "2026-11-27"},
-    {"gracz": "Mateo Biondic", "rola": "?", "waga": 1.0, "powod": "długotrwała absencja", "do": "2026-11-27"}
+    {"gracz": "Kevin Mac Allister", "rola": "obrona", "waga": 1.0, "powod": "długotrwała absencja", "do": "2026-11-27"},
+    {"gracz": "Mateo Biondic", "rola": "atak", "waga": 1.0, "powod": "długotrwała absencja", "do": "2026-11-27"},
+    {"gracz": "Nikki Havenaar", "rola": "obrona", "waga": 1.0, "powod": "uraz łydki", "do": "2026-11-27"},
+    {"gracz": "Vic Chambaere", "rola": "bramkarz", "waga": 0.7, "powod": "uraz na treningu 24.11", "do": "2026-11-27"}
   ],
   "Real Sociedad": [
-    {"gracz": "Ander Barrenetxea", "rola": "?", "waga": 1.0, "powod": "uraz mięśnia dwugłowego uda", "do": "2026-11-27"}
+    {"gracz": "Ander Barrenetxea", "rola": "atak", "waga": 1.0, "powod": "uraz mięśnia dwugłowego uda", "do": "2026-11-27"},
+    {"gracz": "Jon Aramburu", "rola": "obrona", "waga": 1.0, "powod": "uraz biodra, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Alvaro Odriozola", "rola": "obrona", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-27"},
+    {"gracz": "Yangel Herrera", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"}
   ],
   "Lyon": [
-    {"gracz": "Camil Jebara", "rola": "?", "waga": 0.4, "powod": "występ niepewny", "do": "2026-11-27"}
+    {"gracz": "Camil Jebara", "rola": "?", "waga": 0.4, "powod": "występ niepewny", "do": "2026-11-27"},
+    {"gracz": "Pavel Šulc", "rola": "pomoc", "waga": 1.0, "powod": "po operacji (kolano)", "do": "2026-11-27"},
+    {"gracz": "Tyler Morton", "rola": "pomoc", "waga": 1.0, "powod": "po operacji przywodzicieli", "do": "2026-11-27"},
+    {"gracz": "Mohamed Ouédraogo", "rola": "?", "waga": 1.0, "powod": "uraz kolana, wiele miesięcy", "do": "2026-11-27"},
+    {"gracz": "Clinton Mata", "rola": "obrona", "waga": 1.0, "powod": "lekki uraz mięśniowy", "do": "2026-11-27"},
+    {"gracz": "Mads Bidstrup", "rola": "pomoc", "waga": 1.0, "powod": "lekki uraz", "do": "2026-11-27"}
   ],
   "Ararat-Armenia": [
     {"gracz": "João Bravim", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-27"}
   ],
   "NEC Nijmegen": [
-    {"gracz": "Perr Schuurs", "rola": "obrona", "waga": 0.7, "powod": "nie gra od urazu w 4. kolejce", "do": "2026-11-27"}
+    {"gracz": "Perr Schuurs", "rola": "obrona", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Bram Nuytinck", "rola": "obrona", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Philippe Sandler", "rola": "obrona", "waga": 1.0, "powod": "kontuzja, nie trenował z grupą", "do": "2026-11-27"},
+    {"gracz": "Emre Mor", "rola": "?", "waga": 1.0, "powod": "zawiesił karierę", "do": "2026-11-27"}
   ],
   "Rennes": [
-    {"gracz": "Valentin Rongier", "rola": "?", "waga": 0.7, "powod": "prawdopodobnie nie zagra", "do": "2026-11-27"},
-    {"gracz": "Przemysław Frankowski", "rola": "obrona", "waga": 0.7, "powod": "prawdopodobnie nie zagra", "do": "2026-11-27"}
+    {"gracz": "Valentin Rongier", "rola": "pomoc", "waga": 0.9, "powod": "kontuzja (But: niepewny; Ouest-France: nieobecny)", "do": "2026-11-27"},
+    {"gracz": "Przemysław Frankowski", "rola": "obrona", "waga": 0.8, "powod": "kontuzja (jedno źródło)", "do": "2026-11-27"},
+    {"gracz": "Mahdi Camara", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"}
   ],
   "OFI Crete": [
-    {"gracz": "Kenan Kodro", "rola": "?", "waga": 0.4, "powod": "uraz, opuścił weekendowy mecz", "do": "2026-11-27"},
-    {"gracz": "Krešimir Krizmanić", "rola": "?", "waga": 0.4, "powod": "uraz, opuścił weekendowy mecz", "do": "2026-11-27"}
+    {"gracz": "Kenan Kodro", "rola": "atak", "waga": 1.0, "powod": "kontuzja, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Krešimir Krizmanić", "rola": "obrona", "waga": 0.3, "powod": "w kadrze, ale bez pełnej formy po urazie", "do": "2026-11-27"},
+    {"gracz": "Achilleas Pougouras", "rola": "obrona", "waga": 1.0, "powod": "operacja wyrostka", "do": "2026-11-27"},
+    {"gracz": "Borja González", "rola": "?", "waga": 1.0, "powod": "uraz mięśnia czworogłowego", "do": "2026-11-27"},
+    {"gracz": "Aaron Leya Iseka", "rola": "atak", "waga": 1.0, "powod": "kontuzja, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Nikos Marinakis", "rola": "?", "waga": 1.0, "powod": "poza kadrą; uraz wg Sports Mole", "do": "2026-11-27"},
+    {"gracz": "Konstantinos Lagoudakis", "rola": "?", "waga": 1.0, "powod": "poza kadrą; uraz wg Sports Mole", "do": "2026-11-27"},
+    {"gracz": "Emmanouil Chnaris", "rola": "?", "waga": 1.0, "powod": "poza kadrą; uraz wg Sports Mole", "do": "2026-11-27"}
   ],
   "TSG Hoffenheim": [
-    {"gracz": "Nathan De Cata", "rola": "pomoc", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"}
+    {"gracz": "Nathan De Cat", "rola": "pomoc", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Valentin Gendrey", "rola": "obrona", "waga": 1.0, "powod": "uraz nogi/kostki", "do": "2026-11-27"},
+    {"gracz": "Albian Hajdari", "rola": "obrona", "waga": 1.0, "powod": "uraz stopy", "do": "2026-11-27"},
+    {"gracz": "Robin Hranac", "rola": "obrona", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-27"},
+    {"gracz": "Wimmer", "rola": "?", "waga": 0.8, "powod": "uraz ścięgna udowego (tylko Bundesliga.com)", "do": "2026-11-27"}
   ],
   "Sturm Graz": [
-    {"gracz": "Daniil Khudyakov", "rola": "bramkarz", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"}
+    {"gracz": "Daniil Khudyakov", "rola": "bramkarz", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Leon Grgic", "rola": "atak", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-27"},
+    {"gracz": "Otar Kiteishvili", "rola": "pomoc", "waga": 1.0, "powod": "uraz łydki", "do": "2026-11-27"},
+    {"gracz": "Filip Rozga", "rola": "?", "waga": 1.0, "powod": "uraz mięśniowy", "do": "2026-11-27"},
+    {"gracz": "Paul-Friedrich Koller", "rola": "obrona", "waga": 0.4, "powod": "niepewny, choroba", "do": "2026-11-27"}
   ],
   "Ajax Amsterdam": [
-    {"gracz": "Viktor Tsygankov", "rola": "?", "waga": 0.5, "powod": "może nie zagrać", "do": "2026-11-27"},
-    {"gracz": "Caio Henrique", "rola": "?", "waga": 0.4, "powod": "uraz, może nie zagrać", "do": "2026-11-27"},
-    {"gracz": "Jorthy Mokio", "rola": "?", "waga": 0.4, "powod": "uraz, może nie zagrać", "do": "2026-11-27"}
+    {"gracz": "Viktor Tsygankov", "rola": "atak", "waga": 1.0, "powod": "kontuzja, jeszcze niegotowy", "do": "2026-11-27"},
+    {"gracz": "Caio Henrique", "rola": "obrona", "waga": 1.0, "powod": "uraz, nie trenuje z grupą", "do": "2026-11-27"},
+    {"gracz": "Jorthy Mokio", "rola": "?", "waga": 1.0, "powod": "złamana kość podudzia (strzałka)", "do": "2026-11-27"},
+    {"gracz": "Simon Adingra", "rola": "atak", "waga": 1.0, "powod": "uraz kostki, jeszcze niegotowy", "do": "2026-11-27"},
+    {"gracz": "Kasper Dolberg", "rola": "atak", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-27"},
+    {"gracz": "Yves Bissouma", "rola": "pomoc", "waga": 1.0, "powod": "nieuprawniony w Lidze Konferencji", "do": "2026-11-27"}
   ],
   "Borac Banja Luka": [
     {"gracz": "Branimir Cipetić", "rola": "?", "waga": 0.4, "powod": "może nie zagrać", "do": "2026-11-27"},
     {"gracz": "Anderson Esiti", "rola": "?", "waga": 0.4, "powod": "może nie zagrać", "do": "2026-11-27"},
     {"gracz": "Ante Roguljić", "rola": "?", "waga": 0.4, "powod": "może nie zagrać", "do": "2026-11-27"},
-    {"gracz": "Stefan Savić", "rola": "?", "waga": 0.4, "powod": "może nie zagrać", "do": "2026-11-27"}
+    {"gracz": "Stefan Savić", "rola": "?", "waga": 1.0, "powod": "nieobecny, problemy zdrowotne (wg trenera)", "do": "2026-11-27"},
+    {"gracz": "Jakšić", "rola": "?", "waga": 1.0, "powod": "nieobecny, problemy zdrowotne (wg trenera)", "do": "2026-11-27"},
+    {"gracz": "Perić", "rola": "?", "waga": 1.0, "powod": "nieobecny, problemy zdrowotne (wg trenera)", "do": "2026-11-27"}
   ],
   "Pafos": [
-    {"gracz": "Lelê", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"}
+    {"gracz": "Lelê", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"},
+    {"gracz": "Moumi Ngamaleu", "rola": "?", "waga": 1.0, "powod": "kontuzja, zastąpiony na liście UEFA", "do": "2026-11-27"},
+    {"gracz": "Biel", "rola": "?", "waga": 0.4, "powod": "występ wątpliwy", "do": "2026-11-27"},
+    {"gracz": "Jajá", "rola": "?", "waga": 0.7, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-27"},
+    {"gracz": "Jay Gorter", "rola": "bramkarz", "waga": 0.7, "powod": "kontuzja barku (jedno źródło)", "do": "2026-11-27"}
   ],
   "FC Midtjylland": [
-    {"gracz": "Kjell Wätjen", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"},
-    {"gracz": "Nordin Bakker", "rola": "bramkarz", "waga": 0.7, "powod": "na liście kontuzjowanych", "do": "2026-11-27"},
-    {"gracz": "Denil Castillo", "rola": "?", "waga": 0.7, "powod": "na liście kontuzjowanych", "do": "2026-11-27"}
+    {"gracz": "Kjell Wätjen", "rola": "pomoc", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-27"},
+    {"gracz": "Nordin Bakker", "rola": "bramkarz", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Denil Castillo", "rola": "pomoc", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "David Martínez", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Philip Billing", "rola": "pomoc", "waga": 1.0, "powod": "choroba", "do": "2026-11-27"}
   ],
   "Getafe": [
-    {"gracz": "Sebastián Boselli", "rola": "?", "waga": 0.4, "powod": "uraz, opuścił weekendowy mecz", "do": "2026-11-27"}
+    {"gracz": "Sebastián Boselli", "rola": "obrona", "waga": 1.0, "powod": "uraz, nie poleciał do Gruzji", "do": "2026-11-27"},
+    {"gracz": "Abdel Abqar", "rola": "obrona", "waga": 1.0, "powod": "kolano, poza kadrą", "do": "2026-11-27"},
+    {"gracz": "Daniel Carvajal", "rola": "obrona", "waga": 1.0, "powod": "kontuzja, niezgłoszony do pucharów", "do": "2026-11-27"},
+    {"gracz": "Juanmi Jiménez", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana, niezgłoszony", "do": "2026-11-27"},
+    {"gracz": "Christantus Uche", "rola": "?", "waga": 1.0, "powod": "więzadło krzyżowe i łąkotka, niezgłoszony", "do": "2026-11-27"}
   ],
   "Brann": [
-    {"gracz": "Jacob Sørensen", "rola": "?", "waga": 0.7, "powod": "na liście kontuzjowanych", "do": "2026-11-27"}
+    {"gracz": "Jacob Sørensen", "rola": "pomoc", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Eggert Aron Guðmundsson", "rola": "pomoc", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Kjartan Már Kjartansson", "rola": "?", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Sakarias Opsahl", "rola": "?", "waga": 1.0, "powod": "nieobecny", "do": "2026-11-27"},
+    {"gracz": "Sondre Tronstad", "rola": "pomoc", "waga": 1.0, "powod": "nieobecny (więzadło krzyżowe)", "do": "2026-11-27"},
+    {"gracz": "Nana Kwame Boakye", "rola": "?", "waga": 0.4, "powod": "występ wątpliwy", "do": "2026-11-27"}
   ],
   "Mjallby": [
-    {"gracz": "Jacob Bergström", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w weekend", "do": "2026-11-27"},
-    {"gracz": "Ludvig Tidstrand", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w weekend", "do": "2026-11-27"}
+    {"gracz": "Jacob Bergström", "rola": "atak", "waga": 0.7, "powod": "uraz tylnej części uda; źródła: nie zagra / niepewny", "do": "2026-11-27"},
+    {"gracz": "Ludvig Tidstrand", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w weekend", "do": "2026-11-27"},
+    {"gracz": "Villum Dalsgaard", "rola": "?", "waga": 0.7, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Timo Stavitski", "rola": "?", "waga": 0.7, "powod": "kontuzja (wg jednego źródła plecy)", "do": "2026-11-27"},
+    {"gracz": "Mads Enggård", "rola": "?", "waga": 0.7, "powod": "lżejszy uraz, brak", "do": "2026-11-27"},
+    {"gracz": "R. Wallinder", "rola": "?", "waga": 0.4, "powod": "kontuzja (tylko jedno źródło)", "do": "2026-11-27"}
   ],
   "Egnatia": [
-    {"gracz": "Eneo Bitri", "rola": "?", "waga": 1.0, "powod": "nie zagra po czerwonej kartce", "do": "2026-11-27"}
+    {"gracz": "Eneo Bitri", "rola": "?", "waga": 1.0, "powod": "nie zagra po czerwonej kartce", "do": "2026-11-27"},
+    {"gracz": "Eljon Sota", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Soumaila Bakayoko", "rola": "?", "waga": 1.0, "powod": "kontuzja (więzadło krzyżowe)", "do": "2026-11-27"}
   ],
   "RB Salzburg": [
     {"gracz": "Kevin Boma", "rola": "?", "waga": 1.0, "powod": "uraz łydki", "do": "2026-11-27"},
@@ -319,5 +502,198 @@
     {"gracz": "N. Veratschnig", "rola": "?", "waga": 0.8, "powod": "uraz kolana (tylko jedno źródło)", "do": "2026-11-27"},
     {"gracz": "Leandro Morgalla", "rola": "?", "waga": 0.4, "powod": "wątpliwy, uraz barku", "do": "2026-11-27"},
     {"gracz": "Damir Redžić", "rola": "?", "waga": 0.4, "powod": "wątpliwy, uraz uda", "do": "2026-11-27"}
+  ],
+  "Viktoria Plzen": [
+    {"gracz": "Václav Jemelka", "rola": "obrona", "waga": 1.0, "powod": "po operacji kolana", "do": "2026-11-27"}
+  ],
+  "Levski Sofia": [
+    {"gracz": "Serginho", "rola": "pomoc", "waga": 0.9, "powod": "lekki uraz", "do": "2026-11-27"},
+    {"gracz": "Radoslav Kirilov", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Mustapha Sangaré", "rola": "atak", "waga": 0.9, "powod": "kontuzja (wg befoot niezgłoszony do rozgrywek)", "do": "2026-11-27"},
+    {"gracz": "Gašper Trdin", "rola": "?", "waga": 0.7, "powod": "kontuzja", "do": "2026-11-27"}
+  ],
+  "Dinamo Zagreb": [
+    {"gracz": "Robert Mudražija", "rola": "pomoc", "waga": 1.0, "powod": "niedostępny (kontuzja wg Sports Mole; tportal: niezgłoszony)", "do": "2026-11-27"}
+  ],
+  "Omonia Nicosia": [
+    {"gracz": "Mayambela", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Christou", "rola": "?", "waga": 0.9, "powod": "trener na niego nie liczy (powód niepodany)", "do": "2026-11-27"}
+  ],
+  "Lillestrom": [
+    {"gracz": "Espen Bjørnsen Garnås", "rola": "obrona", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-27"},
+    {"gracz": "Daniel Bassi", "rola": "pomoc", "waga": 0.8, "powod": "uraz (Flashscore: niepewny)", "do": "2026-11-27"},
+    {"gracz": "Lars Ranger", "rola": "obrona", "waga": 0.3, "powod": "niepewny wg Flashscore", "do": "2026-11-27"}
+  ],
+  "Celje": [
+    {"gracz": "Pijus Širvys", "rola": "?", "waga": 1.0, "powod": "złamany palec u nogi, koniec rundy", "do": "2026-11-27"}
+  ],
+  "Anderlecht": [
+    {"gracz": "Ilay Camara", "rola": "?", "waga": 0.9, "powod": "choroba (Sports Mole: uraz)", "do": "2026-11-27"},
+    {"gracz": "Lucas Hey", "rola": "obrona", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-27"}
+  ],
+  "Celtic": [
+    {"gracz": "Benjamin Nygren", "rola": "pomoc", "waga": 1.0, "powod": "uraz ścięgna Achillesa, nie poleciał z drużyną", "do": "2026-11-27"},
+    {"gracz": "Mika Baur", "rola": "pomoc", "waga": 1.0, "powod": "dłuższa kontuzja (kostka)", "do": "2026-11-27"},
+    {"gracz": "Alistair Johnston", "rola": "obrona", "waga": 0.9, "powod": "kontuzja nogi", "do": "2026-11-27"}
+  ],
+  "Kairat Almaty": [
+    {"gracz": "Jorginho", "rola": "atak", "waga": 0.7, "powod": "długotrwała kontuzja kolana (więzadła)", "do": "2026-11-27"},
+    {"gracz": "João Paulo", "rola": "?", "waga": 0.5, "powod": "kontuzja (tylko jedno źródło)", "do": "2026-11-27"}
+  ],
+  "Kauno Zalgiris": [
+    {"gracz": "Fabien Ourega", "rola": "?", "waga": 0.7, "powod": "nie zagra: zawieszenie wg jednego źródła, 'urlop specjalny' wg innego", "do": "2026-11-27"},
+    {"gracz": "Léo Ribeiro", "rola": "?", "waga": 0.7, "powod": "nie zagra: zawieszenie wg jednego źródła, 'urlop specjalny' wg innego", "do": "2026-11-27"}
+  ],
+  "Riga FC": [
+    {"gracz": "Renars Varslavans", "rola": "?", "waga": 0.7, "powod": "kontuzja więzadła krzyżowego", "do": "2026-11-27"},
+    {"gracz": "Orlando Galo", "rola": "pomoc", "waga": 0.6, "powod": "kontuzja (tylko jedno źródło)", "do": "2026-11-27"}
+  ],
+  "Lincoln Red Imps": [
+    {"gracz": "Julliani Eersteling", "rola": "?", "waga": 0.4, "powod": "występ niepewny", "do": "2026-11-27"},
+    {"gracz": "Jolley", "rola": "?", "waga": 0.4, "powod": "wątpliwości co do formy fizycznej", "do": "2026-11-27"}
+  ],
+  "Thun": [
+    {"gracz": "Mattias Käit", "rola": "pomoc", "waga": 0.7, "powod": "problemy z plecami / uraz", "do": "2026-11-27"},
+    {"gracz": "Furkan Dursun", "rola": "atak", "waga": 0.6, "powod": "ból dolnej części pleców, niepewny; wg zapowiedzi brak", "do": "2026-11-27"},
+    {"gracz": "Fabio Saiz", "rola": "?", "waga": 0.8, "powod": "kontuzja", "do": "2026-11-27"},
+    {"gracz": "Mats Seiler", "rola": "?", "waga": 0.7, "powod": "kontuzja (jedno źródło)", "do": "2026-11-27"},
+    {"gracz": "Montolio", "rola": "obrona", "waga": 0.6, "powod": "kontuzja (jedno źródło)", "do": "2026-11-27"}
+  ],
+  "Iberia 1999": [
+    {"gracz": "Andria Bartishvili", "rola": "?", "waga": 0.7, "powod": "uraz kostki", "do": "2026-11-27"},
+    {"gracz": "Jean-Marc Tiboué", "rola": "?", "waga": 0.4, "powod": "zszedł z urazem w Kopenhadze, niepewny", "do": "2026-11-27"},
+    {"gracz": "Vakho Bedoshvili", "rola": "?", "waga": 0.4, "powod": "problemy fizyczne, niepewny", "do": "2026-11-27"}
+  ],
+  "AGF": [
+    {"gracz": "Janni Serra", "rola": "atak", "waga": 1.0, "powod": "kolano, nie poleciał do Bergen", "do": "2026-11-27"},
+    {"gracz": "Kevin Yakob", "rola": "pomoc", "waga": 1.0, "powod": "po operacji, poza grą do końca 2026", "do": "2026-11-27"},
+    {"gracz": "Frederik Tingager", "rola": "obrona", "waga": 1.0, "powod": "rehabilitacja, powrót po Nowym Roku", "do": "2026-11-27"},
+    {"gracz": "Nicolai Poulsen", "rola": "pomoc", "waga": 0.6, "powod": "problemy ze ścięgnem Achillesa, wątpliwy/nieobecny", "do": "2026-11-27"},
+    {"gracz": "Jacob Andersen", "rola": "?", "waga": 0.4, "powod": "uraz w meczu z Lyngby, wątpliwy", "do": "2026-11-27"}
+  ],
+  "Universitatea Craiova": [
+    {"gracz": "Assad Al-Hamlawi", "rola": "atak", "waga": 1.0, "powod": "kontuzja, nie poleciał do Anglii", "do": "2026-11-27"},
+    {"gracz": "Pavlo Isenko", "rola": "?", "waga": 0.7, "powod": "nie poleciał (kontuzja / poza listą UEFA)", "do": "2026-11-27"},
+    {"gracz": "Mihnea Rădulescu", "rola": "?", "waga": 0.7, "powod": "nieuprawniony, nie poleciał", "do": "2026-11-27"},
+    {"gracz": "Monday Etim", "rola": "?", "waga": 0.8, "powod": "uraz mięśniowy", "do": "2026-11-27"}
+  ],
+  "FC Nordsjaelland": [
+    {"gracz": "Tobias Salquist", "rola": "obrona", "waga": 1.0, "powod": "choroba, niegotowy", "do": "2026-11-27"},
+    {"gracz": "Souleymane Alio", "rola": "?", "waga": 0.6, "powod": "wątpliwy (inne źródło: kontuzja)", "do": "2026-11-27"},
+    {"gracz": "Araphat Mohammed", "rola": "?", "waga": 0.6, "powod": "kontuzja (tylko agregator)", "do": "2026-11-27"},
+    {"gracz": "Jakob Busk", "rola": "bramkarz", "waga": 0.5, "powod": "kontuzja/wątpliwy (tylko agregator)", "do": "2026-11-27"}
+  ],
+  "Braga": [
+    {"gracz": "Sikou Niakaté", "rola": "obrona", "waga": 1.0, "powod": "zerwane ścięgno Achillesa", "do": "2026-11-27"},
+    {"gracz": "Vítor Carvalho", "rola": "pomoc", "waga": 1.0, "powod": "uraz na ostatnim treningu", "do": "2026-11-27"},
+    {"gracz": "Jonas Wind", "rola": "atak", "waga": 0.4, "powod": "przeciążenie, decyzja po ostatniej ocenie", "do": "2026-11-27"}
+  ],
+  "KuPS": [
+    {"gracz": "Bob Nii Armah", "rola": "?", "waga": 0.5, "powod": "uraz z meczu z Gent", "do": "2026-11-27"}
+  ],
+  "Jagiellonia Bialystok": [
+    {"gracz": "Ousmane Sow", "rola": "?", "waga": 0.3, "powod": "uraz z weekendu, wrócił do treningów", "do": "2026-11-27"}
+  ],
+  "Raków Częstochowa": [
+    {"gracz": "Marko Bulat", "rola": "pomoc", "waga": 1.0, "powod": "uraz stawu skokowego, raczej koniec roku", "do": "2026-11-28"}
+  ],
+  "Widzew Lodz": [
+    {"gracz": "Jusuf Gazibegović", "rola": "obrona", "waga": 1.0, "powod": "zawieszenie za czerwoną kartkę", "do": "2026-11-29"},
+    {"gracz": "Giannis Papanikolaou", "rola": "pomoc", "waga": 0.7, "powod": "uraz mięśniowy, opuścił mecz z Rakowem", "do": "2026-11-29"},
+    {"gracz": "Szymon Czyż", "rola": "pomoc", "waga": 1.0, "powod": "zerwane więzadło, powrót w styczniu", "do": "2026-11-29"},
+    {"gracz": "Carlos Isaac", "rola": "?", "waga": 1.0, "powod": "uraz kolana, powrót wiosną", "do": "2026-11-29"},
+    {"gracz": "Lukas Lerager", "rola": "pomoc", "waga": 1.0, "powod": "zerwany Achilles, powrót najwcześniej w styczniu", "do": "2026-11-29"}
+  ],
+  "Motor Lublin": [
+    {"gracz": "Karol Czubak", "rola": "atak", "waga": 0.5, "powod": "uraz kostek, występ niepewny", "do": "2026-11-29"}
+  ],
+  "Brentford": [
+    {"gracz": "Igor Thiago", "rola": "atak", "waga": 1.0, "powod": "zawieszenie (3 mecze)", "do": "2026-11-29"},
+    {"gracz": "Nathan Collins", "rola": "obrona", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-29"},
+    {"gracz": "Aaron Hickey", "rola": "obrona", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-29"},
+    {"gracz": "Rico Henry", "rola": "obrona", "waga": 0.8, "powod": "uraz biodra/mięśniowy", "do": "2026-11-29"},
+    {"gracz": "Kaye Furo", "rola": "atak", "waga": 0.8, "powod": "kontuzja (nieokreślona)", "do": "2026-11-29"},
+    {"gracz": "Josh Dasilva", "rola": "pomoc", "waga": 0.7, "powod": "wraca po urazie, jeszcze niegotowy", "do": "2026-11-29"},
+    {"gracz": "Antoni Milambo", "rola": "pomoc", "waga": 0.7, "powod": "wraca po urazie kolana, jeszcze niegotowy", "do": "2026-11-29"}
+  ],
+  "Leeds United": [
+    {"gracz": "Mateo Joseph", "rola": "atak", "waga": 1.0, "powod": "długotrwały uraz kolana", "do": "2026-11-29"}
+  ],
+  "Coventry City": [
+    {"gracz": "Taiwo Awoniyi", "rola": "atak", "waga": 0.7, "powod": "uraz kostki, poważnie wątpliwy", "do": "2026-11-29"},
+    {"gracz": "Amenda", "rola": "obrona", "waga": 0.7, "powod": "uraz łydki", "do": "2026-11-29"},
+    {"gracz": "Eccles", "rola": "pomoc", "waga": 0.7, "powod": "uraz kostki", "do": "2026-11-29"},
+    {"gracz": "Ephron Mason-Clark", "rola": "atak", "waga": 0.5, "powod": "uraz kolana, źródła rozbieżne", "do": "2026-11-29"},
+    {"gracz": "Wright", "rola": "?", "waga": 0.6, "powod": "brak formy meczowej", "do": "2026-11-29"},
+    {"gracz": "Woolfenden", "rola": "obrona", "waga": 0.4, "powod": "uraz kolana, wątpliwy", "do": "2026-11-29"},
+    {"gracz": "Caleb Yirenkyi", "rola": "pomoc", "waga": 0.3, "powod": "wątpliwy", "do": "2026-11-29"}
+  ],
+  "Ipswich Town": [
+    {"gracz": "Leif Davis", "rola": "obrona", "waga": 0.4, "powod": "uraz kostki/nogi, wątpliwy", "do": "2026-11-29"}
+  ],
+  "Aston Villa": [
+    {"gracz": "Amadou Onana", "rola": "pomoc", "waga": 1.0, "powod": "zerwane więzadło kolana", "do": "2026-11-29"},
+    {"gracz": "Matteo Ruggeri", "rola": "obrona", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-29"},
+    {"gracz": "Matty Cash", "rola": "obrona", "waga": 0.3, "powod": "wstrząśnienie mózgu, drobna wątpliwość", "do": "2026-11-29"},
+    {"gracz": "Victor Lindelöf", "rola": "obrona", "waga": 0.3, "powod": "choroba, źródła rozbieżne", "do": "2026-11-29"}
+  ],
+  "Real Betis": [
+    {"gracz": "Giovani Lo Celso", "rola": "pomoc", "waga": 0.8, "powod": "stłuczone kolano, bez treningu z grupą", "do": "2026-11-29"},
+    {"gracz": "Dani Ceballos", "rola": "pomoc", "waga": 0.7, "powod": "dolegliwości mięśniowe", "do": "2026-11-29"},
+    {"gracz": "Ez Abde", "rola": "atak", "waga": 0.5, "powod": "nie trenował, przyczyna nieznana", "do": "2026-11-29"},
+    {"gracz": "José Antonio Morante", "rola": "?", "waga": 0.4, "powod": "dopiero wrócił do treningów po urazie", "do": "2026-11-29"}
+  ],
+  "Rayo Vallecano": [
+    {"gracz": "Augusto Batalla", "rola": "bramkarz", "waga": 1.0, "powod": "złamanie piszczeli", "do": "2026-11-29"},
+    {"gracz": "Luiz Felipe", "rola": "obrona", "waga": 1.0, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-29"},
+    {"gracz": "Óscar Valentín", "rola": "pomoc", "waga": 0.5, "powod": "stłuczone kolano, wątpliwy", "do": "2026-11-29"}
+  ],
+  "Malaga": [
+    {"gracz": "Julen Lobete", "rola": "atak", "waga": 1.0, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-29"},
+    {"gracz": "Aarón Ochoa", "rola": "pomoc", "waga": 1.0, "powod": "uraz łąkotki", "do": "2026-11-29"},
+    {"gracz": "Rafita Garrido", "rola": "?", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-29"},
+    {"gracz": "Diego Murillo", "rola": "obrona", "waga": 0.3, "powod": "rozcięty łuk brwiowy, częściowo trenuje", "do": "2026-11-29"}
+  ],
+  "Athletic Club": [
+    {"gracz": "Dani Vivian", "rola": "obrona", "waga": 1.0, "powod": "uraz mięśnia płaszczkowatego", "do": "2026-11-29"},
+    {"gracz": "Gorka Guruzeta", "rola": "atak", "waga": 1.0, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-29"},
+    {"gracz": "Unai Egiluz", "rola": "obrona", "waga": 1.0, "powod": "uraz kolana, bez zgody na grę", "do": "2026-11-29"},
+    {"gracz": "Maroan Sannadi", "rola": "atak", "waga": 0.8, "powod": "uraz ścięgna udowego", "do": "2026-11-29"},
+    {"gracz": "Yeray Álvarez", "rola": "obrona", "waga": 0.5, "powod": "dolegliwości, nie wrócił do grupy", "do": "2026-11-29"},
+    {"gracz": "Álex Berenguer", "rola": "atak", "waga": 0.3, "powod": "opuścił trening, wątpliwy", "do": "2026-11-29"},
+    {"gracz": "Aitor Paredes", "rola": "obrona", "waga": 0.3, "powod": "nie dokończył części zajęć", "do": "2026-11-29"}
+  ],
+  "Elche": [
+    {"gracz": "Rubén Sánchez", "rola": "obrona", "waga": 1.0, "powod": "uraz przywodziciela", "do": "2026-11-29"},
+    {"gracz": "Thomas Lemar", "rola": "pomoc", "waga": 0.8, "powod": "przeciążenie mięśnia dwugłowego, ma odpocząć", "do": "2026-11-29"},
+    {"gracz": "Yago Santiago", "rola": "atak", "waga": 0.7, "powod": "nieobecny na treningu", "do": "2026-11-29"},
+    {"gracz": "Adam Boayar", "rola": "?", "waga": 0.5, "powod": "trenował osobno", "do": "2026-11-29"}
+  ],
+  "Real Madrid": [
+    {"gracz": "Endrick", "rola": "atak", "waga": 1.0, "powod": "uraz przywodziciela", "do": "2026-11-29"},
+    {"gracz": "Rodrygo", "rola": "atak", "waga": 1.0, "powod": "zerwane więzadło krzyżowe i łąkotka", "do": "2026-11-29"},
+    {"gracz": "Raúl Asencio", "rola": "obrona", "waga": 1.0, "powod": "po operacji piszczeli", "do": "2026-11-29"},
+    {"gracz": "Ferland Mendy", "rola": "obrona", "waga": 0.6, "powod": "po długiej przerwie, występ niepewny", "do": "2026-11-29"},
+    {"gracz": "Denzel Dumfries", "rola": "obrona", "waga": 0.3, "powod": "stłuczona kostka", "do": "2026-11-29"},
+    {"gracz": "Jude Bellingham", "rola": "pomoc", "waga": 0.3, "powod": "drobny problem fizyczny", "do": "2026-11-29"}
+  ],
+  "Alavés": [
+    {"gracz": "Hugo Novoa", "rola": "obrona", "waga": 1.0, "powod": "uraz ścięgna udowego", "do": "2026-11-29"},
+    {"gracz": "Facundo Garcés", "rola": "obrona", "waga": 1.0, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-29"},
+    {"gracz": "Mikel Rodríguez", "rola": "pomoc", "waga": 1.0, "powod": "zerwane więzadło krzyżowe", "do": "2026-11-29"},
+    {"gracz": "Abde Rebbach", "rola": "?", "waga": 0.3, "powod": "nieobecny na liście treningowej", "do": "2026-11-29"}
+  ],
+  "Zaglebie Lubin": [
+    {"gracz": "Marcel Reguła", "rola": "?", "waga": 0.4, "powod": "występ pod znakiem zapytania", "do": "2026-11-29"}
+  ],
+  "GKS Katowice": [
+    {"gracz": "Marcin Wasielewski", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-29"},
+    {"gracz": "Aleksander Paluszek", "rola": "?", "waga": 0.8, "powod": "po operacji łąkotki, kilka miesięcy (informacja z 7.10)", "do": "2026-11-29"}
+  ],
+  "Slask Wroclaw": [
+    {"gracz": "Jehor Macenko", "rola": "?", "waga": 0.8, "powod": "poważny uraz kolana (informacja z 11.11)", "do": "2026-11-29"}
+  ],
+  "Wisla Krakow": [
+    {"gracz": "Igbekeme", "rola": "?", "waga": 0.6, "powod": "może pauzować do końca roku (informacja z 16.11)", "do": "2026-11-29"}
   ]
 }
