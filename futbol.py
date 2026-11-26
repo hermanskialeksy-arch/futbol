@@ -1340,7 +1340,7 @@ button{font-family:inherit;color:inherit}
 .hd{display:flex;justify-content:space-between;align-items:center;padding:6px 12px 0}
 .hd b{font-size:17px}.hd span{font-size:11px;color:var(--dim)}
 .tabs{display:flex;padding:2px 6px 0}
-.tabs button{flex:1;padding:8px 2px 7px;border:0;background:none;color:var(--dim);font-size:14.5px;font-weight:600;
+.tabs button{flex:1 1 auto;padding:8px 1px 7px;border:0;background:none;color:var(--dim);font-size:13.5px;font-weight:600;
 border-bottom:3px solid transparent}
 .tabs button.on{color:var(--tx);border-bottom-color:var(--acc)}
 .strip{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
@@ -1471,7 +1471,7 @@ const CAT=[['all','Wszystko'],['1x2','1X2'],['goals','Gole'],['btts','Obie strze
 const POL={over:'powyżej',under:'poniżej'};
 const WD=['ndz','pon','wt','śr','czw','pt','sob'];
 const DAYS=[...new Set(D.matches.map(x=>x.date))].sort();
-const S={per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0,cn:4,cm:'safe',co:1.3};
+const S={per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0,cn:4,cm:'safe',co:1.3,rm:'corners',rr:'all',ro:0,rn:4};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pc=p=>Math.round(p*100)+'%';
@@ -1505,7 +1505,7 @@ const visA=()=>vis().filter(x=>!started(x));
 const badges=x=>(x.nv?`<span class="bd bv">VALUE ×${x.nv}</span>`:'')+(x.na_?`<span class="bd bi">braki ${x.na_}</span>`:'')+(x.low?`<span class="bd bl">mała próba</span>`:'');
 /* ---------- nagłówek: dni i ligi ---------- */
 function bar(){
- let t='';[['matches','Mecze'],['picks','Typy'],['value','Value'],['cpn','Kupon'],['acc','Skuteczność']].forEach(([k,n])=>t+=`<button class="${S.tab===k?'on':''}" data-tab="${k}">${n}</button>`);
+ let t='';[['matches','Mecze'],['picks','Typy'],['mkt','Rynki'],['value','Value'],['cpn','Kupon'],['acc','Skuteczność']].forEach(([k,n])=>t+=`<button class="${S.tab===k?'on':''}" data-tab="${k}">${n}</button>`);
  $('tb').innerHTML=t;
  const showf=S.tab!=='acc';
  $('dy').classList.toggle('hide',!showf);$('lc').classList.toggle('hide',!showf);
@@ -1559,6 +1559,29 @@ function listValue(){const hid=vis().length-visA().length;
  all.sort((a,b)=>b[1][5]-a[1][5]);
  return '<div class="note">Typy, w których model daje przewagę ≥3% nad kursem (kursy: 1X2 oraz Over/Under 2.5 gdy są dostępne). Szansa to średnia z modelu i z kursów bukmachera bez marży (tam, gdzie kursy są po obu stronach rynku), więc skrajne przewagi są ucięte. Backtest pokazuje, że sam model z kursami przynosił stratę – traktuj value jako podpowiedź, nie pewniak.</div>'+
   (hid?`<div class="note">Ukryto ${hid} mecz(e), które już się rozpoczęły.</div>`:'')+(all.length?all.slice(0,80).map(([x,m])=>tipRow(x,m,true)).join(''):'<div class="empty">Brak typów z przewagą.</div>')}
+/* ---------- rynki: wybrany rodzaj zakładu, do 4 typów na mecz ---------- */
+const MKT=[['goals','Gole'],['sot','Celne'],['shots','Strzały'],['corners','Rożne'],['cards','Kartki'],['fouls','Faule'],['offsides','Spalone'],['1x2','Wynik'],['btts','Obie strzelą']];
+const RISK=[['all','Dowolne',0.3,0.93],['low','Niskie',0.7,0.93],['mid','Średnie',0.55,0.7],['high','Wysokie',0.35,0.55]];
+const fam=m=>m[1].split(':')[0];
+function mktPicks(x){const r=RISK.find(v=>v[0]===S.rr)||RISK[0],want=S.rm==='1x2'?['1x2','dc']:[S.rm];
+ const c=x.m.filter(m=>{const p=m[3],o=m[4]||estOdds(p);return want.includes(fam(m))&&p>=r[2]&&p<=r[3]&&o>=S.ro});
+ /* różnorodność: najpierw najlepszy typ z każdej grupy (łącznie/gospodarz/gość × powyżej/poniżej), potem reszta */
+ const key=m=>{const q=pid(m[0]);return q?q.scope+q.dir:fam(m)+':'+m[0]};
+ c.sort((a,b)=>b[3]-a[3]);const seen=new Set(),first=[],rest=[];
+ for(const m of c){const k=key(m);(seen.has(k)?rest:first).push(m);seen.add(k)}
+ return first.concat(rest).slice(0,S.rn).sort((a,b)=>b[3]-a[3])}
+function listMkt(){const hid=vis().length-visA().length;
+ let h='<div class="flt">'+MKT.map(([k,n])=>`<button class="chip${S.rm===k?' on':''}" data-rm="${k}">${n}</button>`).join('')+'</div>';
+ h+='<div class="flt"><span class="note">Ryzyko</span>'+RISK.map(([k,n])=>`<button class="chip${S.rr===k?' on':''}" data-rr="${k}">${n}</button>`).join('')+'</div>';
+ h+='<div class="flt"><span class="note">Kurs min.</span>'+[[0,'dowolny'],[1.3,'1.30'],[1.5,'1.50'],[1.8,'1.80'],[2.2,'2.20']].map(([v,n])=>`<button class="chip${S.ro===v?' on':''}" data-ro="${v}">${n}</button>`).join('')+'</div><div class="flt"><span class="note">Typów na mecz</span>'+[1,2,3,4].map(v=>`<button class="chip${S.rn===v?' on':''}" data-rn="${v}">${v}</button>`).join('')+'</div>';
+ const nm=(MKT.find(v=>v[0]===S.rm)||['',''])[1],r=RISK.find(v=>v[0]===S.rr);
+ h+=`<div class="note">Tylko typy z rynku „${esc(nm)}” – do ${S.rn} na mecz${S.rr!=='all'?`, ryzyko ${r[1].toLowerCase()} (szansa ${Math.round(r[2]*100)}–${Math.round(r[3]*100)}%)`:''}${S.ro?`, kurs min. ${S.ro.toFixed(2)}`:''}. „~” = brak kursu bukmachera, kurs szacowany z szansy modelu. Kliknij mecz, żeby zobaczyć szczegóły.</div>`;
+ if(hid)h+=`<div class="note">Ukryto ${hid} mecz(e), które już się rozpoczęły.</div>`;
+ const ms=visA().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)||a.h.localeCompare(b.h));let n=0;
+ for(const x of ms){const L=mktPicks(x);if(!L.length)continue;n++;
+  h+=`<section class="lgs"><div class="lgh" data-m="${x.i}"><div><small>${dfull(x.date)} ${x.time} · ${esc(x.comp)}</small><b>${esc(x.h)} – ${esc(x.a)}</b></div><span class="car">›</span></div>`+
+  L.map(m=>{const o=m[4];return `<div class="tp ${pcls(m[3])}" data-m="${x.i}"><div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr">${o?'kurs '+o.toFixed(2):'~'+estOdds(m[3]).toFixed(2)}</span>${histTxt(m)}</div></div>`}).join('')+'</section>'}
+ return h+(n?'':'<div class="empty">Brak typów tego rynku dla wybranych filtrów.<br>Zmień ryzyko, kurs albo dzień.</div>')}
 /* ---------- skuteczność (backtest) ---------- */
 const ROIORD=['wszystkie zakłady po kolei','zawsze faworyt modelu','przewaga ≥ 3%','przewaga ≥ 5%','przewaga ≥ 10%'];
 function listAcc(){
@@ -1645,7 +1668,7 @@ async function shareReport(){
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([src],{type:'text/html'}));a.download=name;
  document.body.appendChild(a);a.click();a.remove();toast('Zapisano plik '+name+' w Pobranych – wyślij go znajomym (np. WhatsApp, Messenger, e-mail).')}
 function render(){bar();
- $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():S.tab==='cpn'?listCoupon():listAcc()}
+ $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():S.tab==='mkt'?listMkt():S.tab==='cpn'?listCoupon():listAcc()}
 /* ---------- szczegóły meczu ---------- */
 function groups(x){
  const tri=(ids,tops)=>ids.map((id,k)=>{const m=byId(x,id);return m?cell(tops[k],m):''}).join('');
@@ -1744,7 +1767,7 @@ function route(){
  if(m&&D.matches[+m[1]])detail(+m[1]);
  else{$('det').classList.add('hide');document.body.style.overflow='';render();window.scrollTo(0,S.scroll)}}
 document.addEventListener('click',e=>{
- const t=e.target.closest('[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-co],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
+ const t=e.target.closest('[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-co],[data-rm],[data-rr],[data-ro],[data-rn],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
  const d=t.dataset;
  if(d.share!==undefined){shareReport()}
  else if(d.day!==undefined){S.day=d.day;render()}
@@ -1755,6 +1778,10 @@ document.addEventListener('click',e=>{
  else if(d.cn!==undefined){S.cn=parseInt(d.cn);render()}
  else if(d.cm!==undefined){S.cm=d.cm;render()}
  else if(d.co!==undefined){S.co=+d.co;render()}
+ else if(d.rm!==undefined){S.rm=d.rm;render()}
+ else if(d.rr!==undefined){S.rr=d.rr;render()}
+ else if(d.ro!==undefined){S.ro=+d.ro;render()}
+ else if(d.rn!==undefined){S.rn=parseInt(d.rn);render()}
  else if(d.per!==undefined){S.per=parseInt(d.per);render()}
  else if(d.coll!==undefined){S.coll[d.coll]=!S.coll[d.coll];render()}
  else if(d.dtab!==undefined){S.dtab=d.dtab;const m=location.hash.match(/^#m(\d+)$/);if(m){detail(+m[1]);$('det').scrollTop=0}}
