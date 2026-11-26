@@ -1,59 +1,4 @@
 {
-  "Arsenal": [
-    {"gracz": "David Raya", "rola": "bramkarz", "waga": 0.7, "powod": "uraz w meczu z Newcastle, raczej nie zagra", "do": "2026-11-25"},
-    {"gracz": "Martín Zubimendi", "rola": "pomoc", "waga": 0.5, "powod": "wymieniony jako nieobecny, bez podanej przyczyny", "do": "2026-11-25"}
-  ],
-  "LASK Linz": [
-    {"gracz": "Andrade A.", "rola": "obrona", "waga": 1.0, "powod": "kontuzja kostki", "do": "2026-11-25"},
-    {"gracz": "Bello G.", "rola": "?", "waga": 1.0, "powod": "kontuzja mięśnia", "do": "2026-11-25"},
-    {"gracz": "Cheikne K.", "rola": "?", "waga": 1.0, "powod": "poza kadrą", "do": "2026-11-25"},
-    {"gracz": "Harakate R.", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-25"},
-    {"gracz": "Smakaj A.", "rola": "?", "waga": 1.0, "powod": "poza kadrą", "do": "2026-11-25"},
-    {"gracz": "Flecker F.", "rola": "?", "waga": 0.4, "powod": "występ wątpliwy, kontuzja łydki", "do": "2026-11-25"}
-  ],
-  "PSV Eindhoven": [
-    {"gracz": "Mauro Júnior", "rola": "?", "waga": 0.4, "powod": "zszedł z boiska w 1. połowie, występ pod znakiem zapytania", "do": "2026-11-25"}
-  ],
-  "Feyenoord Rotterdam": [
-    {"gracz": "Anis Hadj Moussa", "rola": "atak", "waga": 0.4, "powod": "wraca po urazie, klub liczy na jego występ", "do": "2026-11-25"}
-  ],
-  "FC Porto": [
-    {"gracz": "William Gomes", "rola": "atak", "waga": 0.4, "powod": "występ wątpliwy, bliski powrotu", "do": "2026-11-25"}
-  ],
-  "Slovan Bratislava": [
-    {"gracz": "Roman Čerepkai", "rola": "?", "waga": 0.8, "powod": "prawdopodobnie nadal nie zagra", "do": "2026-11-25"},
-    {"gracz": "Suleiman Camara", "rola": "?", "waga": 0.8, "powod": "prawdopodobnie nadal nie zagra", "do": "2026-11-25"}
-  ],
-  "Real Betis": [
-    {"gracz": "Antony", "rola": "atak", "waga": 0.4, "powod": "zszedł z boiska w derbach Sewilli", "do": "2026-11-25"},
-    {"gracz": "Dani Ceballos", "rola": "pomoc", "waga": 0.6, "powod": "występ bardzo wątpliwy", "do": "2026-11-25"}
-  ],
-  "RB Leipzig": [
-    {"gracz": "Assan Ouedraogo", "rola": "pomoc", "waga": 1.0, "powod": "pauza do Nowego Roku", "do": "2026-11-25"}
-  ],
-  "Lens": [
-    {"gracz": "Franjo Ivanović", "rola": "atak", "waga": 0.6, "powod": "nie grał w sobotę, klub liczy na powrót", "do": "2026-11-25"}
-  ],
-  "AEK Athens": [
-    {"gracz": "Aboubakary Koita", "rola": "?", "waga": 1.0, "powod": "zawieszony po czerwonej kartce", "do": "2026-11-25"},
-    {"gracz": "Kervin Arriaga", "rola": "?", "waga": 0.4, "powod": "zszedł z boiska w weekend", "do": "2026-11-25"}
-  ],
-  "Galatasaray": [
-    {"gracz": "Victor Osimhen", "rola": "?", "waga": 1.0, "powod": "kontuzja, na liście nieobecnych", "do": "2026-11-25"}
-  ],
-  "Aston Villa": [
-    {"gracz": "Matty Cash", "rola": "?", "waga": 1.0, "powod": "kontuzja z kadry, nie zagra", "do": "2026-11-25"}
-  ],
-  "Manchester City": [
-    {"gracz": "Matheus Nunes", "rola": "?", "waga": 0.4, "powod": "nie grał z Fulham, przyczyna nieznana", "do": "2026-11-25"}
-  ],
-  "Napoli": [
-    {"gracz": "Antonio Vergara", "rola": "?", "waga": 0.7, "powod": "zszedł z urazem w meczu z Torino", "do": "2026-11-25"}
-  ],
-  "Borussia Dortmund": [
-    {"gracz": "Serhou Guirassy", "rola": "?", "waga": 0.4, "powod": "nieobecny w weekend, status niejasny", "do": "2026-11-25"},
-    {"gracz": "Carney Chukwuemeka", "rola": "?", "waga": 0.4, "powod": "nieobecny w weekend, status niejasny", "do": "2026-11-25"}
-  ],
   "Sabah": [
     {"gracz": "A McCarthy", "rola": "?", "waga": 1.0, "powod": "zawieszony", "do": "2026-11-26"}
   ],
@@ -116,11 +61,6 @@
   "Fenerbahçe": [
     {"gracz": "Marco Asensio", "rola": "atak", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
     {"gracz": "Nathan Aké", "rola": "obrona", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"}
-  ],
-  "Bodo/Glimt": [
-    {"gracz": "Evjen H.", "rola": "?", "waga": 1.0, "powod": "kontuzja kolana", "do": "2026-11-25"},
-    {"gracz": "Mikkelsen A.", "rola": "?", "waga": 1.0, "powod": "kontuzja pachwiny", "do": "2026-11-25"},
-    {"gracz": "Sjong I.", "rola": "?", "waga": 1.0, "powod": "kontuzja", "do": "2026-11-25"}
   ],
   "Shakhtar Donetsk": [
     {"gracz": "Eguinaldo", "rola": "?", "waga": 1.0, "powod": "kontuzjowany", "do": "2026-11-26"},
