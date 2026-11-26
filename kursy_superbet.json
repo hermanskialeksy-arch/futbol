@@ -1,3 +1,483 @@
 {
- "_info": "Kursy Superbet.pl (odczyt strony). Klucz: Gospodarz|Gość. Id rynków jak w programie."
+ "_info": "Kursy Superbet.pl (odczyt strony). Klucz: Gospodarz|Gość. Id rynków jak w programie.",
+ "Union St.-Gilloise|Lech Poznan": {
+  "1x2:1": 1.36,
+  "1x2:X": 5.2,
+  "1x2:2": 6.8,
+  "dc:1X": 1.08,
+  "dc:X2": 2.95,
+  "dc:12": 1.14,
+  "btts:yes": 1.7,
+  "btts:no": 2.1
+ },
+ "Viktoria Plzen|Benfica": {
+  "1x2:1": 5.55,
+  "1x2:X": 4.85,
+  "1x2:2": 1.46,
+  "dc:1X": 2.6,
+  "dc:X2": 1.13,
+  "dc:12": 1.15,
+  "btts:yes": 1.59,
+  "btts:no": 2.3
+ },
+ "Marseille|Levski Sofia": {
+  "1x2:1": 1.43,
+  "1x2:X": 4.6,
+  "1x2:2": 6.5,
+  "dc:1X": 1.09,
+  "dc:X2": 2.7,
+  "dc:12": 1.18,
+  "btts:yes": 1.87,
+  "btts:no": 1.88
+ },
+ "Dinamo Zagreb|Bayer Leverkusen": {
+  "1x2:1": 4.35,
+  "1x2:X": 4.1,
+  "1x2:2": 1.67,
+  "dc:1X": 2.12,
+  "dc:X2": 1.19,
+  "dc:12": 1.21,
+  "btts:yes": 1.51,
+  "btts:no": 2.47
+ },
+ "Celta Vigo|AFC Bournemouth": {
+  "1x2:1": 3.55,
+  "1x2:X": 3.4,
+  "1x2:2": 2.02,
+  "dc:1X": 1.74,
+  "dc:X2": 1.27,
+  "dc:12": 1.29,
+  "btts:yes": 1.75,
+  "btts:no": 2.02
+ },
+ "Juventus|Omonia Nicosia": {
+  "1x2:1": 1.17,
+  "1x2:X": 7.2,
+  "1x2:2": 12.0,
+  "dc:1X": 1.03,
+  "dc:X2": 4.45,
+  "dc:12": 1.07,
+  "btts:yes": 2.02,
+  "btts:no": 1.75
+ },
+ "Besiktas|Hapoel Be'er Sheva": {
+  "1x2:1": 1.2,
+  "1x2:X": 6.9,
+  "1x2:2": 10.0,
+  "dc:1X": 1.04,
+  "dc:X2": 4.1,
+  "dc:12": 1.08,
+  "btts:yes": 1.83,
+  "btts:no": 1.92
+ },
+ "Lyon|Lillestrom": {
+  "1x2:1": 1.17,
+  "1x2:X": 7.3,
+  "1x2:2": 12.0,
+  "dc:1X": 1.03,
+  "dc:X2": 4.45,
+  "dc:12": 1.07,
+  "btts:yes": 1.97,
+  "btts:no": 1.78
+ },
+ "Borac Banja Luka|Atalanta": {
+  "1x2:1": 5.8,
+  "1x2:X": 4.9,
+  "1x2:2": 1.43,
+  "dc:1X": 2.67,
+  "dc:X2": 1.12,
+  "dc:12": 1.15,
+  "btts:yes": 1.69,
+  "btts:no": 2.1
+ },
+ "Olympiacos|AC Milan": {
+  "1x2:1": 2.75,
+  "1x2:X": 3.3,
+  "1x2:2": 2.47,
+  "dc:1X": 1.5,
+  "dc:X2": 1.42,
+  "dc:12": 1.3,
+  "btts:yes": 1.64,
+  "btts:no": 2.17
+ },
+ "Crystal Palace|Real Sociedad": {
+  "1x2:1": 2.02,
+  "1x2:X": 3.85,
+  "1x2:2": 3.15,
+  "dc:1X": 1.33,
+  "dc:X2": 1.73,
+  "dc:12": 1.24,
+  "btts:yes": 1.53,
+  "btts:no": 2.42
+ },
+ "Sparta Prague|AZ Alkmaar": {
+  "1x2:1": 2.8,
+  "1x2:X": 3.5,
+  "1x2:2": 2.35,
+  "dc:1X": 1.56,
+  "dc:X2": 1.41,
+  "dc:12": 1.27,
+  "btts:yes": 1.55,
+  "btts:no": 2.37
+ },
+ "Raków Częstochowa|Piast Gliwice": {
+  "1x2:1": 1.85,
+  "1x2:X": 4.0,
+  "1x2:2": 3.85,
+  "dc:1X": 1.26,
+  "dc:X2": 1.97,
+  "dc:12": 1.25,
+  "btts:yes": 1.51,
+  "btts:no": 2.55
+ },
+ "Gornik Zabrze|Wisla Plock": {
+  "1x2:1": 1.47,
+  "1x2:X": 4.6,
+  "1x2:2": 6.4,
+  "dc:1X": 1.12,
+  "dc:X2": 2.67,
+  "dc:12": 1.2,
+  "btts:yes": 1.83,
+  "btts:no": 1.97
+ },
+ "Nottingham Forest|Chelsea": {
+  "1x2:1": 2.5,
+  "1x2:X": 3.25,
+  "1x2:2": 2.75,
+  "dc:1X": 1.42,
+  "dc:X2": 1.49,
+  "dc:12": 1.31,
+  "btts:yes": 1.58,
+  "btts:no": 2.3
+ },
+ "Widzew Lodz|Zaglebie Lubin": {
+  "1x2:1": 1.82,
+  "1x2:X": 3.75,
+  "1x2:2": 4.3,
+  "dc:1X": 1.22,
+  "dc:X2": 2.0,
+  "dc:12": 1.28,
+  "btts:yes": 1.75,
+  "btts:no": 2.05
+ },
+ "Slask Wroclaw|GKS Katowice": {
+  "1x2:1": 2.92,
+  "1x2:X": 3.6,
+  "1x2:2": 2.3,
+  "dc:1X": 1.62,
+  "dc:X2": 1.41,
+  "dc:12": 1.29,
+  "btts:yes": 1.49,
+  "btts:no": 2.6
+ },
+ "Wisla Krakow|Motor Lublin": {
+  "1x2:1": 1.92,
+  "1x2:X": 3.9,
+  "1x2:2": 3.65,
+  "dc:1X": 1.28,
+  "dc:X2": 1.9,
+  "dc:12": 1.26,
+  "btts:yes": 1.49,
+  "btts:no": 2.6
+ },
+ "Manchester United|Brentford": {
+  "1x2:1": 2.1,
+  "1x2:X": 3.6,
+  "1x2:2": 3.2,
+  "dc:1X": 1.32,
+  "dc:X2": 1.69,
+  "dc:12": 1.26,
+  "btts:yes": 1.5,
+  "btts:no": 2.5
+ },
+ "Leeds United|Coventry City": {
+  "1x2:1": 1.46,
+  "1x2:X": 4.5,
+  "1x2:2": 6.1,
+  "dc:1X": 1.11,
+  "dc:X2": 2.57,
+  "dc:12": 1.18,
+  "btts:yes": 1.78,
+  "btts:no": 1.97
+ },
+ "Ipswich Town|Aston Villa": {
+  "1x2:1": 3.55,
+  "1x2:X": 3.65,
+  "1x2:2": 1.95,
+  "dc:1X": 1.8,
+  "dc:X2": 1.27,
+  "dc:12": 1.26,
+  "btts:yes": 1.5,
+  "btts:no": 2.5
+ },
+ "RB Salzburg|Ararat-Armenia": {
+  "1x2:1": 1.16,
+  "1x2:X": 7.6,
+  "1x2:2": 12.0,
+  "dc:1X": 1.02,
+  "dc:X2": 4.6,
+  "dc:12": 1.07,
+  "btts:yes": 1.87,
+  "btts:no": 1.88
+ },
+ "NEC Nijmegen|Rennes": {
+  "1x2:1": 3.0,
+  "1x2:X": 3.75,
+  "1x2:2": 2.12,
+  "dc:1X": 1.67,
+  "dc:X2": 1.36,
+  "dc:12": 1.24,
+  "btts:yes": 1.47,
+  "btts:no": 2.6
+ },
+ "Ferencvaros|Celje": {
+  "1x2:1": 1.36,
+  "1x2:X": 5.1,
+  "1x2:2": 7.0,
+  "dc:1X": 1.08,
+  "dc:X2": 2.95,
+  "dc:12": 1.15,
+  "btts:yes": 1.8,
+  "btts:no": 1.95
+ },
+ "OFI Crete|Anderlecht": {
+  "1x2:1": 4.35,
+  "1x2:X": 3.65,
+  "1x2:2": 1.76,
+  "dc:1X": 2.0,
+  "dc:X2": 1.19,
+  "dc:12": 1.26,
+  "btts:yes": 1.65,
+  "btts:no": 2.17
+ },
+ "TSG Hoffenheim|Sturm Graz": {
+  "1x2:1": 1.33,
+  "1x2:X": 5.6,
+  "1x2:2": 6.9,
+  "dc:1X": 1.08,
+  "dc:X2": 3.1,
+  "dc:12": 1.12,
+  "btts:yes": 1.65,
+  "btts:no": 2.17
+ },
+ "Torreense|Celtic": {
+  "1x2:1": 4.7,
+  "1x2:X": 4.0,
+  "1x2:2": 1.65,
+  "dc:1X": 2.15,
+  "dc:X2": 1.17,
+  "dc:12": 1.22,
+  "btts:yes": 1.58,
+  "btts:no": 2.32
+ },
+ "Kairat Almaty|Mjallby": {
+  "1x2:1": 2.27,
+  "1x2:X": 3.3,
+  "1x2:2": 3.1,
+  "dc:1X": 1.34,
+  "dc:X2": 1.59,
+  "dc:12": 1.31,
+  "btts:yes": 1.72,
+  "btts:no": 2.07
+ },
+ "Jablonec|Lugano": {
+  "1x2:1": 3.25,
+  "1x2:X": 3.7,
+  "1x2:2": 2.05,
+  "dc:1X": 1.73,
+  "dc:X2": 1.31,
+  "dc:12": 1.25,
+  "btts:yes": 1.65,
+  "btts:no": 2.17
+ },
+ "Kauno Zalgiris|Riga FC": {
+  "1x2:1": 3.5,
+  "1x2:X": 3.15,
+  "1x2:2": 2.15,
+  "dc:1X": 1.65,
+  "dc:X2": 1.28,
+  "dc:12": 1.33,
+  "btts:yes": 1.7,
+  "btts:no": 2.1
+ },
+ "Egnatia|Lincoln Red Imps": {
+  "1x2:1": 1.55,
+  "1x2:X": 4.35,
+  "1x2:2": 5.1,
+  "dc:1X": 1.15,
+  "dc:X2": 2.35,
+  "dc:12": 1.19,
+  "btts:yes": 1.7,
+  "btts:no": 2.1
+ },
+ "Heart of Midlothian|AS Monaco": {
+  "1x2:1": 4.55,
+  "1x2:X": 4.1,
+  "1x2:2": 1.65,
+  "dc:1X": 2.15,
+  "dc:X2": 1.18,
+  "dc:12": 1.21,
+  "btts:yes": 1.6,
+  "btts:no": 2.27
+ },
+ "Ajax Amsterdam|Thun": {
+  "1x2:1": 1.17,
+  "1x2:X": 7.7,
+  "1x2:2": 11.0,
+  "dc:1X": 1.03,
+  "dc:X2": 4.5,
+  "dc:12": 1.06,
+  "btts:yes": 1.69,
+  "btts:no": 2.1
+ },
+ "Iberia 1999|Getafe": {
+  "1x2:1": 6.3,
+  "1x2:X": 4.1,
+  "1x2:2": 1.49,
+  "dc:1X": 2.5,
+  "dc:X2": 1.1,
+  "dc:12": 1.21,
+  "btts:yes": 2.22,
+  "btts:no": 1.62
+ },
+ "Pafos|FC Midtjylland": {
+  "1x2:1": 2.92,
+  "1x2:X": 3.45,
+  "1x2:2": 2.27,
+  "dc:1X": 1.58,
+  "dc:X2": 1.37,
+  "dc:12": 1.29,
+  "btts:yes": 1.5,
+  "btts:no": 2.5
+ },
+ "Brann|AGF": {
+  "1x2:1": 2.12,
+  "1x2:X": 3.75,
+  "1x2:2": 3.0,
+  "dc:1X": 1.36,
+  "dc:X2": 1.68,
+  "dc:12": 1.24,
+  "btts:yes": 1.44,
+  "btts:no": 2.7
+ },
+ "Brighton & Hove Albion|Universitatea Craiova": {
+  "1x2:1": 1.14,
+  "1x2:X": 8.1,
+  "1x2:2": 13.0,
+  "dc:1X": 1.02,
+  "dc:X2": 4.9,
+  "dc:12": 1.06,
+  "btts:yes": 2.17,
+  "btts:no": 1.66
+ },
+ "Hajduk Split|Sint-Truiden": {
+  "1x2:1": 2.15,
+  "1x2:X": 3.45,
+  "1x2:2": 3.2,
+  "dc:1X": 1.32,
+  "dc:X2": 1.66,
+  "dc:12": 1.29,
+  "btts:yes": 1.62,
+  "btts:no": 2.22
+ },
+ "CSKA Sofia|Trabzonspor": {
+  "1x2:1": 4.1,
+  "1x2:X": 3.75,
+  "1x2:2": 1.78,
+  "dc:1X": 1.95,
+  "dc:X2": 1.21,
+  "dc:12": 1.25,
+  "btts:yes": 1.54,
+  "btts:no": 2.4
+ },
+ "SC Freiburg|FC Twente": {
+  "1x2:1": 2.02,
+  "1x2:X": 3.8,
+  "1x2:2": 3.2,
+  "dc:1X": 1.32,
+  "dc:X2": 1.74,
+  "dc:12": 1.24,
+  "btts:yes": 1.54,
+  "btts:no": 2.4
+ },
+ "FC Nordsjaelland|Panathinaikos": {
+  "1x2:1": 2.47,
+  "1x2:X": 3.4,
+  "1x2:2": 2.7,
+  "dc:1X": 1.43,
+  "dc:X2": 1.5,
+  "dc:12": 1.29,
+  "btts:yes": 1.56,
+  "btts:no": 2.35
+ },
+ "Inter Club d'Escaldes|FC Copenhagen": {
+  "1x2:1": 11.0,
+  "1x2:X": 6.0,
+  "1x2:2": 1.22,
+  "dc:1X": 3.8,
+  "dc:X2": 1.03,
+  "dc:12": 1.11,
+  "btts:yes": 2.1,
+  "btts:no": 1.69
+ },
+ "KAA Gent|Red Star Belgrade": {
+  "1x2:1": 2.17,
+  "1x2:X": 3.35,
+  "1x2:2": 3.2,
+  "dc:1X": 1.32,
+  "dc:X2": 1.64,
+  "dc:12": 1.3,
+  "btts:yes": 1.66,
+  "btts:no": 2.15
+ },
+ "Braga|KuPS": {
+  "1x2:1": 1.13,
+  "1x2:X": 8.0,
+  "1x2:2": 17.0,
+  "dc:1X": 1.01,
+  "dc:X2": 5.25,
+  "dc:12": 1.06,
+  "btts:yes": 2.27,
+  "btts:no": 1.59
+ },
+ "Real Betis|Rayo Vallecano": {
+  "1x2:1": 1.6,
+  "1x2:X": 4.1,
+  "1x2:2": 4.9,
+  "dc:1X": 1.16,
+  "dc:X2": 2.22,
+  "dc:12": 1.21,
+  "btts:yes": 1.61,
+  "btts:no": 2.25
+ },
+ "Malaga|Athletic Club": {
+  "1x2:1": 4.6,
+  "1x2:X": 3.65,
+  "1x2:2": 1.73,
+  "dc:1X": 2.02,
+  "dc:X2": 1.18,
+  "dc:12": 1.26,
+  "btts:yes": 1.83,
+  "btts:no": 1.92
+ },
+ "Elche|Atlético Madrid": {
+  "1x2:1": 5.75,
+  "1x2:X": 4.45,
+  "1x2:2": 1.48,
+  "dc:1X": 2.52,
+  "dc:X2": 1.12,
+  "dc:12": 1.18,
+  "btts:yes": 1.7,
+  "btts:no": 2.1
+ },
+ "Real Madrid|Alavés": {
+  "1x2:1": 1.15,
+  "1x2:X": 8.1,
+  "1x2:2": 12.0,
+  "dc:1X": 1.02,
+  "dc:X2": 4.85,
+  "dc:12": 1.06,
+  "btts:yes": 2.0,
+  "btts:no": 1.77
+ }
 }
