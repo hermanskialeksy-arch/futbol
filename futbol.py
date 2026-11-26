@@ -946,6 +946,19 @@ def blend_with_market(ms, odds):
     return ms
 
 
+def sb_lines(sb, stat, scope):
+    """Linie Powyżej/Poniżej, które Superbet podał dla rynku (stat, total/home/away) – posortowane."""
+    out = set()
+    for k in (sb or {}):
+        p = k.split(":")
+        if len(p) == 4 and p[0] == stat and p[1] == scope and p[2] in ("over", "under"):
+            try:
+                out.add(float(p[3]))
+            except ValueError:
+                pass
+    return sorted(out)
+
+
 def auto_lines(mu, step, count):
     base = math.floor(mu) + 0.5
     idx = range(-(count // 2), count // 2 + 1)
@@ -975,7 +988,7 @@ class Model:
         sm = self.sm.get("goals")
         return sm.count(team) if sm else 0
 
-    def predict(self, h, a, odds, adj=None):
+    def predict(self, h, a, odds, adj=None, sb=None):
         if "goals" not in self.sm:
             return None
         exp, dist = {}, {}
@@ -1013,6 +1026,9 @@ class Model:
                 tl, hl, al = [0.5, 1.5, 2.5, 3.5, 4.5], [0.5, 1.5], [0.5, 1.5]
             else:
                 tl, hl, al = auto_lines(lh + la, step, 5), auto_lines(lh, step, 3), auto_lines(la, step, 3)
+            # Gdy Superbet podaje linie dla danego rynku, pokazujemy dokładnie te same linie co Superbet.
+            tl, hl, al = (sb_lines(sb, stat, "total") or tl, sb_lines(sb, stat, "home") or hl,
+                          sb_lines(sb, stat, "away") or al)
             for L in tl:
                 po = over_prob(tot, L)
                 ms.append(mk(f"{stat}:total:over:{L}", f"{stat}:total", "", po, odds))
@@ -1174,7 +1190,18 @@ def superbet_odds(h, a):
             continue
         kh, ka = k.split("|", 1)
         if same_team(kh, h) and same_team(ka, a):
-            return {i: o for i, o in v.items() if isinstance(o, (int, float)) and o > 1}
+            out = {}
+            for i, o in v.items():
+                if not isinstance(o, (int, float)) or o <= 1:
+                    continue
+                p = i.split(":")
+                if len(p) == 4 and p[2] in ("over", "under"):
+                    try:
+                        p[3] = str(float(p[3]))  # "9.50" / "9.5" -> jeden zapis linii
+                    except ValueError:
+                        continue
+                out[":".join(p)] = o
+            return out
     return {}
 
 
@@ -1194,14 +1221,16 @@ def build_fixtures(days, dom_played, fd_fix, espn_fix):
                 fo = fd_idx.get((comp, h, a))
                 if fo and fo["odds"]:
                     odds = dict(fo["odds"])
-            odds.update(superbet_odds(h, a))
-            out.append(dict(comp=comp, date=pdate(r["date"]), time=r["time"], home=h, away=a, odds=odds,
+            sb = superbet_odds(h, a)
+            odds.update(sb)
+            out.append(dict(comp=comp, date=pdate(r["date"]), time=r["time"], home=h, away=a, odds=odds, sb=sb,
                             form=r.get("form") if r.get("form_v") == 2 else None))
     else:
         for f in fd_fix:
             if today <= f["date"] <= end:
+                sb = superbet_odds(f["home"], f["away"])
                 out.append(dict(comp=f["comp"], date=f["date"], time=fd_time_to_pl(f["time"]), home=f["home"],
-                                away=f["away"], odds=f["odds"]))
+                                away=f["away"], odds={**f["odds"], **sb}, sb=sb))
     return out
 
 
@@ -1231,7 +1260,7 @@ def analyze_fixture(fx, model, api_cache, manual):
     h, a, di = fx["home"], fx["away"], fx["date"].isoformat()
     ab_h, ab_a = absences_for(h, di, api_cache, manual), absences_for(a, di, api_cache, manual)
     adj = {"h": absence_mult(ab_h), "a": absence_mult(ab_a)}
-    pred = model.predict(h, a, fx["odds"], adj)
+    pred = model.predict(h, a, fx["odds"], adj, fx.get("sb"))
     if not pred:
         return None
     return dict(comp=fx["comp"], date=fx["date"], time=fx.get("time", ""), home=h, away=a, odds=fx["odds"],
