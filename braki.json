@@ -308,5 +308,16 @@
   ],
   "Egnatia": [
     {"gracz": "Eneo Bitri", "rola": "?", "waga": 1.0, "powod": "nie zagra po czerwonej kartce", "do": "2026-11-27"}
+  ],
+  "RB Salzburg": [
+    {"gracz": "Kevin Boma", "rola": "?", "waga": 1.0, "powod": "uraz łydki", "do": "2026-11-27"},
+    {"gracz": "Sota Kitano", "rola": "?", "waga": 1.0, "powod": "uraz kostki", "do": "2026-11-27"},
+    {"gracz": "John Mellberg", "rola": "?", "waga": 1.0, "powod": "uraz mięśniowy", "do": "2026-11-27"},
+    {"gracz": "Justin Omoregie", "rola": "?", "waga": 1.0, "powod": "uraz ścięgna Achillesa", "do": "2026-11-27"},
+    {"gracz": "Dominik Schmid", "rola": "?", "waga": 1.0, "powod": "uraz kolana", "do": "2026-11-27"},
+    {"gracz": "Haris Tabaković", "rola": "?", "waga": 1.0, "powod": "uraz łąkotki, pauza do końca roku", "do": "2026-11-27"},
+    {"gracz": "N. Veratschnig", "rola": "?", "waga": 0.8, "powod": "uraz kolana (tylko jedno źródło)", "do": "2026-11-27"},
+    {"gracz": "Leandro Morgalla", "rola": "?", "waga": 0.4, "powod": "wątpliwy, uraz barku", "do": "2026-11-27"},
+    {"gracz": "Damir Redžić", "rola": "?", "waga": 0.4, "powod": "wątpliwy, uraz uda", "do": "2026-11-27"}
   ]
 }
