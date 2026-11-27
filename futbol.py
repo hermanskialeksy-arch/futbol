@@ -1363,7 +1363,13 @@ def build_fixtures(days, dom_played, fd_fix, espn_fix):
             sb = superbet_odds(f["home"], f["away"])
             out.append(dict(comp=f["comp"], date=f["date"], time=fd_time_to_pl(f["time"]), home=f["home"],
                             away=f["away"], odds={**f["odds"], **sb}, sb=sb))
-    return out
+    seen, uniq = set(), []
+    for f in out:  # bez duplikatów (ten sam mecz z kilku źródeł / powtórzone wiersze w pliku)
+        k = (f["comp"], f["date"], norm_name(f["home"]), norm_name(f["away"]))
+        if k not in seen:
+            seen.add(k)
+            uniq.append(f)
+    return uniq
 
 
 def build_models(dom_played, euro_played, euro_teams):
@@ -1501,7 +1507,8 @@ border-top:1px solid var(--line);cursor:pointer}
 .mr:active{background:var(--card2)}
 .tc{text-align:center;font-weight:700;font-size:14px;line-height:1.2}.tc small{display:block;font-weight:400;
 color:var(--dim);font-size:10.5px}
-.psc{float:right;margin-left:6px;min-width:20px;text-align:center;font-weight:700;color:var(--val);font-size:14px}
+.tn div{display:flex;align-items:baseline;gap:6px}.tn span{flex:1;min-width:0}
+.psc{flex:none;width:16px;text-align:center;font-weight:700;color:var(--val);font-size:15px}
 .scb{display:flex;flex-direction:column;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 12px}
 .scm{display:flex;flex-direction:column;align-items:center;text-align:center}
 .scm b{font-size:30px;color:var(--val);line-height:1.15}.scm small{font-size:11px;color:var(--dim)}
@@ -1672,7 +1679,7 @@ function row(x){
  const hb=b&&hist(b);
  const tip=b?`<div class="tip"><span>★ ${esc(lab(b,x))}</span><div class="pill"><b class="${pcls(b[3])}">${pc(b[3])}</b>${hb?`<i>hist. ${Math.round(hb.r*100)}%</i>`:''}</div></div>`:'';
  return `<div class="mr" data-m="${x.i}"><div class="tc">${x.time||'–'}${S.day==='all'?`<small>${x.date.slice(8)}.${x.date.slice(5,7)}</small>`:''}</div>
- <div class="tn"><div>${esc(x.h)}${x.sc?`<span class="psc">${x.sc.p[0]}</span>`:''}</div><div>${esc(x.a)}${x.sc?`<span class="psc">${x.sc.p[1]}</span>`:''}</div></div>
+ <div class="tn"><div><span>${esc(x.h)}</span>${x.sc?`<b class="psc">${x.sc.p[0]}</b>`:''}</div><div><span>${esc(x.a)}</span>${x.sc?`<b class="psc">${x.sc.p[1]}</b>`:''}</div></div>
  <div class="o3c">${['1x2:1','1x2:X','1x2:2'].map(id=>oc(x,id,fav&&fav[0])).join('')}</div>${tip}${badges(x)?`<div class="bds">${badges(x)}</div>`:''}</div>`}
 function listMatches(){
  const ms=vis();if(!ms.length)return'<div class="empty">Brak meczów dla wybranych filtrów.</div>';
