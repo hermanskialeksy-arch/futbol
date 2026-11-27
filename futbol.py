@@ -66,7 +66,18 @@ LEAGUES = {
     "T1": ("Süper Lig", "Turcja", "tur.1"),
     "SC0": ("Scottish Premiership", "Szkocja", "sco.1"),
     "G1": ("Super League (Grecja)", "Grecja", "gre.1"),
+    "E1": ("Championship", "Anglia", "eng.2"),
+    "D2": ("2. Bundesliga", "Niemcy", "ger.2"),
+    "I2": ("Serie B", "Włochy", "ita.2"),
+    "SP2": ("LaLiga 2", "Hiszpania", "esp.2"),
+    "F2": ("Ligue 2", "Francja", "fra.2"),
+    # ligi z „nowego” formatu football-data (jeden plik na wszystkie sezony, tylko wyniki i kursy)
+    "POL": ("Ekstraklasa", "Polska", "pol.1"),
+    "AUT": ("Bundesliga (Austria)", "Austria", "aut.1"),
+    "SWZ": ("Super League (Szwajcaria)", "Szwajcaria", "sui.1"),
+    "DNK": ("Superliga (Dania)", "Dania", "den.1"),
 }
+NEW_FMT = {"POL", "AUT", "SWZ", "DNK"}
 EURO = {
     "uefa.champions": ("Liga Mistrzów", "Europa"),
     "uefa.europa": ("Liga Europy", "Europa"),
@@ -76,7 +87,9 @@ COMP_INFO = {v[0]: (v[1], v[2], "dom") for v in LEAGUES.values()}
 COMP_INFO.update({v[0]: (v[1], k, "eu") for k, v in EURO.items()})
 COMP_ORDER = ["Liga Mistrzów", "Liga Europy", "Liga Konferencji", "Premier League", "La Liga", "Bundesliga",
               "Serie A", "Ligue 1", "Eredivisie", "Primeira Liga", "Jupiler Pro League", "Süper Lig",
-              "Scottish Premiership", "Super League (Grecja)"]
+              "Scottish Premiership", "Super League (Grecja)", "Ekstraklasa", "Championship", "2. Bundesliga",
+              "Serie B", "LaLiga 2", "Ligue 2", "Bundesliga (Austria)", "Super League (Szwajcaria)",
+              "Superliga (Dania)"]
 
 FD_STATS = {
     "goals": ("FTHG", "FTAG"), "shots": ("HS", "AS"), "sot": ("HST", "AST"),
@@ -286,8 +299,13 @@ def update_football_data(n_seasons):
     for i in range(n_seasons):
         sc = season_code(y0 - i)
         for code in LEAGUES:
-            url = f"https://www.football-data.co.uk/mmz4281/{sc}/{code}.csv"
-            path = P(f"fd_{sc}_{code}.csv")
+            if code in NEW_FMT:
+                if i > 0:
+                    continue
+                url, path = f"https://www.football-data.co.uk/new/{code}.csv", P(f"fdn_{code}.csv")
+            else:
+                url = f"https://www.football-data.co.uk/mmz4281/{sc}/{code}.csv"
+                path = P(f"fd_{sc}_{code}.csv")
             if i > 0 and os.path.exists(path) and os.path.getsize(path) > 1000:
                 continue
             try:
@@ -519,7 +537,7 @@ def update_espn(days, budget):
     now = time.time()
     got_odds = 0
     for rec in sorted(cache["fixtures"].values(), key=lambda r: (r["date"], r["time"])):
-        if calls >= budget + 80:
+        if calls >= budget + 250:
             break
         if rec.get("odds") and rec.get("form_v") == 2 and now - rec.get("odds_ts", 0) < 6 * 3600:
             continue
@@ -750,8 +768,33 @@ def parse_fd(path, comp):
     return out
 
 
-def load_domestic():
+def parse_fd_new(path, comp, since):
+    """„Nowy” format football-data (Polska, Austria...): Home/Away/HG/AG, kursy zamknięcia Avg/PSC/Max."""
+    out = []
+    with open(path, newline="", encoding="utf-8-sig", errors="replace") as f:
+        for r in csv.DictReader(f):
+            d = pdate(r.get("Date"))
+            hg, ag = num(r.get("HG")), num(r.get("AG"))
+            if not d or d < since or not r.get("Home") or hg is None or ag is None:
+                continue
+            odds = {}
+            for k, names in (("1x2:1", ["AvgCH", "PSCH", "MaxCH"]), ("1x2:X", ["AvgCD", "PSCD", "MaxCD"]),
+                             ("1x2:2", ["AvgCA", "PSCA", "MaxCA"])):
+                v = _first(r, names)
+                if v:
+                    odds[k] = v
+            out.append(dict(comp=comp, date=d, home=r["Home"].strip(), away=r["Away"].strip(),
+                            stats={"goals": (hg, ag)}, odds=odds, div=None, time=(r.get("Time") or "").strip()))
+    return out
+
+
+def load_domestic(n_seasons=3):
     played = defaultdict(list)
+    since = dt.date(season_start_year() - n_seasons + 1, 7, 1)
+    for code in NEW_FMT:
+        path = P(f"fdn_{code}.csv")
+        if os.path.exists(path):
+            played[LEAGUES[code][0]].extend(parse_fd_new(path, LEAGUES[code][0], since))
     for path in sorted(glob.glob(P("fd_*_*.csv"))):
         base = os.path.basename(path)[3:-4]
         if base == "fixtures":
@@ -965,6 +1008,70 @@ def auto_lines(mu, step, count):
     return [base + step * i for i in idx if base + step * i >= 0.5]
 
 
+_PMF_CACHE = {}
+
+
+def _pois(lam, n=10):
+    k = round(lam, 3)
+    v = _PMF_CACHE.get(k)
+    if v is None:
+        v = _PMF_CACHE[k] = pmf(k, 0.0, n)
+    return v
+
+
+def _score_probs(lh, la):
+    ph, pa = _pois(lh), _pois(la)
+    ca, acc = [], 0.0
+    for y in pa:
+        acc += y
+        ca.append(acc)
+    p1 = sum(ph[i] * ca[i - 1] for i in range(1, len(ph)))
+    px = sum(ph[i] * pa[i] for i in range(len(ph)))
+    u25 = sum(ph[i] * pa[j] for i in range(3) for j in range(3 - i))
+    return p1, px, 1 - p1 - px, 1 - u25
+
+
+def fit_goal_rates(lh, la, ms):
+    """Średnie gole (Poisson) dopasowane do końcowych szans 1X2 i powyżej 2.5 (po uśrednieniu z rynkiem),
+    żeby prognozowany wynik był spójny z typami pokazanymi w raporcie."""
+    by = {m["id"]: m["p"] for m in ms}
+    t = [by.get("1x2:1"), by.get("1x2:X"), by.get("1x2:2"), by.get("goals:total:over:2.5")]
+    if None in t[:3]:
+        return lh, la
+
+    def err(a, b):
+        r = _score_probs(a, b)
+        return sum((r[k] - t[k]) ** 2 for k in range(4) if t[k] is not None)
+    best = (err(lh, la), lh, la)
+    grid = [0.1 * i for i in range(2, 41)]
+    for a in grid:
+        for b in grid:
+            e = err(a, b)
+            if e < best[0]:
+                best = (e, a, b)
+    _, a0, b0 = best
+    for i in range(-5, 6):
+        for j in range(-5, 6):
+            a, b = a0 + 0.02 * i, b0 + 0.02 * j
+            if a > 0.05 and b > 0.05:
+                e = err(a, b)
+                if e < best[0]:
+                    best = (e, a, b)
+    return best[1], best[2]
+
+
+def score_forecast(lh, la, top=4):
+    """Najbardziej prawdopodobne dokładne wyniki [(gole gosp., gole gościa, szansa)] przy średnich lh/la
+    oraz „prognoza”: najczęstszy wynik w obrębie najbardziej prawdopodobnego rozstrzygnięcia (1/X/2)."""
+    ph, pa = _pois(lh), _pois(la)
+    sc = [(i, j, ph[i] * pa[j]) for i in range(7) for j in range(7)]
+    sc.sort(key=lambda v: -v[2])
+    p1, px, p2, _ = _score_probs(lh, la)
+    want = max(((p1, 1), (px, 0), (p2, -1)))[1]
+    pick = next(v for v in sc if (v[0] > v[1]) - (v[0] < v[1]) == want)
+    return sc[:top], pick
+
+
 ADJ_EXP = {"goals": 1.0, "sot": 1.0, "shots": 0.6, "corners": 0.3}
 
 
@@ -1038,7 +1145,9 @@ class Model:
                     po = over_prob(d, L)
                     ms.append(mk(f"{stat}:{side}:over:{L}", f"{stat}:{side}", "", po, odds))
                     ms.append(mk(f"{stat}:{side}:under:{L}", f"{stat}:{side}", "", 1 - po, odds))
-        return dict(exp=exp, markets=blend_with_market(ms, odds))
+        ms = blend_with_market(ms, odds)
+        gh, ga = fit_goal_rates(*exp["goals"], ms)
+        return dict(exp=exp, markets=ms, score=dict(zip(("top", "pick"), score_forecast(gh, ga)), lam=(gh, ga)))
 
     def profile(self, team, as_home):
         rows = [m for m in self.played if team in (m["home"], m["away"])]
@@ -1102,6 +1211,7 @@ def run_backtest(dom_played, n_last=150):
     groups = defaultdict(lambda: defaultdict(lambda: [0, 0]))   # grupa (gole, rożne...) -> przedział
     total = 0
     roi = defaultdict(lambda: [0, 0, 0.0])                      # nazwa strategii -> [zakładów, trafionych, zysk przy stawce 1]
+    score = [0, 0, 0, 0]          # prognozy wyniku: [ile, trafiony dokładny wynik, wynik w top 3, trafione rozstrzygnięcie 1X2]
     t0 = time.time()
     for comp, played in dom_played.items():
         ms = sorted(played, key=lambda m: m["date"])
@@ -1120,6 +1230,13 @@ def run_backtest(dom_played, n_last=150):
                 if not pr:
                     continue
                 total += 1
+                g = m["stats"]["goals"]
+                tops, pk = pr["score"]["top"], pr["score"]["pick"]
+                sgn_ = lambda x, y: (x > y) - (x < y)  # noqa
+                score[0] += 1
+                score[1] += int((pk[0], pk[1]) == (g[0], g[1]))
+                score[2] += int(any((t[0], t[1]) == (g[0], g[1]) for t in tops[:3]))
+                score[3] += int(sgn_(pk[0], pk[1]) == sgn_(g[0], g[1]))
                 best = {}
                 fav = None
                 for mkt in pr["markets"]:
@@ -1166,7 +1283,7 @@ def run_backtest(dom_played, n_last=150):
         log(f"  backtest {comp}: gotowe ({time.time() - t0:.0f}s)")
     res = {"generated": dt.date.today().isoformat(), "matches": total,
            "hist": {k: dict(v) for k, v in hist.items()}, "groups": {k: dict(v) for k, v in groups.items()},
-           "picks": dict(picks),
+           "picks": dict(picks), "score": score,
            "roi": [[k[0], k[1], v[0], v[1], round(v[2], 2)] for k, v in sorted(roi.items())]}
     jsave(P("backtest.json"), res)
     return res
@@ -1265,7 +1382,7 @@ def analyze_fixture(fx, model, api_cache, manual):
         return None
     return dict(comp=fx["comp"], date=fx["date"], time=fx.get("time", ""), home=h, away=a, odds=fx["odds"],
                 form=fx.get("form") or {},
-                exp=pred["exp"], markets=pred["markets"], prof_h=model.profile(h, True),
+                exp=pred["exp"], markets=pred["markets"], score=pred["score"], prof_h=model.profile(h, True),
                 prof_a=model.profile(a, False), h2h=model.h2h(h, a), n_h=model.n_matches(h),
                 n_a=model.n_matches(a), abs={"h": ab_h, "a": ab_a}, adj=adj)
 
@@ -1323,6 +1440,9 @@ def match_payload(i, an):
     return dict(i=i, comp=an["comp"], country=country, kind=kind, date=an["date"].isoformat(), time=an.get("time", ""),
                 h=an["home"], a=an["away"], nh=an["n_h"], na=an["n_a"], low=low_conf(an), fm=an.get("form") or {},
                 exp={s: [round(v[0], 2), round(v[1], 2)] for s, v in an["exp"].items()},
+                sc={"l": [round(v, 2) for v in an["score"]["lam"]],
+                    "t": [[i, j, round(p, 4)] for i, j, p in an["score"]["top"]],
+                    "p": [an["score"]["pick"][0], an["score"]["pick"][1], round(an["score"]["pick"][2], 4)]},
                 ph=prof(an["prof_h"]), pa=prof(an["prof_a"]), h2h=h2h, m=ms,
                 abs={"h": ab(an["abs"]["h"]), "a": ab(an["abs"]["a"])},
                 adj={"h": [round((an["adj"]["h"][0] - 1) * 100, 1), round((an["adj"]["h"][1] - 1) * 100, 1)],
@@ -1366,6 +1486,13 @@ border-top:1px solid var(--line);cursor:pointer}
 .mr:active{background:var(--card2)}
 .tc{text-align:center;font-weight:700;font-size:14px;line-height:1.2}.tc small{display:block;font-weight:400;
 color:var(--dim);font-size:10.5px}
+.psc{float:right;margin-left:6px;min-width:20px;text-align:center;font-weight:700;color:var(--val);font-size:14px}
+.scb{display:flex;flex-direction:column;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 12px}
+.scm{display:flex;flex-direction:column;align-items:center;text-align:center}
+.scm b{font-size:30px;color:var(--val);line-height:1.15}.scm small{font-size:11px;color:var(--dim)}
+.scr{flex:1;min-width:0}.scl{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.sco{display:inline-flex;flex-direction:column;align-items:center;background:var(--card2);border-radius:8px;padding:4px 9px;border:1.5px solid transparent}
+.sco.on{border-color:var(--val)}.sco small{font-size:11px;color:var(--dim)}
 .tn{min-width:0}.tn div{font-size:15px;line-height:1.28;padding:2px 0;overflow-wrap:anywhere}
 .o3c{display:flex;gap:4px}
 .oc{width:50px;padding:5px 0 4px;border-radius:9px;background:var(--card2);text-align:center;border:1.5px solid transparent;line-height:1.15}
@@ -1530,7 +1657,7 @@ function row(x){
  const hb=b&&hist(b);
  const tip=b?`<div class="tip"><span>★ ${esc(lab(b,x))}</span><div class="pill"><b class="${pcls(b[3])}">${pc(b[3])}</b>${hb?`<i>hist. ${Math.round(hb.r*100)}%</i>`:''}</div></div>`:'';
  return `<div class="mr" data-m="${x.i}"><div class="tc">${x.time||'–'}${S.day==='all'?`<small>${x.date.slice(8)}.${x.date.slice(5,7)}</small>`:''}</div>
- <div class="tn"><div>${esc(x.h)}</div><div>${esc(x.a)}</div></div>
+ <div class="tn"><div>${esc(x.h)}${x.sc?`<span class="psc">${x.sc.p[0]}</span>`:''}</div><div>${esc(x.a)}${x.sc?`<span class="psc">${x.sc.p[1]}</span>`:''}</div></div>
  <div class="o3c">${['1x2:1','1x2:X','1x2:2'].map(id=>oc(x,id,fav&&fav[0])).join('')}</div>${tip}${badges(x)?`<div class="bds">${badges(x)}</div>`:''}</div>`}
 function listMatches(){
  const ms=vis();if(!ms.length)return'<div class="empty">Brak meczów dla wybranych filtrów.</div>';
@@ -1600,6 +1727,8 @@ function listAcc(){
     if(n<20)return;const roi=pr/n*100;
     h+=`<div class="br" style="grid-template-columns:1fr 70px 70px"><div>${esc(nm)}<br><span style="color:var(--dim);font-size:12px">${n} zakładów · trafione ${Math.round(hit/n*100)}%</span></div><div style="text-align:right;color:var(--dim);font-size:12px">${pr>=0?'+':''}${pr.toFixed(1)} zł</div><div style="text-align:right"><b style="color:${roi>=0?'#7fd49f':'#e07a7a'}">${roi>=0?'+':''}${roi.toFixed(1)}%</b></div></div>`})}
   h+='<div class="note" style="padding:6px 0 0">Kursy: średnia z kilku bukmacherów (football-data.co.uk) – tylko 1X2 i Over/Under 2.5, bo do reszty rynków nie ma historycznych kursów. Dla kartek, fauli, rożnych nie da się tego sprawdzić.</div></div>'}
+ if(t.score&&t.score[0]){const [n,ex,t3,dir]=t.score;
+  h+=`<div class="bt"><h3>Prognozy wyniku (${n} meczów)</h3><div class="br" style="grid-template-columns:1fr 70px"><div>Trafione rozstrzygnięcie (1/X/2)</div><div style="text-align:right"><b>${Math.round(dir/n*100)}%</b></div></div><div class="br" style="grid-template-columns:1fr 70px"><div>Dokładny wynik</div><div style="text-align:right"><b>${Math.round(ex/n*100)}%</b></div></div><div class="br" style="grid-template-columns:1fr 70px"><div>Wynik wśród 3 najczęstszych</div><div style="text-align:right"><b>${Math.round(t3/n*100)}%</b></div></div></div>`}
  h+=`<div class="bt"><h3>Najlepsze typy modelu (60–85%)</h3>${rows(t.picks)||'brak'}</div>`;
  for(const g of Object.keys(t.groups).sort((a,b)=>(GRP[a]||a).localeCompare(GRP[b]||b))){
   const o={};for(const k in t.groups[g])if(+k>=60)o[k]=t.groups[g][k];const r=rows(o);
@@ -1670,6 +1799,12 @@ async function shareReport(){
 function render(){bar();
  $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():S.tab==='mkt'?listMkt():S.tab==='cpn'?listCoupon():listAcc()}
 /* ---------- szczegóły meczu ---------- */
+function scoreBlock(x){
+ if(!x.sc)return'';const [a,b,p]=x.sc.p,L=x.sc.l;
+ const others=x.sc.t.map(([i,j,q])=>`<span class="sco${i===a&&j===b?' on':''}"><b>${i}:${j}</b><small>${pc(q)}</small></span>`).join('');
+ return `<div class="scb"><div class="scm"><small>Prognozowany wynik</small><b>${a} : ${b}</b><small>szansa dokładnie tego wyniku ${pc(p)}</small></div>
+ <div class="scr"><div class="rl">Najczęstsze wyniki</div><div class="scl">${others}</div>
+ <div class="cs" style="margin:0">Oczekiwane gole: ${L[0].toFixed(2)} – ${L[1].toFixed(2)}. Prognoza = najczęstszy wynik przy najbardziej prawdopodobnym rozstrzygnięciu (1/X/2). Dokładny wynik trafia się rzadko – traktuj go orientacyjnie.</div></div></div>`}
 function groups(x){
  const tri=(ids,tops)=>ids.map((id,k)=>{const m=byId(x,id);return m?cell(tops[k],m):''}).join('');
  let out=`<details open><summary>Wynik meczu</summary><div class="in"><div class="rl">1X2</div><div class="o3">${tri(['1x2:1','1x2:X','1x2:2'],['1','X','2'])}</div>
@@ -1760,7 +1895,7 @@ function detail(i){
  <div class="dt"><div class="mt"><span>${esc(x.country)} · ${esc(x.comp)}</span><span>${dfull(x.date)} ${x.time}</span></div>
  <div class="tm">${esc(x.h)} – ${esc(x.a)}</div><div>${badges(x)}</div></div>
  <div class="sub">${tabs.map(([k,n])=>`<button class="${S.dtab===k?'on':''}" data-dtab="${k}">${n}</button>`).join('')}</div></div>
- <div class="dc">${top}${body}<div class="note">Mecze w modelu: ${esc(x.h)} ${x.nh}, ${esc(x.a)} ${x.na}. „~” / „fair” = uczciwy kurs (1/prawdopodobieństwo). Model uwzględnia osobno formę u siebie i na wyjeździe.</div></div>`;
+ <div class="dc">${S.dtab==='bets'?scoreBlock(x):''}${top}${body}<div class="note">Mecze w modelu: ${esc(x.h)} ${x.nh}, ${esc(x.a)} ${x.na}. „~” / „fair” = uczciwy kurs (1/prawdopodobieństwo). Model uwzględnia osobno formę u siebie i na wyjeździe.</div></div>`;
  $('det').classList.remove('hide');document.body.style.overflow='hidden'}
 function route(){
  const m=location.hash.match(/^#m(\d+)$/);
@@ -1861,6 +1996,9 @@ def cmd_match(hname, aname, manual_odds, show_all):
         print(f"{'Statystyka':<15}{h[:14]:>15}{a[:14]:>15}{'Razem':>9}")
         for stat, (lh, la) in an["exp"].items():
             print(f"{NAMES[stat]:<15}{lh:>15.2f}{la:>15.2f}{lh + la:>9.2f}")
+        pk = an["score"]["pick"]
+        print(f"Prognozowany wynik: {pk[0]}:{pk[1]} ({pk[2] * 100:.0f}%)  |  najczęstsze: "
+              + ", ".join(f"{i}:{j} {p * 100:.0f}%" for i, j, p in an["score"]["top"]))
         for side, nm in (("h", h), ("a", a)):
             for e in an["abs"][side]:
                 print(f"  brak: {nm} – {e['n']} ({e['role']}, {e['st']})")
@@ -1881,7 +2019,7 @@ def cmd_match(hname, aname, manual_odds, show_all):
 
 def maybe_backtest(args, force=False):
     bt = jload(P("backtest.json"), None)
-    stale = (not bt) or "roi" not in bt or (dt.date.today() - dt.date.fromisoformat(bt["generated"])).days >= 7
+    stale = (not bt) or "score" not in bt or (dt.date.today() - dt.date.fromisoformat(bt["generated"])).days >= 7
     if force or (stale and not getattr(args, "no_backtest", False)):
         log("Liczę historyczną skuteczność typów (backtest) – jednorazowo, potem co tydzień...")
         dom_played, _ = load_domestic()
