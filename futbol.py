@@ -1630,15 +1630,14 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .ef{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--dim)}
 .hide{display:none}
 .l5{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--card2);border-radius:10px;padding:8px 10px;margin:0 0 6px;font-size:13px;color:var(--dim);cursor:pointer}
-.l5 i{font-style:normal;font-size:14px}.l5b{flex:1;min-width:0}.l5k{display:block;font-size:11.5px;margin-bottom:4px}
-.l5c{display:flex;align-items:center;gap:4px;margin:3px 0}.l5t{flex:1;min-width:0;color:var(--tx);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.l5c .l5v{min-width:26px;padding:2px 4px}.l5n{font-size:12px}
+.l5 b{color:var(--tx);font-weight:600}.l5 i{font-style:normal;font-size:14px}
 .l5p{background:var(--card2);border-radius:10px;padding:8px 10px;margin:-2px 0 8px}
 .l5f{padding:0 0 6px}.l5h{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0 4px}.l5h small{color:var(--dim);font-size:11.5px}
 .l5r{display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line);font-size:13px}
 .l5d{color:var(--dim);font-size:12px;flex:none}.l5o{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.l5o small{color:var(--dim)}
 .l5v{flex:none;min-width:28px;text-align:center;border-radius:8px;padding:2px 6px;background:var(--line);font-size:13px}
-.l5v.ov{background:#25804f;color:#fff}.l5v.un{background:#b04848;color:#fff}
+.l5v{border-radius:50%;min-width:26px;height:26px;padding:0 4px;display:inline-flex;align-items:center;justify-content:center}
+.l5v.ov{background:#2f6fd6;color:#fff}.l5v.un{background:#e08a2c;color:#fff}
 .ad{flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--acc);background:none;color:var(--acc);font-size:20px;font-weight:700;line-height:1;padding:0}
 .ad.on{background:var(--acc);color:#fff;font-size:17px}
 .cell{position:relative}.cell.sel{outline:2px solid var(--acc);outline-offset:-2px}
@@ -1921,14 +1920,10 @@ function scoreBlock(x){
 const L5F=[['all','Wszystkie'],['H','U siebie (H)'],['A','Na wyjeździe (A)']];
 function l5rows(x,side,f){const L=(x.l5&&x.l5[side])||[];return L.filter(r=>f==='all'||r[2]===f).slice(0,5)}
 function l5val(r,stat,sc){const i=D.sk.indexOf(stat),v=r[3][i];if(!v)return null;return sc==='total'?v[0]+v[1]:v[0]}
-function l5line(x,stat,sc){const lines=x.m.map(m=>pid(m[0])).filter(q=>q&&q.stat===stat&&q.scope===sc).map(q=>q.line).sort((a,b)=>a-b);
- return lines.length?lines[Math.floor(lines.length/2)]:null}
-function l5chips(x,side,stat,sc,line){const L=l5rows(x,side,S.l5);if(!L.length)return'<span class="l5n">brak meczów</span>';
- return L.map(r=>{const v=l5val(r,stat,sc),c=v==null||line==null?'':v>line?' ov':' un';return `<b class="l5v${c}">${v==null?'–':v}</b>`}).join('')}
-function l5bar(x,stat,sc){const f=S.l5,k=stat+'|'+sc,line=l5line(x,stat,sc);
- const sides=sc==='total'?['h','a']:[sc==='home'?'h':'a'];
- const rows=sides.map(sd=>`<div class="l5c">${sides.length>1?`<span class="l5t">${esc(short(sd==='h'?x.h:x.a))}</span>`:''}${l5chips(x,sd,stat,sc,line)}</div>`).join('');
- return `<div class="l5" data-l5="${k}"><div class="l5b"><span class="l5k">Ostatnie 5${f!=='all'?' ('+f+')':''} · od najnowszego</span>${rows}</div><i>${S.l5o[k]?'▴':'▾'}</i></div><div class="l5p${S.l5o[k]?'':' hide'}" data-l5p="${k}">${S.l5o[k]?l5panel(x,stat,sc):''}</div>`}
+function l5avg(x,side,stat,sc,f){const v=l5rows(x,side,f).map(r=>l5val(r,stat,sc)).filter(v=>v!=null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null}
+function l5bar(x,stat,sc){const f=S.l5,k=stat+'|'+sc,fa=v=>v==null?'–':v.toFixed(1);
+ const txt=sc==='total'?`${esc(short(x.h))} ${fa(l5avg(x,'h',stat,sc,f))} – ${esc(short(x.a))} ${fa(l5avg(x,'a',stat,sc,f))}`:fa(l5avg(x,sc==='home'?'h':'a',stat,sc,f));
+ return `<div class="l5" data-l5="${k}"><span>Ostatnie 5${f!=='all'?' ('+f+')':''}: <b>${txt}</b></span><i>📊</i></div><div class="l5p${S.l5o[k]?'':' hide'}" data-l5p="${k}">${S.l5o[k]?l5panel(x,stat,sc):''}</div>`}
 const short=n=>n.length>14?n.slice(0,13)+'…':n;
 function l5list(x,side,stat,sc,line){const f=S.l5,L=l5rows(x,side,f),i=D.sk.indexOf('goals');
  if(!L.length)return'<div class="cs">Brak meczów w danych'+(f!=='all'?' w tej roli':'')+'.</div>';
@@ -1936,12 +1931,13 @@ function l5list(x,side,stat,sc,line){const f=S.l5,L=l5rows(x,side,f),i=D.sk.inde
   const cls=v==null||line==null?'':v>line?' ov':' un';
   return `<div class="l5r"><span class="fc ${res[1]}">${res[0]}</span><span class="l5d">${r[0].slice(0,5)}</span><span class="l5o">${g[0]}:${g[1]} vs ${esc(r[1])} <small>(${r[2]})</small></span><b class="l5v${cls}">${v==null?'–':v}</b></div>`}).join('')}
 function l5panel(x,stat,sc){
- const line=l5line(x,stat,sc);
+ const lines=x.m.map(m=>pid(m[0])).filter(q=>q&&q.stat===stat&&q.scope===sc).map(q=>q.line).sort((a,b)=>a-b);
+ const line=lines.length?lines[Math.floor(lines.length/2)]:null;
  let h='<div class="flt l5f">'+L5F.map(([k,n])=>`<button class="chip${S.l5===k?' on':''}" data-l5f="${k}">${n}</button>`).join('')+'</div>';
  const nm=ST[stat]+(sc==='total'?' w meczu (łącznie obu drużyn)':' drużyny');
  const sides=sc==='total'?['h','a']:[sc==='home'?'h':'a'];
  for(const sd of sides)h+=`<div class="l5h"><b>${esc(sd==='h'?x.h:x.a)}</b><small>${esc(nm)}</small></div>`+l5list(x,sd,stat,sc,line);
- h+=`<div class="cs">${line!=null?`Zielone = powyżej ${line}, czerwone = poniżej (środkowa linia tego rynku). `:''}H = mecz u siebie, A = na wyjeździe. Wynik i liczby z perspektywy danej drużyny.</div>`;
+ h+=`<div class="cs">${line!=null?`Niebieskie kółko = powyżej ${line}, pomarańczowe = poniżej (środkowa linia tego rynku). `:''}H = mecz u siebie, A = na wyjeździe. Wynik i liczby z perspektywy danej drużyny.</div>`;
  return h}
 function l5refresh(){const m=location.hash.match(/^#m(\d+)$/);if(!m)return;const x=D.matches[+m[1]];
  document.querySelectorAll('#det [data-l5]').forEach(b=>{const [st,sc]=b.dataset.l5.split('|');const t=document.createElement('div');t.innerHTML=l5bar(x,st,sc);b.replaceWith(t.firstChild)});
@@ -2047,7 +2043,7 @@ function route(){
 document.addEventListener('click',e=>{
  const t=e.target.closest('[data-l5],[data-l5f],[data-add],[data-addall],[data-del],[data-cpopen],[data-cpclear],[data-stake],[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-co],[data-rm],[data-rr],[data-ro],[data-rn],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
  const d=t.dataset;
- if(d.l5!==undefined){const k=d.l5;S.l5o[k]=!S.l5o[k];const ar=t.querySelector('i');if(ar)ar.textContent=S.l5o[k]?'▴':'▾';const m=location.hash.match(/^#m(\d+)$/),x=m&&D.matches[+m[1]];
+ if(d.l5!==undefined){const k=d.l5;S.l5o[k]=!S.l5o[k];const m=location.hash.match(/^#m(\d+)$/),x=m&&D.matches[+m[1]];
   document.querySelectorAll(`#det [data-l5p="${k}"]`).forEach(p=>{p.classList.toggle('hide',!S.l5o[k]);if(S.l5o[k]&&x){const [st,sc]=k.split('|');p.innerHTML=l5panel(x,st,sc)}})}
  else if(d.l5f!==undefined){S.l5=d.l5f;l5refresh()}
  else if(d.add!==undefined){const [i,id]=d.add.split('|'),x=D.matches[+i],m=x&&byId(x,id);if(m){cpAdd(x,m);rerender()}}
