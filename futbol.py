@@ -1637,7 +1637,7 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .l5d{color:var(--dim);font-size:12px;flex:none}.l5o{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.l5o small{color:var(--dim)}
 .l5v{flex:none;min-width:28px;text-align:center;border-radius:8px;padding:2px 6px;background:var(--line);font-size:13px}
 .l5v{border-radius:50%;min-width:26px;height:26px;padding:0 4px;display:inline-flex;align-items:center;justify-content:center}
-.l5v.ov{background:#2f6fd6;color:#fff}.l5v.un{background:#e08a2c;color:#fff}
+.l5v.ov,.l5v.un{background:var(--line);color:var(--tx)}
 .ad{flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--acc);background:none;color:var(--acc);font-size:20px;font-weight:700;line-height:1;padding:0}
 .ad.on{background:var(--acc);color:#fff;font-size:17px}
 .cell{position:relative}.cell.sel{outline:2px solid var(--acc);outline-offset:-2px}
@@ -1937,7 +1937,7 @@ function l5panel(x,stat,sc){
  const nm=ST[stat]+(sc==='total'?' w meczu (łącznie obu drużyn)':' drużyny');
  const sides=sc==='total'?['h','a']:[sc==='home'?'h':'a'];
  for(const sd of sides)h+=`<div class="l5h"><b>${esc(sd==='h'?x.h:x.a)}</b><small>${esc(nm)}</small></div>`+l5list(x,sd,stat,sc,line);
- h+=`<div class="cs">${line!=null?`Niebieskie kółko = powyżej ${line}, pomarańczowe = poniżej (środkowa linia tego rynku). `:''}H = mecz u siebie, A = na wyjeździe. Wynik i liczby z perspektywy danej drużyny.</div>`;
+ h+=`<div class="cs">Liczba w kółku = ${esc(ST[stat].toLowerCase())} w tamtym meczu. H = mecz u siebie, A = na wyjeździe. Wynik i liczby z perspektywy danej drużyny.</div>`;
  return h}
 function l5refresh(){const m=location.hash.match(/^#m(\d+)$/);if(!m)return;const x=D.matches[+m[1]];
  document.querySelectorAll('#det [data-l5]').forEach(b=>{const [st,sc]=b.dataset.l5.split('|');const t=document.createElement('div');t.innerHTML=l5bar(x,st,sc);b.replaceWith(t.firstChild)});
