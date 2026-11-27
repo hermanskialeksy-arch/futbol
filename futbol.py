@@ -1502,8 +1502,8 @@ button{font-family:inherit;color:inherit}
 .top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 .hd{display:flex;justify-content:space-between;align-items:center;padding:6px 12px 0}
 .hd b{font-size:17px}.hd span{font-size:11px;color:var(--dim)}
-.tabs{display:flex;padding:2px 6px 0}
-.tabs button{flex:1 1 auto;padding:8px 1px 7px;border:0;background:none;color:var(--dim);font-size:13.5px;font-weight:600;
+.tabs{display:flex;padding:2px 6px 0;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1 0 auto;white-space:nowrap;padding:8px 6px 7px;border:0;background:none;color:var(--dim);font-size:13.5px;font-weight:600;
 border-bottom:3px solid transparent}
 .tabs button.on{color:var(--tx);border-bottom-color:var(--acc)}
 .strip{display:flex;gap:6px;overflow-x:auto;padding:6px 10px;scrollbar-width:none}
@@ -1629,6 +1629,7 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .tg{flex:none;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:9px}.tg1{background:#5d2a2a;color:#ffb4b4}.tg2{background:#3a3220;color:var(--val)}
 .ef{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--dim)}
 .hide{display:none}
+.hw{font-size:14px;line-height:1.5}.hw p{margin:4px 0 8px}.hw ul,.hw ol{margin:2px 0 6px;padding-left:20px}.hw li{margin:5px 0}
 .l5{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--card2);border-radius:10px;padding:8px 10px;margin:0 0 6px;font-size:13px;color:var(--dim);cursor:pointer}
 .l5 b{color:var(--tx);font-weight:600}.l5 i{font-style:normal;font-size:14px}
 .l5p{background:var(--card2);border-radius:10px;padding:8px 10px;margin:-2px 0 8px}
@@ -1701,9 +1702,9 @@ const visA=()=>vis().filter(x=>!started(x));
 const badges=x=>(x.nv?`<span class="bd bv">VALUE ×${x.nv}</span>`:'')+(x.na_?`<span class="bd bi">braki ${x.na_}</span>`:'')+(x.low?`<span class="bd bl">mała próba</span>`:'');
 /* ---------- nagłówek: dni i ligi ---------- */
 function bar(){
- let t='';[['matches','Mecze'],['picks','Typy'],['mkt','Rynki'],['value','Value'],['cpn','Kupon'],['acc','Skuteczność']].forEach(([k,n])=>t+=`<button class="${S.tab===k?'on':''}" data-tab="${k}">${n}</button>`);
+ let t='';[['matches','Mecze'],['picks','Typy'],['mkt','Rynki'],['value','Value'],['cpn','Kupon'],['acc','Skuteczność'],['how','Jak to działa']].forEach(([k,n])=>t+=`<button class="${S.tab===k?'on':''}" data-tab="${k}">${n}</button>`);
  $('tb').innerHTML=t;
- const showf=S.tab!=='acc';
+ const showf=S.tab!=='acc'&&S.tab!=='how';
  $('dy').classList.toggle('hide',!showf);$('lc').classList.toggle('hide',!showf);
  if(!showf)return;
  let d=`<button class="dy${S.day==='all'?' on':''}" data-day="all"><span>&nbsp;</span><b>Wszystkie</b><small>${D.matches.length}</small></button>`;
@@ -1778,6 +1779,51 @@ function listMkt(){const hid=vis().length-visA().length;
   h+=`<section class="lgs"><div class="lgh" data-m="${x.i}"><div><small>${dfull(x.date)} ${x.time} · ${esc(x.comp)}</small><b>${esc(x.h)} – ${esc(x.a)}</b></div><span class="car">›</span></div>`+
   L.map(m=>{const o=m[4];return `<div class="tp ${pcls(m[3])}" data-m="${x.i}">${addBtn(x,m)}<div class="ti"><div class="tt">${esc(lab(m,x))}</div></div><div class="tk"><b>${pc(m[3])}</b><span class="kr">${o?'kurs '+o.toFixed(2):'~'+estOdds(m[3]).toFixed(2)}</span>${histTxt(m)}</div></div>`}).join('')+'</section>'}
  return h+(n?'':'<div class="empty">Brak typów tego rynku dla wybranych filtrów.<br>Zmień ryzyko, kurs albo dzień.</div>')}
+/* ---------- jak to działa ---------- */
+function listHow(){
+ const sec=(t,b,open)=>`<details class="how"${open?' open':''}><summary>${t}</summary><div class="in hw">${b}</div></details>`;
+ let h='<div class="note">Krótko i po kolei: skąd są dane, jak liczę szanse i jak czytać liczby na stronie. Kliknij temat, żeby go rozwinąć.</div>';
+ h+=sec('W skrócie',`<p>Dla każdego meczu program liczy, <b>ile średnio</b> goli, rożnych, strzałów, kartek itd. powinna mieć każda drużyna. Z tej średniej wylicza <b>szansę (%)</b> każdego typu, np. „powyżej 2.5 gola – 58%”. Tam, gdzie znam kursy bukmachera, szansa jest dodatkowo uśredniana z tym, co „myśli” rynek.</p>
+ <p>To jest <b>oszacowanie</b>, nie pewność. 70% znaczy, że na 10 takich typów średnio ok. 7 wchodzi, a 3 nie.</p>`,true);
+ h+=sec('Skąd są dane',`<ul><li><b>Wyniki i statystyki meczów</b> (gole, strzały, celne, rożne, faule, kartki, spalone) – football-data.co.uk, ostatnie 3 sezony. Dla Ekstraklasy, Austrii, Szwajcarii i Danii są tylko gole i kursy 1X2.</li>
+ <li><b>Terminarz i forma</b> – ESPN (Ekstraklasa z football-data).</li>
+ <li><b>Puchary europejskie</b> – wyniki i statystyki z ESPN; siła drużyny z ligi krajowej jest częściowo przenoszona na puchary.</li>
+ <li><b>Kursy</b> – Superbet (gdy są wpisane), w innym wypadku średnie kursy z ESPN / football-data.</li>
+ <li><b>Braki kadrowe</b> – ręcznie wpisywane (kontuzje, kartki).</li></ul>
+ <p>Strona odświeża się sama co ok. 3 godziny.</p>`);
+ h+=sec('Jak liczona jest szansa (%)',`<ol><li><b>Siła ataku i obrony.</b> Dla każdej drużyny liczę, ile zdobywa i traci w porównaniu ze średnią ligi – osobno ogólnie, u siebie i na wyjeździe. Np. atak 1.20 = zdobywa o 20% więcej niż przeciętna drużyna.</li>
+ <li><b>Świeższe mecze ważą więcej.</b> Mecz sprzed ok. 8 miesięcy liczy się o połowę słabiej niż wczorajszy.</li>
+ <li><b>Mała liczba meczów = ostrożność.</b> Drużyny z małą liczbą meczów są „ściągane” do średniej ligi, żeby jeden wynik 5:0 nie robił z nich potęgi. Gdy któraś ma mniej niż 6 meczów w danych, mecz dostaje znaczek <span class="bd bl">mała próba</span>.</li>
+ <li><b>Oczekiwana liczba.</b> Atak gospodarza × obrona gościa × średnia ligi = ile gospodarz powinien zdobyć (i odwrotnie). To widzisz w zakładce meczu „Statystyki → Oczekiwane w meczu”.</li>
+ <li><b>Braki kadrowe</b> zmniejszają atak (brak napastnika) lub osłabiają obronę (brak obrońcy, bramkarza) – maksymalnie o 20%.</li>
+ <li><b>Z oczekiwanej liczby na %.</b> Rozkład Poissona (dla rożnych, kartek itp. – jego szersza odmiana) mówi, jak często padnie 0, 1, 2, 3… Z tego wychodzi np. szansa „powyżej 9.5 rożnych”, 1X2, obie strzelą itd.</li>
+ <li><b>Połączenie z rynkiem.</b> Jeśli znam kursy po obu stronach rynku (np. 1, X i 2 albo powyżej i poniżej 2.5), końcowa szansa = 40% model + 60% szansa z kursów bez marży. Rynek zna składy i newsy, model – liczby. Razem są pewniejsze niż osobno.</li></ol>`);
+ h+=sec('Kursy: prawdziwe, „~” i uczciwe',`<ul><li><b>kurs 1.85</b> – kurs bukmachera (Superbet lub średni rynkowy).</li>
+ <li><b>~1.85</b> – brak kursu bukmachera; to <b>kurs uczciwy</b> = 1 ÷ szansa. Np. szansa 54% → ~1.85. U bukmachera realnie będzie niższy, bo bierze marżę (ok. 5–8%).</li>
+ <li><b>(szac.)</b> w kuponach – kurs szacowany: uczciwy pomniejszony o typową marżę (×0.93).</li>
+ <li><b>Szansa z kursu:</b> kurs 2.00 ≈ 50%, 1.50 ≈ 67%, 1.25 = 80%. Bukmacher ma marżę, więc suma szans z kursów 1/X/2 wychodzi ponad 100% – przy liczeniu ją usuwam.</li></ul>`);
+ h+=sec('Co znaczą %, EV, VALUE i hist.',`<ul><li><b>% (duża liczba)</b> – szansa, że typ wejdzie, wg modelu (połączonego z rynkiem).</li>
+ <li><b>EV (przewaga)</b> = szansa × kurs − 1. Np. szansa 55%, kurs 2.00 → EV = 0.55×2 − 1 = <b>+10%</b>: w długim okresie na 100 zł stawek teoretycznie +10 zł. Ujemne EV = bukmacher ma przewagę.</li>
+ <li><b>VALUE</b> (żółta ramka/znaczek) – typ z EV ≥ 3% i szansą ≥ 35%. To podpowiedź, nie pewniak – backtest pokazuje, że modele często przeceniają przewagę.</li>
+ <li><b>hist. 78%</b> – jak często typy o podobnej szansie z tej samej kategorii trafiały w teście na przeszłych meczach. Czerwone, gdy historia jest wyraźnie gorsza niż obiecywana szansa.</li>
+ <li><b>Kolory pól:</b> zielone tło = szansa ≥ 60% (ciemniejsze ≥ 70%), zielone w liście meczów = faworyt modelu.</li>
+ <li><b>★</b> – najpewniejszy typ modelu w meczu (bez „oczywistych” ponad ${Math.round(D.maxp*100)}%).</li></ul>`);
+ h+=sec('Prognozowany wynik',`<p>Żółte cyfry przy drużynach (np. 2 i 1) to przewidywany wynik. Biorę najbardziej prawdopodobne rozstrzygnięcie (1, X albo 2), a w nim najczęstszy dokładny wynik. W szczegółach meczu są też 4 najczęstsze wyniki z szansami.</p>
+ <p>Dokładny wynik trafia się rzadko (zwykle 10–15% meczów), więc traktuj go orientacyjnie. Ile trafia – w zakładce Skuteczność.</p>`);
+ h+=sec('Zakładki',`<ul><li><b>Mecze</b> – lista meczów z kursami 1X2, prognozą wyniku i najlepszym typem.</li>
+ <li><b>Typy</b> – najpewniejsze typy ze wszystkich meczów (filtr minimalnej szansy i rodzaju).</li>
+ <li><b>Rynki</b> – typy tylko z jednego rynku (np. same rożne), z filtrem ryzyka i kursu.</li>
+ <li><b>Value</b> – typy z przewagą nad kursem.</li>
+ <li><b>Kupon</b> – automatycznie złożony kupon: Pewniaki (najwyższa szansa), Mocne+ (kursy 1.40–2.00), Value (przewaga).</li>
+ <li><b>Skuteczność</b> – test na przeszłych meczach: czy 70% naprawdę wchodziło w ok. 70% i czy dałoby to zysk.</li></ul>`);
+ h+=sec('Mój kupon',`<p>Przycisk <b>+</b> przy typie (albo kliknięcie pola z kursem w meczu) dodaje typ do Twojego kuponu. Pasek na dole pokazuje liczbę typów i kurs łączny. W kuponie usuwasz typ krzyżykiem albo cały kupon przyciskiem na dole.</p>
+ <p><b>Szansa wejścia</b> kuponu = iloczyn szans typów, np. 80% × 75% × 70% = 42%. Każdy kolejny typ wyraźnie ją obniża. Kupon jest zapisany tylko w tym telefonie.</p>`);
+ h+=sec('Ostatnie 5 meczów',`<p>Pod każdym rynkiem w meczu pasek „Ostatnie 5” pokazuje średnią z 5 ostatnich meczów. Po kliknięciu widać same mecze: wynik (W/R/P), rywala, (H) u siebie / (A) na wyjeździe i liczbę z tamtego meczu w kółku. Przyciskami wybierasz: wszystkie, tylko u siebie albo tylko na wyjeździe.</p>`);
+ h+=sec('Ograniczenia – przeczytaj',`<ul><li>Model nie zna składów na dany dzień, motywacji, pogody ani sędziego – tylko to, co w liczbach i w ręcznie wpisanych brakach.</li>
+ <li>Typy bez kursu bukmachera (kartki, faule, strzały…) nie są porównane z rynkiem, więc są mniej pewne.</li>
+ <li>Bukmacher ma marżę – na dłuższą metę większość graczy traci. Backtest w zakładce Skuteczność pokazuje to uczciwie.</li>
+ <li>Graj tylko za pieniądze, które możesz stracić. Gra u nielegalnych bukmacherów i przez osoby poniżej 18 lat jest zabroniona.</li></ul>`);
+ return h}
 /* ---------- skuteczność (backtest) ---------- */
 const ROIORD=['wszystkie zakłady po kolei','zawsze faworyt modelu','przewaga ≥ 3%','przewaga ≥ 5%','przewaga ≥ 10%'];
 function listAcc(){
@@ -1908,7 +1954,7 @@ function rerender(){const m=location.hash.match(/^#m(\d+)$/);
  else render();
  cpBar()}
 function render(){bar();cpBar();
- $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():S.tab==='mkt'?listMkt():S.tab==='cpn'?listCoupon():listAcc()}
+ $('main').innerHTML=S.tab==='matches'?listMatches():S.tab==='picks'?listPicks():S.tab==='value'?listValue():S.tab==='mkt'?listMkt():S.tab==='cpn'?listCoupon():S.tab==='how'?listHow():listAcc()}
 /* ---------- szczegóły meczu ---------- */
 function scoreBlock(x){
  if(!x.sc)return'';const [a,b,p]=x.sc.p,L=x.sc.l;
