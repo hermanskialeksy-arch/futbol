@@ -1187,6 +1187,28 @@ class Model:
                              fv=avg(v6, 0), av=avg(v6, 1), nv=len(v6), n=len(vals))
         return res
 
+    def last(self, team, n=5):
+        """Ostatnie mecze drużyny: n ogółem + n u siebie + n na wyjeździe (bez powtórzeń), od najnowszego.
+        Wiersz: [data, rywal, 'H'/'A', [[ile zdobyła, ile rywal] lub None dla każdej statystyki z FD_STATS]]."""
+        rows = [m for m in self.played if team in (m["home"], m["away"])][::-1]
+        pick, cnt = [], {"all": 0, "H": 0, "A": 0}
+        for m in rows:
+            v = "H" if m["home"] == team else "A"
+            if cnt["all"] < n or cnt[v] < n:
+                pick.append((m, v))
+            cnt["all"] += 1
+            cnt[v] += 1
+            if cnt["all"] >= n and cnt["H"] >= n and cnt["A"] >= n:
+                break
+        out = []
+        for m, v in pick:
+            st = []
+            for k in FD_STATS:
+                p = m["stats"].get(k)
+                st.append(None if p is None else ([int(p[0]), int(p[1])] if v == "H" else [int(p[1]), int(p[0])]))
+            out.append([m["date"].strftime("%d.%m.%y"), m["away"] if v == "H" else m["home"], v, st])
+        return out
+
     def h2h(self, h, a, limit=6):
         rows = [m for m in self.played if {m["home"], m["away"]} == {h, a}]
         return rows[-limit:][::-1]
@@ -1404,7 +1426,7 @@ def analyze_fixture(fx, model, api_cache, manual):
     return dict(comp=fx["comp"], date=fx["date"], time=fx.get("time", ""), home=h, away=a, odds=fx["odds"],
                 form=fx.get("form") or {},
                 exp=pred["exp"], markets=pred["markets"], score=pred["score"], prof_h=model.profile(h, True),
-                prof_a=model.profile(a, False), h2h=model.h2h(h, a), n_h=model.n_matches(h),
+                prof_a=model.profile(a, False), h2h=model.h2h(h, a), last={"h": model.last(h), "a": model.last(a)}, n_h=model.n_matches(h),
                 n_a=model.n_matches(a), abs={"h": ab_h, "a": ab_a}, adj=adj)
 
 
@@ -1464,7 +1486,7 @@ def match_payload(i, an):
                 sc={"l": [round(v, 2) for v in an["score"]["lam"]],
                     "t": [[i, j, round(p, 4)] for i, j, p in an["score"]["top"]],
                     "p": [an["score"]["pick"][0], an["score"]["pick"][1], round(an["score"]["pick"][2], 4)]},
-                ph=prof(an["prof_h"]), pa=prof(an["prof_a"]), h2h=h2h, m=ms,
+                ph=prof(an["prof_h"]), pa=prof(an["prof_a"]), l5=an.get("last") or {}, h2h=h2h, m=ms,
                 abs={"h": ab(an["abs"]["h"]), "a": ab(an["abs"]["a"])},
                 adj={"h": [round((an["adj"]["h"][0] - 1) * 100, 1), round((an["adj"]["h"][1] - 1) * 100, 1)],
                      "a": [round((an["adj"]["a"][0] - 1) * 100, 1), round((an["adj"]["a"][1] - 1) * 100, 1)]})
@@ -1607,6 +1629,14 @@ details[open] summary:after{content:'▴'}.in{padding:0 10px 10px}
 .tg{flex:none;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:9px}.tg1{background:#5d2a2a;color:#ffb4b4}.tg2{background:#3a3220;color:var(--val)}
 .ef{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--dim)}
 .hide{display:none}
+.l5{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--card2);border-radius:10px;padding:8px 10px;margin:0 0 6px;font-size:13px;color:var(--dim);cursor:pointer}
+.l5 b{color:var(--tx);font-weight:600}.l5 i{font-style:normal;font-size:14px}
+.l5p{background:var(--card2);border-radius:10px;padding:8px 10px;margin:-2px 0 8px}
+.l5f{padding:0 0 6px}.l5h{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0 4px}.l5h small{color:var(--dim);font-size:11.5px}
+.l5r{display:flex;align-items:center;gap:8px;padding:4px 0;border-top:1px solid var(--line);font-size:13px}
+.l5d{color:var(--dim);font-size:12px;flex:none}.l5o{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.l5o small{color:var(--dim)}
+.l5v{flex:none;min-width:28px;text-align:center;border-radius:8px;padding:2px 6px;background:var(--line);font-size:13px}
+.l5v.ov{background:#25804f;color:#fff}.l5v.un{background:#b04848;color:#fff}
 .ad{flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--acc);background:none;color:var(--acc);font-size:20px;font-weight:700;line-height:1;padding:0}
 .ad.on{background:var(--acc);color:#fff;font-size:17px}
 .cell{position:relative}.cell.sel{outline:2px solid var(--acc);outline-offset:-2px}
@@ -1636,7 +1666,7 @@ const CAT=[['all','Wszystko'],['1x2','1X2'],['goals','Gole'],['btts','Obie strze
 const POL={over:'powyżej',under:'poniżej'};
 const WD=['ndz','pon','wt','śr','czw','pt','sob'];
 const DAYS=[...new Set(D.matches.map(x=>x.date))].sort();
-const S={per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0,cn:4,cm:'safe',co:1.3,rm:'corners',rr:'all',ro:0,rn:4};
+const S={l5:'all',l5o:{},per:3,tab:'matches',day:DAYS.find(d=>d>=D.today)||DAYS[0]||'all',league:'all',minp:D.minp,cat:'all',coll:{},dtab:'bets',scroll:0,cn:4,cm:'safe',co:1.3,rm:'corners',rr:'all',ro:0,rn:4};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pc=p=>Math.round(p*100)+'%';
@@ -1871,7 +1901,8 @@ function cpView(){
  h+=`<div class="note">Kupon jest zapisany tylko w tym telefonie/przeglądarce. Kursy i szanse odświeżają się razem ze stroną. ${est?'„~” = brak kursu bukmachera, kurs szacowany z szansy modelu. ':''}Kliknij typ, żeby zobaczyć mecz. Z jednego meczu można mieć jeden typ.</div></div>`;
  return h}
 function rerender(){const m=location.hash.match(/^#m(\d+)$/);
- if(m){const t=$('det').scrollTop;detail(+m[1]);$('det').scrollTop=t}
+ if(m){const t=$('det').scrollTop,op=[...document.querySelectorAll('#det details')].map(d=>d.open);detail(+m[1]);
+  document.querySelectorAll('#det details').forEach((d,i)=>{if(i<op.length)d.open=op[i]});$('det').scrollTop=t}
  else if(location.hash==='#kupon'){const t=$('cpv').scrollTop;$('cpv').innerHTML=cpView();$('cpv').scrollTop=t}
  else render();
  cpBar()}
@@ -1884,6 +1915,32 @@ function scoreBlock(x){
  return `<div class="scb"><div class="scm"><small>Prognozowany wynik</small><b>${a} : ${b}</b><small>szansa dokładnie tego wyniku ${pc(p)}</small></div>
  <div class="scr"><div class="rl">Najczęstsze wyniki</div><div class="scl">${others}</div>
  <div class="cs" style="margin:0">Oczekiwane gole: ${L[0].toFixed(2)} – ${L[1].toFixed(2)}. Prognoza = najczęstszy wynik przy najbardziej prawdopodobnym rozstrzygnięciu (1/X/2). Dokładny wynik trafia się rzadko – traktuj go orientacyjnie.</div></div></div>`}
+/* ---------- ostatnie 5 meczów pod danym typem (jak „Ostatnie 5” w Superbet) + filtr: wszystkie / u siebie / na wyjeździe ---------- */
+const L5F=[['all','Wszystkie'],['H','U siebie (H)'],['A','Na wyjeździe (A)']];
+function l5rows(x,side,f){const L=(x.l5&&x.l5[side])||[];return L.filter(r=>f==='all'||r[2]===f).slice(0,5)}
+function l5val(r,stat,sc){const i=D.sk.indexOf(stat),v=r[3][i];if(!v)return null;return sc==='total'?v[0]+v[1]:v[0]}
+function l5avg(x,side,stat,sc,f){const v=l5rows(x,side,f).map(r=>l5val(r,stat,sc)).filter(v=>v!=null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null}
+function l5bar(x,stat,sc){const f=S.l5,k=stat+'|'+sc,fa=v=>v==null?'–':v.toFixed(1);
+ const txt=sc==='total'?`${esc(short(x.h))} ${fa(l5avg(x,'h',stat,sc,f))} – ${esc(short(x.a))} ${fa(l5avg(x,'a',stat,sc,f))}`:fa(l5avg(x,sc==='home'?'h':'a',stat,sc,f));
+ return `<div class="l5" data-l5="${k}"><span>Ostatnie 5${f!=='all'?' ('+f+')':''}: <b>${txt}</b></span><i>📊</i></div><div class="l5p${S.l5o[k]?'':' hide'}" data-l5p="${k}">${S.l5o[k]?l5panel(x,stat,sc):''}</div>`}
+const short=n=>n.length>14?n.slice(0,13)+'…':n;
+function l5list(x,side,stat,sc,line){const f=S.l5,L=l5rows(x,side,f),i=D.sk.indexOf('goals');
+ if(!L.length)return'<div class="cs">Brak meczów w danych'+(f!=='all'?' w tej roli':'')+'.</div>';
+ return L.map(r=>{const g=r[3][i]||[0,0],res=g[0]>g[1]?['W','fw']:g[0]<g[1]?['P','fl']:['R','fd'],v=l5val(r,stat,sc);
+  const cls=v==null||line==null?'':v>line?' ov':' un';
+  return `<div class="l5r"><span class="fc ${res[1]}">${res[0]}</span><span class="l5d">${r[0].slice(0,5)}</span><span class="l5o">${g[0]}:${g[1]} vs ${esc(r[1])} <small>(${r[2]})</small></span><b class="l5v${cls}">${v==null?'–':v}</b></div>`}).join('')}
+function l5panel(x,stat,sc){
+ const lines=x.m.map(m=>pid(m[0])).filter(q=>q&&q.stat===stat&&q.scope===sc).map(q=>q.line).sort((a,b)=>a-b);
+ const line=lines.length?lines[Math.floor(lines.length/2)]:null;
+ let h='<div class="flt l5f">'+L5F.map(([k,n])=>`<button class="chip${S.l5===k?' on':''}" data-l5f="${k}">${n}</button>`).join('')+'</div>';
+ const nm=ST[stat]+(sc==='total'?' w meczu (łącznie obu drużyn)':' drużyny');
+ const sides=sc==='total'?['h','a']:[sc==='home'?'h':'a'];
+ for(const sd of sides)h+=`<div class="l5h"><b>${esc(sd==='h'?x.h:x.a)}</b><small>${esc(nm)}</small></div>`+l5list(x,sd,stat,sc,line);
+ h+=`<div class="cs">${line!=null?`Zielone = powyżej ${line}, czerwone = poniżej (środkowa linia tego rynku). `:''}H = mecz u siebie, A = na wyjeździe. Wynik i liczby z perspektywy danej drużyny.</div>`;
+ return h}
+function l5refresh(){const m=location.hash.match(/^#m(\d+)$/);if(!m)return;const x=D.matches[+m[1]];
+ document.querySelectorAll('#det [data-l5]').forEach(b=>{const [st,sc]=b.dataset.l5.split('|');const t=document.createElement('div');t.innerHTML=l5bar(x,st,sc);b.replaceWith(t.firstChild)});
+ document.querySelectorAll('#det [data-l5p]').forEach(p=>{const [st,sc]=p.dataset.l5p.split('|');if(S.l5o[p.dataset.l5p])p.innerHTML=l5panel(x,st,sc)})}
 function groups(x){
  const tri=(ids,tops)=>ids.map((id,k)=>{const m=byId(x,id);return m?cell(tops[k],m,x):''}).join('');
  let out=`<details open><summary>Wynik meczu</summary><div class="in"><div class="rl">1X2</div><div class="o3">${tri(['1x2:1','1x2:X','1x2:2'],['1','X','2'])}</div>
@@ -1895,7 +1952,7 @@ function groups(x){
    const lines={};
    for(const m of x.m){const q=pid(m[0]);if(q&&q.stat===stat&&q.scope===sc)(lines[q.line]=lines[q.line]||{})[q.dir]=m}
    const ks=Object.keys(lines).map(Number).sort((a,b)=>a-b);if(!ks.length)continue;
-   inner+=`<div class="sh">${sc==='total'?'Łącznie':esc(sc==='home'?x.h:x.a)}</div>`;
+   inner+=`<div class="sh">${sc==='total'?'Łącznie':esc(sc==='home'?x.h:x.a)}</div>`+(x.l5?l5bar(x,stat,sc):'');
    for(const k of ks){const l=lines[k];
     inner+=`<div class="row"><div class="ln">${k}</div>${l.over?cell('Powyżej',l.over,x):'<div></div>'}${l.under?cell('Poniżej',l.under,x):'<div></div>'}</div>`}}
   const e=x.exp[stat];
@@ -1983,9 +2040,12 @@ function route(){
  if(m&&D.matches[+m[1]])detail(+m[1]);
  else{$('det').classList.add('hide');document.body.style.overflow='';render();window.scrollTo(0,S.scroll)}}
 document.addEventListener('click',e=>{
- const t=e.target.closest('[data-add],[data-addall],[data-del],[data-cpopen],[data-cpclear],[data-stake],[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-co],[data-rm],[data-rr],[data-ro],[data-rn],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
+ const t=e.target.closest('[data-l5],[data-l5f],[data-add],[data-addall],[data-del],[data-cpopen],[data-cpclear],[data-stake],[data-share],[data-day],[data-lg],[data-tab],[data-minp],[data-per],[data-cat],[data-cn],[data-cm],[data-co],[data-rm],[data-rr],[data-ro],[data-rn],[data-coll],[data-m],[data-back],[data-dtab]');if(!t)return;
  const d=t.dataset;
- if(d.add!==undefined){const [i,id]=d.add.split('|'),x=D.matches[+i],m=x&&byId(x,id);if(m){cpAdd(x,m);rerender()}}
+ if(d.l5!==undefined){const k=d.l5;S.l5o[k]=!S.l5o[k];const m=location.hash.match(/^#m(\d+)$/),x=m&&D.matches[+m[1]];
+  document.querySelectorAll(`#det [data-l5p="${k}"]`).forEach(p=>{p.classList.toggle('hide',!S.l5o[k]);if(S.l5o[k]&&x){const [st,sc]=k.split('|');p.innerHTML=l5panel(x,st,sc)}})}
+ else if(d.l5f!==undefined){S.l5=d.l5f;l5refresh()}
+ else if(d.add!==undefined){const [i,id]=d.add.split('|'),x=D.matches[+i],m=x&&byId(x,id);if(m){cpAdd(x,m);rerender()}}
  else if(d.addall!==undefined){const L=couponLegs(S.cn,S.cm);let n=0;L.forEach(([x,m])=>{const o=m0(x,m);if(!inCp(x,o)){cpAdd(x,o,true);n++}});rerender();toast(n?`Dodano ${n} typ(y) do Twojego kuponu.`:'Te typy już są w Twoim kuponie.')}
  else if(d.del!==undefined){CP.splice(+d.del,1);cpSave();rerender()}
  else if(d.cpclear!==undefined){if(confirm('Usunąć cały kupon ('+CP.length+' typ(y))?')){CP=[];cpSave();rerender()}}
@@ -2019,7 +2079,7 @@ route();
 def build_report(analyses, min_p, max_p, top=None):
     bt = jload(P("backtest.json"), None)
     ords = {c: i for i, c in enumerate(COMP_ORDER)}
-    data = dict(generated=dt.datetime.now().strftime("%d.%m %H:%M"), today=dt.date.today().isoformat(),
+    data = dict(sk=list(FD_STATS), generated=dt.datetime.now().strftime("%d.%m %H:%M"), today=dt.date.today().isoformat(),
                 minp=min_p, maxp=max_p, ord=ords, bt=bt,
                 matches=[match_payload(i, an) for i, an in enumerate(analyses)])
     js = APP_JS.replace("__DATA__", json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
