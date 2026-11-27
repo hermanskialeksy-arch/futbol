@@ -72,12 +72,13 @@ LEAGUES = {
     "SP2": ("LaLiga 2", "Hiszpania", "esp.2"),
     "F2": ("Ligue 2", "Francja", "fra.2"),
     # ligi z „nowego” formatu football-data (jeden plik na wszystkie sezony, tylko wyniki i kursy)
-    "POL": ("Ekstraklasa", "Polska", "pol.1"),
+    "POL": ("Ekstraklasa", "Polska", None),  # ESPN nie ma Ekstraklasy – terminarz z football-data
     "AUT": ("Bundesliga (Austria)", "Austria", "aut.1"),
     "SWZ": ("Super League (Szwajcaria)", "Szwajcaria", "sui.1"),
     "DNK": ("Superliga (Dania)", "Dania", "den.1"),
 }
 NEW_FMT = {"POL", "AUT", "SWZ", "DNK"}
+NEW_FMT_COUNTRY = {"Poland": "POL", "Austria": "AUT", "Switzerland": "SWZ", "Denmark": "DNK"}
 EURO = {
     "uefa.champions": ("Liga Mistrzów", "Europa"),
     "uefa.europa": ("Liga Europy", "Europa"),
@@ -321,6 +322,10 @@ def update_football_data(n_seasons):
         open(P("fd_fixtures.csv"), "wb").write(http_get("https://www.football-data.co.uk/fixtures.csv"))
     except Exception as e:  # noqa
         log("  ! fixtures.csv:", e)
+    try:
+        open(P("fdn_fixtures.csv"), "wb").write(http_get("https://www.football-data.co.uk/new_league_fixtures.csv"))
+    except Exception as e:  # noqa
+        log("  ! new_league_fixtures.csv:", e)
     log(f"football-data.co.uk: pobrano {ok} plików, błędów {fail}")
 
 
@@ -461,7 +466,7 @@ def update_espn(days, budget):
     cache = jload(P("espn_cache.json"), {"events": {}, "fixtures": {}, "meta": {}})
     today = dt.date.today()
     calls = 0
-    comps = [(slug, v[0]) for slug, v in EURO.items()] + [(v[2], v[0]) for v in LEAGUES.values()]
+    comps = [(slug, v[0]) for slug, v in EURO.items()] + [(v[2], v[0]) for v in LEAGUES.values() if v[2]]
     from concurrent.futures import ThreadPoolExecutor
 
     def fetch_days(slug, days_list):
@@ -768,23 +773,30 @@ def parse_fd(path, comp):
     return out
 
 
-def parse_fd_new(path, comp, since):
-    """„Nowy” format football-data (Polska, Austria...): Home/Away/HG/AG, kursy zamknięcia Avg/PSC/Max."""
+def parse_fd_new(path, comp, since, fixtures=False):
+    """„Nowy” format football-data (Polska, Austria...): Home/Away/HG/AG, kursy zamknięcia Avg/PSC/Max.
+    fixtures=True: plik z terminarzem (bez wyniku), liga ustalana po kolumnie Country."""
     out = []
     with open(path, newline="", encoding="utf-8-sig", errors="replace") as f:
         for r in csv.DictReader(f):
             d = pdate(r.get("Date"))
             hg, ag = num(r.get("HG")), num(r.get("AG"))
-            if not d or d < since or not r.get("Home") or hg is None or ag is None:
+            if fixtures:
+                code = NEW_FMT_COUNTRY.get((r.get("Country") or "").strip())
+                if not code or not d or d < since or not r.get("Home"):
+                    continue
+                comp = LEAGUES[code][0]
+            elif not d or d < since or not r.get("Home") or hg is None or ag is None:
                 continue
             odds = {}
-            for k, names in (("1x2:1", ["AvgCH", "PSCH", "MaxCH"]), ("1x2:X", ["AvgCD", "PSCD", "MaxCD"]),
-                             ("1x2:2", ["AvgCA", "PSCA", "MaxCA"])):
+            for k, names in (("1x2:1", ["AvgCH", "PSCH", "MaxCH", "AvgH", "PSH", "PH", "MaxH"]),
+                             ("1x2:X", ["AvgCD", "PSCD", "MaxCD", "AvgD", "PSD", "PD", "MaxD"]),
+                             ("1x2:2", ["AvgCA", "PSCA", "MaxCA", "AvgA", "PSA", "PA", "MaxA"])):
                 v = _first(r, names)
                 if v:
                     odds[k] = v
             out.append(dict(comp=comp, date=d, home=r["Home"].strip(), away=r["Away"].strip(),
-                            stats={"goals": (hg, ag)}, odds=odds, div=None, time=(r.get("Time") or "").strip()))
+                            stats={} if fixtures else {"goals": (hg, ag)}, odds=odds, div=None, time=(r.get("Time") or "").strip()))
     return out
 
 
@@ -813,6 +825,9 @@ def load_domestic(n_seasons=3):
             if lg and "goals" not in m["stats"]:
                 m["comp"] = lg[0]
                 fix.append(m)
+    fp = P("fdn_fixtures.csv")
+    if os.path.exists(fp):
+        fix += parse_fd_new(fp, "", dt.date.today() - dt.timedelta(days=1), fixtures=True)
     return played, fix
 
 
@@ -1342,12 +1357,12 @@ def build_fixtures(days, dom_played, fd_fix, espn_fix):
             odds.update(sb)
             out.append(dict(comp=comp, date=pdate(r["date"]), time=r["time"], home=h, away=a, odds=odds, sb=sb,
                             form=r.get("form") if r.get("form_v") == 2 else None))
-    else:
-        for f in fd_fix:
-            if today <= f["date"] <= end:
-                sb = superbet_odds(f["home"], f["away"])
-                out.append(dict(comp=f["comp"], date=f["date"], time=fd_time_to_pl(f["time"]), home=f["home"],
-                                away=f["away"], odds={**f["odds"], **sb}, sb=sb))
+    espn_comps = {r["comp"] for r in espn_ok}
+    for f in fd_fix:  # ligi, których ESPN nie podał (np. Ekstraklasa) – terminarz z football-data
+        if (not espn_ok or f["comp"] not in espn_comps) and today <= f["date"] <= end:
+            sb = superbet_odds(f["home"], f["away"])
+            out.append(dict(comp=f["comp"], date=f["date"], time=fd_time_to_pl(f["time"]), home=f["home"],
+                            away=f["away"], odds={**f["odds"], **sb}, sb=sb))
     return out
 
 
