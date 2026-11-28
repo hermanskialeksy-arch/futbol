@@ -1,35 +1,5 @@
 {
  "_info": "Kursy Superbet.pl (odczyt strony). Klucz: Gospodarz|Gość. Id rynków jak w programie.",
- "Raków Częstochowa|Piast Gliwice": {
-  "1x2:1": 1.85,
-  "1x2:X": 4.0,
-  "1x2:2": 3.85,
-  "dc:1X": 1.26,
-  "dc:X2": 1.97,
-  "dc:12": 1.25,
-  "btts:yes": 1.51,
-  "btts:no": 2.55
- },
- "Gornik Zabrze|Wisla Plock": {
-  "1x2:1": 1.47,
-  "1x2:X": 4.6,
-  "1x2:2": 6.4,
-  "dc:1X": 1.12,
-  "dc:X2": 2.67,
-  "dc:12": 1.2,
-  "btts:yes": 1.83,
-  "btts:no": 1.97
- },
- "Nottingham Forest|Chelsea": {
-  "1x2:1": 2.5,
-  "1x2:X": 3.25,
-  "1x2:2": 2.75,
-  "dc:1X": 1.42,
-  "dc:X2": 1.49,
-  "dc:12": 1.31,
-  "btts:yes": 1.58,
-  "btts:no": 2.3
- },
  "Widzew Lodz|Zaglebie Lubin": {
   "1x2:1": 1.82,
   "1x2:X": 3.75,
